@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Project Proposal Post Form{% endblock %}
+
+{% block body %}
+  <h1>Please fill out the following info for your Project Posting</h1>
+
+  <section id="ppp-form">
+    <h2>Project Details</h2>
+    <form action="">
+      <div>
+        <label for="title">Project Title:</label>
+        <input type="text" name="title" id="title">
+      </div>
+      <div>
+        <label for="summary">Project Summary:</label>
+      </div>
+      <div>
+        <textarea name="summary" id="summary" rows="4" cols="50"></textarea>
+      </div>
+      <div>
+        <label for="specs">What languages, libraries, API's, etc will you be 
+                           using in your project?</label>
+      </div>
+      <div>
+        <textarea name="specs" id="specs" rows="4" cols="50"></textarea>
+      </div>
+      <div>
+        <label for="github_url">Your Project's GitHub Link:</label>
+        <input type="url" name="github_url" id="github_url">
+      </div>
+      <div> 
+        <fieldset>
+            <legend>Required Experience Level for Your Project:</legend>
+            <div>
+              <input type="checkbox" name="trainee" id="trainee" 
+              value="Trainee Software Engineer">
+              <label for="trainee">Trainee Software Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="junior" id="junior" 
+              value="Junior Software Engineer">
+              <label for="junior">Junior Software Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="mid_level" id="mid_level" 
+              value="Mid-level Software Engineer">
+              <label for="mid_level">Mid-level Software Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="senior" id="senior" 
+              value="Senior Software Engineer">
+              <label for="senior">Senior Software Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="lead" id="lead" 
+              value="Lead Software Engineer">
+              <label for="lead">Lead Software Engineer</label>
+            </div>
+      </div>
+      <div>
+        <fieldset>
+            <legend>Required Background for Your Project:</legend>
+            <div>
+              <input type="checkbox" name="back_end" id="back_end" 
+              value="Back-End Engineer">
+              <label for="back_end">Back-End Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="front_end" id="front_end" 
+              value="Front-End Engineer">
+              <label for="front_end">Front-End Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="mobile" id="mobile" 
+              value="Mobile Developer">
+              <label for="mobile">Mobile Developer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="game" id="game" 
+              value="Game Developer">
+              <label for="game">Game Developer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="devops" id="devops" 
+              value="DevOps Engineer">
+              <label for="devops">DevOps Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="security" id="security" 
+              value="Security Engineer">
+              <label for="security">Security Engineer</label>
+            </div>
+            <div>
+              <input type="checkbox" name="qa" id="qa" 
+              value="QA Engineer">
+              <label for="qa">QA Engineer</label>
+            </div>
+        </div>
+        <div>
+          <input type="submit">
+        </div>
+    </form>
+{% endblock body%}
