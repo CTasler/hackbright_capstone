@@ -8,90 +8,123 @@
     <h2>Personal Info</h2>
     <form action="">
       <div>
-        <label for="fname">Frist Name:</label>
-        <input type="text" name="fname" id="fname">
+        <label for="fname">First Name:</label>
+        <input type="text" name="fname" id="fname" required>
       </div>
       <div>
-        <label for="summary">Project Summary:</label>
+        <label for="lname">Last Name:</label>
+        <input type="text" name="lname" id="lname">
       </div>
       <div>
-        <textarea name="summary" id="summary" rows="4" cols="50"></textarea>
+        <label for="username">Username:</label>
+        <input type="text" name="lname" id="lname" required>
       </div>
       <div>
-        <label for="specs">What languages, libraries, API's, etc will you be 
-                           using in your project?</label>
+        <label for="pwd">Password:</label>
+        <input type="password" name="pwd" id="pwd" required>
       </div>
       <div>
-        <textarea name="specs" id="specs" rows="4" cols="50"></textarea>
+        <label for="bio">Bio:</label>
       </div>
       <div>
-        <label for="github_url">Your Project's GitHub Link:</label>
-        <input type="url" name="github_url" id="github_url">
+        <textarea name="bio" id="bio" rows="4" cols="50" required></textarea>
       </div>
       <div> 
         <fieldset>
-            <legend>Required Experience Level for Your Project:</legend>
+            <legend>Contact Preferences:</legend>
             <div>
-              <input type="checkbox" name="trainee" id="trainee" 
+              <input type="checkbox" name="contact_pref" id="phone" 
+              value="Phone">
+              <label for="trainee">Phone</label>
+            </div>
+            <div>
+              <input type="checkbox" name="contact_pref" id="email" 
+              value="email">
+              <label for="junior">Email</label>
+            </div>
+            <div>
+              <input type="checkbox" name="contact_pref" id="slack" 
+              value="Slack">
+              <label for="slack">Slack</label>
+            </div>
+            <div>
+              <input type="checkbox" name="contact_pref" id="discord" 
+              value="Discord">
+              <label for="discord">Discord</label>
+            </div>
+      </div>
+      <div>
+        <label for="github_link">GitHub URL:</label>
+        <input type="url" name="github_link" id="github_link">
+      </div>
+      <div>
+        <label for="linkedin_link">Linkedin URL:</label>
+        <input type="url" name="github_link" id="github_link">
+      </div>
+      <div> 
+        <fieldset>
+            <legend>Experience Level:</legend>
+            <div>
+              <input type="radio" name="exp_level" id="trainee" 
               value="Trainee Software Engineer">
               <label for="trainee">Trainee Software Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="junior" id="junior" 
+              <input type="radio" name="exp_level" id="junior" 
               value="Junior Software Engineer">
               <label for="junior">Junior Software Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="mid_level" id="mid_level" 
+              <input type="radio" name="exp_level" id="mid_level" 
               value="Mid-level Software Engineer">
               <label for="mid_level">Mid-level Software Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="senior" id="senior" 
+              <input type="radio" name="exp_level" id="senior" 
               value="Senior Software Engineer">
               <label for="senior">Senior Software Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="lead" id="lead" 
+              <input type="radio" name="exp_level" id="lead" 
               value="Lead Software Engineer">
               <label for="lead">Lead Software Engineer</label>
             </div>
       </div>
       <div>
         <fieldset>
-            <legend>Required Background for Your Project:</legend>
+            <legend>Current or Previous Roles:</legend>
             <div>
-              <input type="checkbox" name="back_end" id="back_end" 
+              <input type="checkbox" name="roles" id="back_end" 
               value="Back-End Engineer">
               <label for="back_end">Back-End Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="front_end" id="front_end" 
+              <input type="checkbox" name="roles" id="front_end" 
               value="Front-End Engineer">
               <label for="front_end">Front-End Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="mobile" id="mobile" 
+              <input type="checkbox" name="roles" id="mobile" 
               value="Mobile Developer">
               <label for="mobile">Mobile Developer</label>
             </div>
             <div>
-              <input type="checkbox" name="game" id="game" 
+              <input type="checkbox" name="roles" id="game" 
               value="Game Developer">
               <label for="game">Game Developer</label>
             </div>
             <div>
-              <input type="checkbox" name="devops" id="devops" 
+              <input type="checkbox" name="roles" id="devops" 
               value="DevOps Engineer">
               <label for="devops">DevOps Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="security" id="security" 
+              <input type="checkbox" name="roles" id="security" 
               value="Security Engineer">
               <label for="security">Security Engineer</label>
             </div>
             <div>
-              <input type="checkbox" name="qa" id="qa" 
+              <input type="checkbox" name="roles" id="qa" 
               value="QA Engineer">
               <label for="qa">QA Engineer</label>
             </div>
