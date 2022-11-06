@@ -135,3 +135,37 @@
 
 
 // ReactDOM.render(<Hello />, document.querySelector('#root'));
+
+
+
+
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a href="/" class="navbar-brand mb-0 h1"> Coders Assemble</a>
+    <div id="login-b-cont"></div>
+    <button type="button" data-bs-toggle="collapse" 
+    data-bs-target="#collapsibleNavbar" 
+    class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" 
+    aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="/create-project-proposal" class="nav-link">
+                    Post a Project
+                </a>
+            </li>
+            <li class="nav-item disabled">
+                <a href="#" class="nav-link">
+                    View Profile
+                </a>
+            </li>
+            <li class="nav-item disabled">
+                <a href="/create-profile" class="nav-link">
+                    Create a Profile
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
