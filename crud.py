@@ -45,6 +45,9 @@ def create_project(user_id, title, summary, specs, github_url, req_exp_level,
     
     return project
 
+def get_all_projects():
+    return Project.query.order_by(Project.id.desc).all()
+
 def get_project_by_id(project_id):
     
     return Project.query.get(project_id)

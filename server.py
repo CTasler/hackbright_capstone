@@ -7,16 +7,63 @@ import json
 app = Flask(__name__)
 app.secret_key = "unicorn"
 
+project_data = [{"username": "lovely",
+                "title": "We got this", 
+                 "summary": "Keep Pushing", 
+                 "specs": "libraries", 
+                 "project_github": "link", 
+                 "req_exp_level": "none", 
+                 "req_roles": "none"}, 
+                {"username": "frank",
+                "title": "Melons", 
+                 "summary": "I hate melons",
+                 "specs": "libraries", 
+                 "project_github": "link", 
+                 "req_exp_level": "none", 
+                 "req_roles": "none"},
+                 {"username": "unicorn",
+                "title": "something", 
+                 "summary": "something else",
+                 "specs": "libraries", 
+                 "project_github": "link", 
+                 "req_exp_level": "none", 
+                 "req_roles": "none"},
+                 {"username": "apples",
+                  "title": "Awesomeness", 
+                 "summary": "Epicness",
+                 "specs": "libraries", 
+                 "project_github": "link", 
+                 "req_exp_level": "none", 
+                 "req_roles": "none"}
+                ]
+
+
 @app.route('/')
 def show_homepage():
+    
     return render_template('homepage.html')
+
+@app.route('/projects.json')
+def show_project_posts():
+    
+    # project_data = {}
+    # for every project in projects: 
+    #     make key/value for project_data
+    # projects = crud.get_all_projects
+
+    
+    return jsonify({"project": project_data})
+
+@app.route('/login-page')
+def show_login_page():
+    return render_template('login_page.html')
 
 @app.route('/create-project-proposal')
 def show_pp_form():
     
     username = session.get("username")
     if username is None: 
-        flash("You must be logged in to create a project propposal")
+        flash("You must be logged in to post a project.")
         return redirect("/")
 
     return render_template('project_proposal_form.html')
@@ -29,19 +76,21 @@ def show_profile_form():
     
     return render_template('create_profile.html', usernames=usernames)
 
-@app.route('/login', methods=["POST"])
+@app.route('/process-login', methods=["POST"])
 def login_user():
     
-    username = request.json.get("email")
-    password = request.json.get("pwd")
+    username = request.json.get("username")
+    password = request.json.get("password")
     
-    user = crud.get_user_by_username(username)
+    # user = crud.get_user_by_username(username)
     
-    if not user or user.password != password: 
-        flash("The username or password you entered was incorrect.")
-    else: 
-        session["username"] = user.username
-        flash(f"Welcome back, {user.fname}!")
+    # if not user or user.password != password: 
+    #     flash("The username or password you entered was incorrect.")
+    # else: 
+    #     session["username"] = user.username
+    #     flash(f"Welcome back, {user.fname}!")
+    
+    return {"username": username}
         
 
 @app.route('/profile')
@@ -90,11 +139,24 @@ def add_user():
     
 @app.route('/apply', methods=["POST"])
 def add_applicant():
-    pass
+    
+    
+    username = session.get("username")
+    if username is None: 
+        return {"loggedIn": "no"}
+    username = request.json.get("username")
+    proj_title = request.json.get("title")
+    return {"username": username, "title": proj_title}
     
 @app.route('/favorite', methods=["POST"])
 def favorite():
-    pass
+    
+    username = session.get("username")
+    if username is None: 
+        return {"loggedIn": "no"}
+    username = request.json.get("username")
+    proj_title = request.json.get("title")
+    return {"username": username, "title": proj_title}
 
 
 @app.route('/ppform-submission', methods=["POST"])
@@ -113,15 +175,6 @@ def add_project():
     crud.create_project(user.user_id, title, summary, specs, project_github, 
                         req_exp_level, req_roles) 
     
-    # project_data = {
-    #     "title": title, 
-    #     "summary": summary, 
-    #     "specs": specs, 
-    #     "project_github": project_github, 
-    #     "req_exp_level": req_exp_level, 
-    #     "req_roles": req_roles
-    # }
-    # print(project_data)
     
     # with open("projects.json", "r+") as file: 
     #     data = json.load(file)

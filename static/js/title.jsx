@@ -1,6 +1,6 @@
 function Title() {
     return (        
-        <div>
+        <div id="projtitle">
             <h1>Coders Assemble</h1>
             <h3>Where inspiration meets Action</h3>
             <hr></hr>

@@ -1,0 +1,24 @@
+#ppost { 
+    border-style: solid;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+    width: 50%;
+    align-content: center;
+}
+
+#projtitle {
+    text-align: center;
+
+}
+
+#favbutton {
+    float: right;
+}
+
+#joinbuttondiv {
+    text-align: center;
+}
+

@@ -10,15 +10,13 @@
 //     );
 // }
 
-// ReactDOM.render(<LoginButton />, document.querySelector('#login-b-cont'));
 
-
-export function LoginButton() {
-
+function LoginButton() {
+    
     const handleClick = ('click', () => {
-        console.log("you clicked me")
+        setOpenModal(true);
     });
-
+    
     return (
         <div>    
             <button onClick={handleClick} type="button" id="login_button">
@@ -27,5 +25,7 @@ export function LoginButton() {
         </div>  
     );
 }
+
+ReactDOM.render(<LoginButton />, document.querySelector('#login-b-cont'));
 
 

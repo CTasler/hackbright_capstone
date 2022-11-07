@@ -1,7 +1,7 @@
 function LoginButton() {
     const handleClick = ('click', () => {
-        $('#myModal').modal(options);
-    })
+        console.log("You clicked me")
+    });
 
     return (
         <div>    
@@ -18,7 +18,7 @@ function Navbar() {
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <a href="/" className="navbar-brand mb-0 h1"> Coders Assemble</a>
                 <div id="login-b-cont"></div>
-                <LoginButton/>
+                <a href="/login-page"><LoginButton/></a>
                 <button type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar"
                     className="navbar-toggler" aria-controls="navbarNav" 
@@ -28,10 +28,9 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul className="navbar-nav">
-                        <li className="nav-item active">
-                            <a href="/create-project-proposal" 
-                            className="nav-link">
-                                Post a Project
+                        <li className="nav-item disabled">
+                            <a href="/create-profile" className="nav-link">
+                                Create a Profile
                             </a>
                         </li>
                         <li className="nav-item disabled">
@@ -39,9 +38,10 @@ function Navbar() {
                                 View Profile
                             </a>
                         </li>
-                        <li className="nav-item disabled">
-                            <a href="/create-profile" className="nav-link">
-                                Create a Profile
+                        <li className="nav-item active">
+                            <a href="/create-project-proposal" 
+                            className="nav-link">
+                                Post a Project
                             </a>
                         </li>
                     </ul>
