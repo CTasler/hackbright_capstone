@@ -1,14 +1,18 @@
-
-// function ShowUserName(props) {
-//   return <h1> Hello {props.userName}! </h1>
-// <ShowUserName userName={data.fname}/>}
-
-
 function ProfilePreview(props) {
-  let contactstring = ''
+  let contactString = ''
   const contacts = props.contact_pref
   for (const contact of contacts) {
-    contactstring += `${contact}, `
+    if (contact != null) {
+    contactString += `${contact}, `
+    }
+  }
+
+  let rolesString = ''
+  const roles = props.roles
+  for (const role of roles) {
+    if (role != null) {
+    rolesString += `${role}, `
+    }
   }
 
   return (
@@ -17,19 +21,17 @@ function ProfilePreview(props) {
           <p> First Name: {props.fname} </p>
           <p> Last Name: {props.lname} </p>
           <p> Username: {props.username} </p>
-          <p> Password: {props.pwd} </p>
           <p> Bio: {props.bio} </p>
-          <p> Contact Preferences: {contactstring}</p>
+          <p> Contact Preferences: {contactString}</p>
           <p> GitHub URL: {props.github_link} </p>
           <p> Linkedin URL: {props.linkedin_link} </p>
           <p> Experience Level: {props.exp_level} </p>
-          <p> Current or Previous Roles: </p>
-          <ul>
-              <li>{props.roles}</li>
-          </ul>
+          <p> Current or Previous Roles: {rolesString}</p>
       </div>
   )
 }
+
+
 
 
 function CreateProfile() {
@@ -49,7 +51,19 @@ function CreateProfile() {
 
   const changeHandler = (event) => {
     setData({...data, [event.target.name]: event.target.value});
+    if (event.target.name === "username") {
+      fetch(`/available-usernames?username=${event.target.value}`)
+      .then((response) => response.text())
+      .then((status) => {
+        if (status == "unavailable") {
+          document.querySelector("#username-available").innerHTML = "*username NOT available"
+        } else if (status == "available") {
+          document.querySelector("#username-available").innerHTML = "*username is available"
+        }
+      })
+    }
   }
+
 
   const contactHandler = (event) => {    
     const copiedData = JSON.parse(JSON.stringify(data));
@@ -77,7 +91,6 @@ function CreateProfile() {
     const index = roles.indexOf(event.target.value);
     roles[index] = null;
    }
-   console.log(copiedData)
    setData(copiedData);
  };
 
@@ -85,9 +98,9 @@ function CreateProfile() {
     event.preventDefault();
     console.log(data);
 
-    const usernames= ["claire", "hayden", "jack"]
-
-    if (usernames.includes(data.username)) {
+    console.log(document.querySelector("#username-available").innerHTML)
+    if (document.querySelector("#username-available").innerHTML === 
+    "*username NOT available") {
       alert("Username already exists. Please provide a unique username.")
     } else {
 
@@ -98,32 +111,9 @@ function CreateProfile() {
             'Content-Type': 'application/json',
         }
       }) 
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        setData({
-          fname: "", 
-          lname: "", 
-          username: "", 
-          pwd: "",
-          bio: "",
-          contactpref: [], 
-          github: "", 
-          linkedin: "", 
-          explevel: "", 
-          roles: []
-        })
-      });
+      .then((response) => window.location.replace(response.url))
     }
   };
-
-  //localhost:5000/?fname=Claire&lname=Tasler&username=love&pwd=jfkdl%3Ba&bio=jfdk%3Bla&contact_pref=Phone&github_link=https%3A%2F%2Fgithub.com%2Fhackbrightassessments%2Fskills-1-CTasler&linkedin_link=https%3A%2F%2Fgithub.com%2Fhackbrightassessments%
-
-  // http://localhost:5000/?title=my+project&summary=apegoh&specs=aewgjhu&github_url=
-  // http://localhost:5000/?title=awegpuh&summary=awegiub&specs=aweg&github_url=
-  //fetch 
-  //@approute
-  //http://localhost:5000/?title=aweg&summary=aeg&specs=aeg&github_url=
 
   return (
     <div>
@@ -143,11 +133,12 @@ function CreateProfile() {
           <input type="text" name="username" id="username" 
           value={data.username} 
           onChange={changeHandler} required />
+          <p id="username-available">*username is available</p>
         </div>
         <div>
           <label htmlFor="pwd">Password:</label>
           <input type="password" name="pwd" id="pwd" value={data.pwd} 
-          onChange={changeHandler} required />
+          onChange={changeHandler} required></input>
         </div>
         <div>
           <label htmlFor="bio">Bio:</label>
@@ -206,7 +197,7 @@ function CreateProfile() {
               </div>
               <div>
                 <input type="radio" name="exp_level" id="mid_level" 
-                value="Mid-level Software Engineer" onChange={changeHandler} />
+                value="Mid-level Software Engineer" onChange={changeHandler}/>
                 <label htmlFor="mid_level">Mid-level Software Engineer</label>
               </div>
               <div>
@@ -267,8 +258,10 @@ function CreateProfile() {
       </form>
       <div>
         <ProfilePreview fname={data.fname} lname={data.lname} 
-        username={data.username} pwd={data.pwd} bio={data.bio} 
-        contact_pref={data.contact_pref} github_link={data.github_link}/>
+        username={data.username} bio={data.bio} 
+        contact_pref={data.contact_pref} github_link={data.github_link} 
+        linkedin_link={data.linkedin_link} exp_level={data.exp_level} 
+        roles={data.roles}/>
       </div>
     </div>
   );

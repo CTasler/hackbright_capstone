@@ -1,11 +1,19 @@
-#ppost { 
+.boxes { 
     border-style: solid;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: auto;
     margin-left: auto;
     padding: 20px;
-    width: 50%;
+    width: 30%;
+    min-width: 30em;
+}
+
+.boarder {
+    border-style: solid;
+}
+
+#ppost { 
     align-content: center;
 }
 

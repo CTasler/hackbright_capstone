@@ -1,4 +1,12 @@
 function PPFormPreview(props) {
+    let reqRolesString = '';
+    const roles = props.reqRoles
+    for (const role of roles) {
+        if (role != null) {
+        reqRolesString += `${role}, `
+        }
+    }
+
     return (
         <div>
             <h1> Project Post Preview </h1>
@@ -6,12 +14,9 @@ function PPFormPreview(props) {
             <p> Title: {props.title} </p>
             <p> Summary: {props.summary} </p>
             <p> Languages, Libraries, APIs: {props.specs} </p>
-            <p> GitHub URL: {props.project_github} </p>
-            <p> Required Experience Level: {props.req_exp_level} </p>
-            <p>Current or Previous Roles: </p>
-            <ul>
-                <li>{props.req_roles}</li>
-            </ul>
+            <p> GitHub URL: {props.projectGithub} </p>
+            <p> Required Experience Level: {props.reqExpLevel} </p>
+            <p>Current or Previous Roles: {reqRolesString}</p>
         </div>
     );
   }
@@ -165,13 +170,13 @@ function ProjectProposalForm() {
                     </legend>
                     <div>
                     <input type="checkbox" name="req_roles" id="pp-back_end" 
-                    value="Back-End Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="back_end">Back-End Engineer</label>
+                    value="Back-end Engineer" onChange={reqRoleHandler}/>
+                    <label htmlFor="back_end">Back-end Engineer</label>
                     </div>
                     <div>
                     <input type="checkbox" name="req_roles" id="pp-front_end" 
-                    value="Front-End Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="front_end">Front-End Engineer</label>
+                    value="Front-end Engineer" onChange={reqRoleHandler}/>
+                    <label htmlFor="front_end">Front-end Engineer</label>
                     </div>
                     <div>
                     <input type="checkbox" name="req_roles" id="pp-mobile" 
