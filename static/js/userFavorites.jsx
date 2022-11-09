@@ -21,40 +21,40 @@ function Favorite(props) {
 
 
 
-function FavoritesContainer() {
-  const [favorites, setFavorites] = React.useState([])
+// function FavoritesContainer() {
+//   const [favorites, setFavorites] = React.useState([])
 
-  React.useEffect(() => {
-    fetch("/user-favorites.json")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.project)
-        setFavorites(data.project)
-      }
-        )
-  }, []);
-  const Favorites = [];
-  for (const currentFavorite of favorites) {
-    Favorites.push(
-    <Favorite
-      key={currentFavorite.projectId}
-      username={currentFavorite.username}
-      title={currentFavorite.title} 
-      summary={currentFavorite.summary}
-      specs={currentFavorite.specs}
-      project_github={currentFavorite.project_github}
-      req_exp_level={currentFavorite.req_exp_level}
-      req_roles={currentFavorite.req_roles}
-    />
-      );
-    }
+//   React.useEffect(() => {
+//     fetch("/user-favorites.json")
+//       .then((response) => response.json())
+//       .then((data) => {
+//         console.log(data.project)
+//         setFavorites(data.project)
+//       }
+//         )
+//   }, []);
+//   const Favorites = [];
+//   for (const currentFavorite of favorites) {
+//     Favorites.push(
+//     <Favorite
+//       key={currentFavorite.projectId}
+//       username={currentFavorite.username}
+//       title={currentFavorite.title} 
+//       summary={currentFavorite.summary}
+//       specs={currentFavorite.specs}
+//       project_github={currentFavorite.project_github}
+//       req_exp_level={currentFavorite.req_exp_level}
+//       req_roles={currentFavorite.req_roles}
+//     />
+//       );
+//     }
 
-    return (
-      <div>
-         <h1> Your Favorites </h1>
-        {Favorites}
-      </div>
-    );
-  }
+//     return (
+//       <div>
+//          <h1> Your Favorites </h1>
+//         {Favorites}
+//       </div>
+//     );
+//   }
 
-ReactDOM.render(<FavoritesContainer />, document.querySelector('#favorites-cont'));
+// ReactDOM.render(<FavoritesContainer />, document.querySelector('#favorites-cont'));

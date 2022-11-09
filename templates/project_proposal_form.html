@@ -2,6 +2,9 @@
 {% block title %}Project Proposal Post Form{% endblock %}
 
 {% block body %}
+{% if post_created %}
+<p>Your project was posted successfully.</p>
+{% endif %}
   <h1>Please fill out the following info for your Project Post</h1>
   <div id="ppform-cont"> </div>
   <script type="text/jsx" src="/static/js/ppform.jsx"></script>

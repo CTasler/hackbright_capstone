@@ -6,8 +6,8 @@ import os
 db = SQLAlchemy()
 
 
-os.system("dropdb codele")
-os.system("createdb codele")
+# os.system("dropdb codele")
+# os.system("createdb codele")
 
 class User(db.Model):
     """User info."""

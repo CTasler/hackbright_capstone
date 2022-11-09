@@ -1,5 +1,5 @@
 from flask import (Flask, render_template, request, 
-                   jsonify, current_app, session, flash, redirect)
+                   jsonify, current_app, session, flash, redirect, url_for)
 from model import Project, db
 import crud
 import json
@@ -9,69 +9,132 @@ import werkzeug.security
 app = Flask(__name__)
 app.secret_key = "unicorn"
 
-project_data = [{"username": "lovely",
-                "title": "We got this", 
-                 "summary": "Keep Pushing", 
-                 "specs": "libraries", 
-                 "project_github": "link", 
-                 "req_exp_level": "none", 
-                 "req_roles": "none"}, 
-                {"username": "frank",
-                "title": "Melons", 
-                 "summary": "I hate melons",
-                 "specs": "libraries", 
-                 "project_github": "link", 
-                 "req_exp_level": "none", 
-                 "req_roles": "none"},
-                 {"username": "unicorn",
-                "title": "something", 
-                 "summary": "something else",
-                 "specs": "libraries", 
-                 "project_github": "link", 
-                 "req_exp_level": "none", 
-                 "req_roles": "none"},
-                 {"username": "apples",
-                  "title": "Awesomeness", 
-                 "summary": "Epicness",
-                 "specs": "libraries", 
-                 "project_github": "link", 
-                 "req_exp_level": "none", 
-                 "req_roles": "none"}
-                ]
+test_data = [
+            {"username": "lovely",
+            "title": "We got this", 
+            "summary": "Keep Pushing", 
+            "specs": "libraries", 
+            "project_github": "link", 
+            "req_exp_level": "none", 
+            "req_roles": "none"}, 
+            {"username": "frank",
+            "title": "Melons", 
+            "summary": "I hate melons",
+            "specs": "libraries", 
+            "project_github": "link", 
+            "req_exp_level": "none", 
+            "req_roles": "none"},
+            {"username": "unicorn",
+            "title": "something", 
+            "summary": "something else",
+            "specs": "libraries", 
+            "project_github": "link", 
+            "req_exp_level": "none", 
+            "req_roles": "none"},
+            {"username": "apples",
+            "title": "Awesomeness", 
+            "summary": "Epicness",
+            "specs": "libraries", 
+            "project_github": "link", 
+            "req_exp_level": "none", 
+            "req_roles": "none"}
+            ]
 
 
 @app.route('/')
 def show_homepage():
-    
+    session["incorrect_login"] = False
+    session["post_created"] = False
     return render_template('homepage.html')
 
 @app.route('/projects.json')
 def show_project_posts():
     
-    all_projects = crud.get_all_projects
-    print(all_projects)
+    all_projects = crud.get_all_projects()
+    if all_projects: 
+        project_data = []
+        for project in all_projects: 
+            user = crud.get_user_by_id(project.user_id)
+            project_roles = crud.get_project_roles(project.project_id)
+            req_roles = []
+            if project_roles.back_end == True: 
+                req_roles.append("Back-end Engineer")
+            if project_roles.front_end == True: 
+                req_roles.append("Front-end Engineer")
+            if project_roles.mobile == True: 
+                req_roles.append("Mobile Developer")
+            if project_roles.game == True: 
+                req_roles.append("Game Developer")
+            if project_roles.devops == True: 
+                req_roles.append("DevOps Engineer")
+            if project_roles.security == True: 
+                req_roles.append("Security Engineer")
+            if project_roles.qa == True: 
+                req_roles.append("QA Engineer")
+            data = {
+                "username": user.username,
+                "project_id": project.project_id,
+                "title": project.title, 
+                 "summary": project.summary, 
+                 "specs": project.specs, 
+                 "project_github": project.github_url, 
+                 "req_exp_level": project.req_exp_level,
+                 "req_roles": req_roles
+            }
+            project_data.append(data)
+        return jsonify({"project": project_data})
+    
+    return jsonify({"project": test_data})
 
-    return jsonify({})
-# jsonify({"project": all_projects})
 
-
-@app.route('/login-page')
-def show_login_page():
-    return render_template('login_page.html')
-
-@app.route('/create-project-proposal')
-def show_pp_form():
+@app.route('/apply', methods=["POST"])
+def add_applicant():
+    
+    project_id = request.json.get("project_id")
     
     username = session.get("username")
     if username is None: 
-        flash("You must be logged in to post a project.")
-        return redirect("/")
+        return {"loggedIn": "no"}
+    
+    applicants = crud.get_all_project_applicants(project_id)
+    if username in applicants: 
+        return {"already_applied": "yes"}
+    
+    teammembers = crud.get_all_teammembers(project_id)
+    if username in teammembers: 
+        return {"on_team": "yes"}
+    
+    user = crud.get_user_by_username(username)
+    crud.create_applicant(user.user_id, project_id)
+    
+    print(f"{applicants}**")
+    print(f"{teammembers}****")
+    
+    return {"username": username}
 
-    return render_template('project_proposal_form.html')
+    
+@app.route('/favorite', methods=["POST"])
+def favorite():
+    proj_title = request.json.get("title")
+    
+    username = session.get("username")
+    if username is None: 
+        return {"loggedIn": "no"}
+    
+    user = crud.get_user_by_username(username)
+    project = crud.get_user_project_by_title(proj_title)
+    
+    if crud.check_already_favorited(user.user_id, project.project_id): 
+        crud.delete_favorite(project.project_id, user.user_id)
+        return {"already_favorited": "true"}
+    
+    crud.create_favorite(project.project_id, user.user_id)
+    return {"favorite_created": "true"}
 
 
 @app.route('/create-profile')
 def show_profile_form():
+    session["post_created"] = False
     
     return render_template('create_profile.html')
 
@@ -87,6 +150,7 @@ def check_username_available():
     
     return ("available")
 
+
 @app.route('/profile-submission', methods=["POST"])
 def add_user():
     
@@ -101,7 +165,7 @@ def add_user():
     exp_level = request.json.get("exp_level")
     
     roles = request.json.get("roles")
-    print(f"***{roles}***")
+
 
    #generate a password hash
     hash = werkzeug.security.generate_password_hash(pwd)
@@ -137,16 +201,23 @@ def add_user():
         back_end = True
     else: 
         back_end = False
-    
 
     user = crud.get_user_by_username(username)
-    print(user)
     
     crud.create_user_roles(user.user_id, back_end, front_end, mobile, game, 
                            devops, security, qa)
     
-    flash("Your profile has been saved.")  #Not showing up on redirect#
+    session["username"] = username
+    
     return redirect("/")
+    # return redirect(url_for("show_homepage"))
+#url_for flask utility that searches for name of function and matches to route
+
+
+@app.route('/login-page')
+def show_login_page():
+    session["post_created"] = False
+    return render_template('login_page.html')
 
 
 @app.route('/process-login', methods=["POST"])
@@ -157,44 +228,138 @@ def login_user():
     
     user = crud.get_user_by_username(username)
   
-    if not werkzeug.security.check_password_hash(user.password, password):
-        flash("The username or password you entered was incorrect.")
-        return redirect("/login-page")
-        
     if user == None: 
-        flash("The username or password you entered was incorrect.")
+        session["incorrect_login"] = True
         return redirect("/login-page")
     
+    if not werkzeug.security.check_password_hash(user.password, password):
+        session["incorrect_login"] = True
+        return redirect("/login-page")
+        
     if werkzeug.security.check_password_hash(user.password, password):
+        session["incorrect_login"] = False
         session["username"] = username
-        print(session["username"])
     return redirect("/")
         
 
 @app.route('/profile')
 def show_user_profile():
     
+    username = session.get("username")
+    if username is None: 
+        flash("You must be logged in to view your profile.")
+        return redirect("/")
+    
     return render_template('profile.html')
 
+
+@app.route('/user-info.json')
+def show_user_info():
+    
+    username = session.get("username")
+    user = crud.get_user_by_username(username)
+    
+    preferences = user.contact_pref
+    profile_preferences = preferences[1:-1]
+    contact_prefs = ''
+    for char in profile_preferences: 
+        if char == ",":
+            contact_prefs += ", "
+        else: 
+            contact_prefs += char
+            
+    user_roles = crud.get_user_roles(user.user_id)
+    roles = []
+    if user_roles.back_end == True: 
+        roles.append("Back-end Engineer")
+    if user_roles.front_end == True: 
+        roles.append("Front-end Engineer")
+    if user_roles.mobile == True: 
+        roles.append("Mobile Developer")
+    if user_roles.game == True: 
+        roles.append("Game Developer")
+    if user_roles.devops == True: 
+        roles.append("DevOps Engineer")
+    if user_roles.security == True: 
+        roles.append("Security Engineer")
+    if user_roles.qa == True: 
+        roles.append("QA Engineer")
+    
+    
+    profile_roles = ""
+    if len(roles) > 1: 
+        for role in roles: 
+            if role == roles[-1]:
+                profile_roles += role
+            else: 
+                profile_roles += f"{role}, "
+    else: 
+        profile_roles = str(roles)
+    
+    
+    user_info = {
+                    "fname": user.fname, 
+                    "lname": user.lname, 
+                    "username": user.username, 
+                    "bio": user.bio, 
+                    "contact_pref": contact_prefs,
+                    "github_url": user.github_link, 
+                    "linkedin_url": user.linkedin_link, 
+                    "exp_level": user.exp_level,
+                    "roles": profile_roles
+                }
+    
+    #need to get list of all applicants for each project
+    return jsonify({"user_data": user_info})
 
 
 @app.route('/user-projects.json')
 def show_user_projects():
     
-    username = request.args.get("username")
+    username = session.get("username")
     user = crud.get_user_by_username(username)
     project_posts = crud.get_all_projects_by_user(user.user_id)
-    #need to get list of all applicants for each project
-    return jsonify({"project": project_posts})
-
-
-@app.route('/user-favorites.json')
-def show_user_favorites():
     
-    username = request.args.get("username")
-    user = crud.get_user_by_username(username)
-    favorited_projects = crud.get_all_user_favorites(user.user_id)
-    return jsonify({"project": favorited_projects})
+    if project_posts: 
+        posts_data = []
+        for project in project_posts: 
+            project_roles = crud.get_project_roles(project.project_id)
+            req_roles = []
+            if project_roles.back_end == True: 
+                req_roles.append("Back-end Engineer")
+            if project_roles.front_end == True: 
+                req_roles.append("Front-end Engineer")
+            if project_roles.mobile == True: 
+                req_roles.append("Mobile Developer")
+            if project_roles.game == True: 
+                req_roles.append("Game Developer")
+            if project_roles.devops == True: 
+                req_roles.append("DevOps Engineer")
+            if project_roles.security == True: 
+                req_roles.append("Security Engineer")
+            if project_roles.qa == True: 
+                req_roles.append("QA Engineer")
+            data = {
+                "username": user.username,
+                "title": project.title, 
+                 "summary": project.summary, 
+                 "specs": project.specs, 
+                 "project_github": project.github_url, 
+                 "req_exp_level": project.req_exp_level,
+                 "req_roles": req_roles
+            }
+            posts_data.append(data)
+            
+        return jsonify({"user_projects": posts_data})
+
+
+# @app.route('/user-favorites.json')
+# def show_user_favorites():
+    
+#     username = request.args.get("username")
+#     user = crud.get_user_by_username(username)
+#     favorited_projects = crud.get_all_user_favorites(user.user_id)
+#     return jsonify({"project": favorited_projects})
 
 
 # @app.route('/user-teams.json')
@@ -209,29 +374,19 @@ def show_user_favorites():
 #     return jsonify({"teams": user_teams})
 
 
+@app.route('/create-project-proposal')
+def show_pp_form():
     
-    
-@app.route('/apply', methods=["POST"])
-def add_applicant():
-    
-    
+    post_created = session.get("post_created", False)
+    if post_created: 
+        session.pop("post_created")
     username = session.get("username")
     if username is None: 
-        return {"loggedIn": "no"}
-    username = request.json.get("username")
-    proj_title = request.json.get("title")
-    return {"username": username, "title": proj_title}
-    
-@app.route('/favorite', methods=["POST"])
-def favorite():
-    
-    username = session.get("username")
-    if username is None: 
-        return {"loggedIn": "no"}
-    username = request.json.get("username")
-    proj_title = request.json.get("title")
-    return {"username": username, "title": proj_title}
+        flash("You must be logged in to post a project.")
+        return redirect("/")
 
+    return render_template('project_proposal_form.html', post_created=post_created)
+    
 
 @app.route('/ppform-submission', methods=["POST"])
 def add_project():
@@ -244,7 +399,7 @@ def add_project():
     req_exp_level = request.json.get("req_exp_level")
     
     req_roles = request.json.get("req_roles")
-    print(f"***{req_roles}***")
+
     
     user = crud.get_user_by_username(username)
     
@@ -282,9 +437,7 @@ def add_project():
     else: 
         back_end = False
     
-    
-    print( back_end, front_end, mobile, game, devops, security, qa)
-    project_roles = crud.create_project_roles(user.user_id, back_end, 
+    crud.create_project_roles(project.project_id, back_end, 
                                               front_end, mobile, game, 
                                               devops, security, qa)
     
@@ -294,10 +447,9 @@ def add_project():
     #     json.dump(data, file, indent = 6, separators=(",",": "))
     
     
-    return {"title": title, "summary": summary, "specs": specs, 
-            "project_github": project_github, "req_exp_level": req_exp_level, 
-            "req_roles": req_roles}
-
+    session["post_created"] = True
+    
+    return {"url": "/create-project-proposal"}
 
 
 if __name__ == "__main__": 

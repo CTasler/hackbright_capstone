@@ -2,6 +2,9 @@
 {% block title %}Create a Profile{% endblock %}
 
 {% block body %}
+{% if session["incorrect_login"]%}
+<p>Incorrect username/password combination.</p>
+{% endif %}
 <div id="login-cont"></div>
 <script type="text/jsx" src="/static/js/loginModal.jsx"></script>
 {% endblock body %}

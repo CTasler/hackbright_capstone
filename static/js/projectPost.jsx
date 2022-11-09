@@ -13,21 +13,12 @@
 // }
 
 
-// function JoinButton() {
-//   return (
-//     <div>
-//       <button></button>
-//     </div>
-//   );
-// }
-
-
 
 function ProjectPost(props) {
   
   const data = {
-        username: props.username,
-        title: props.title
+        post_creator: props.username,
+        project_id: props.id
       }
       
   const joinButtonHandler = (event => {
@@ -44,9 +35,12 @@ function ProjectPost(props) {
       .then((responseJson) => {
           if (responseJson.loggedIn === "no") {
             alert("You need to be logged in to apply to join a team");
+          } else if (responseJson.already_applied === "yes") {
+            alert("You already applied for this team.")
+          } else if (responseJson.on_team === yes) {
+            alert("You are already on this team.")
           } else {
-          alert("Your application was registered. The creator of this project will reach out to you shortly.");
-          console.log(responseJson);
+          alert("Your application was registered. If your application is accepted, the project will show up on the Team section of your profile.");
           }
       })
   })  
@@ -118,7 +112,8 @@ function ProjectPost(props) {
         <p> Libraries: {props.specs} </p>
         <p> GitHub URL: {props.project_github}</p>
         <p> Required Experience Level: {props.req_exp_level}</p>
-        <p> Required Current or Previous Roles: {props.req_roles}</p>
+        <p> Required Current or Previous Roles: {props.roles}</p>
+        <p>Project ID: {props.id}</p>
       </div>
       <div id="joinbuttondiv">
           <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
@@ -129,10 +124,7 @@ function ProjectPost(props) {
 
 function ProjectPostContainer() {
     const [projects, setProjects] = React.useState([])
-    // function addProject(newProject) {
-    //   const currentProjects = [...projects];
-    //   setProjects([...currentProjects, newProject])
-    // }
+
     React.useEffect(() => {
       fetch("/projects.json")
         .then((response) => response.json())
@@ -146,14 +138,15 @@ function ProjectPostContainer() {
     for (const currentProject of projects) {
       projectPosts.push(
       <ProjectPost 
-        key={currentProject.projectId}
+        key={currentProject.project_id}
+        id={currentProject.project_id}
         username={currentProject.username}
         title={currentProject.title} 
         summary={currentProject.summary}
         specs={currentProject.specs}
         project_github={currentProject.project_github}
         req_exp_level={currentProject.req_exp_level}
-        req_roles={currentProject.req_roles}
+        roles={currentProject.req_roles.join(", ")}
       />
       );
     }
