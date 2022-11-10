@@ -31,12 +31,6 @@ function PPPreview(props) {
     );
   }
 
-function uncheckBoxes() {
-    let checkboxes = document.getElementsByClassName("checkbox");
-    for (let i=0; i <= checkboxes.length; i++) {
-        checkboxes[i].checked = false;
-    }
-}
 
 function ProjectProposalForm() {
     

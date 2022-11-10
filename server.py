@@ -94,15 +94,15 @@ def add_applicant():
     
     username = session.get("username")
     if username is None: 
-        return {"loggedIn": "no"}
+        return {"loggedIn": "false"}
     
     applicants = crud.get_all_project_applicants(project_id)
     if username in applicants: 
-        return {"already_applied": "yes"}
+        return {"already_applied": "true"}
     
     teammembers = crud.get_all_teammembers(project_id)
     if username in teammembers: 
-        return {"on_team": "yes"}
+        return {"on_team": "true"}
     
     user = crud.get_user_by_username(username)
     crud.create_applicant(user.user_id, project_id)
@@ -115,20 +115,27 @@ def add_applicant():
     
 @app.route('/favorite', methods=["POST"])
 def favorite():
-    proj_title = request.json.get("title")
+    project_id = request.json.get("project_id")
     
     username = session.get("username")
     if username is None: 
-        return {"loggedIn": "no"}
+        return {"loggedIn": "false"}
     
     user = crud.get_user_by_username(username)
-    project = crud.get_user_project_by_title(proj_title)
+    project = crud.get_project_by_id(project_id)
     
-    if crud.check_already_favorited(user.user_id, project.project_id): 
-        crud.delete_favorite(project.project_id, user.user_id)
+    print(user.user_id)
+    print(project.user_id)
+    
+    if project.user_id == user.user_id: 
+        return {"post_creator": "true"}
+    
+    if crud.check_already_favorited(user.user_id, project_id): 
+        print("working")
+        crud.delete_favorite(project_id, user.user_id)
         return {"already_favorited": "true"}
     
-    crud.create_favorite(project.project_id, user.user_id)
+    crud.create_favorite(project_id, user.user_id)
     return {"favorite_created": "true"}
 
 
@@ -323,6 +330,7 @@ def show_user_projects():
     if project_posts: 
         posts_data = []
         for project in project_posts: 
+            applicants = crud.get_all_project_applicants(project.project_id)
             project_roles = crud.get_project_roles(project.project_id)
             req_roles = []
             if project_roles.back_end == True: 
@@ -340,13 +348,13 @@ def show_user_projects():
             if project_roles.qa == True: 
                 req_roles.append("QA Engineer")
             data = {
-                "username": user.username,
                 "title": project.title, 
                  "summary": project.summary, 
                  "specs": project.specs, 
                  "project_github": project.github_url, 
                  "req_exp_level": project.req_exp_level,
-                 "req_roles": req_roles
+                 "req_roles": req_roles,
+                 "applicants": applicants
             }
             posts_data.append(data)
             
@@ -362,16 +370,33 @@ def show_user_projects():
 #     return jsonify({"project": favorited_projects})
 
 
-# @app.route('/user-teams.json')
-# def show_user_teams(): 
+@app.route('/user-teams.json')
+def show_user_teams(): 
     
-#     username = request.args.get("username")
+    username = session.get("username")
+    user = crud.get_user_by_username(username)
     
-#     user = crud.get_user_by_username(username)
+ 
+   
+    project_ids_for_all_teams = crud.get_project_ids_for_user_teams(user.user_id)
     
-#     user_teams = crud.get_all_user_teams(user.user_id)
+    print(project_ids_for_all_teams)
+    teams_data = []
+    for project_id in project_ids_for_all_teams: 
+        project = crud.get_project_by_id(project_id)
+        members = crud.get_all_teammembers(project_id)
+        members_string = ", ".join(members)
+        data = {
+                "project_id": project_id,
+                "title": project.title, 
+                "summary": project.summary, 
+                "github": project.github_url,
+                "members": members_string
+        }
+        teams_data.append(data)
     
-#     return jsonify({"teams": user_teams})
+    
+    return jsonify({"user_teams": teams_data})
 
 
 @app.route('/create-project-proposal')

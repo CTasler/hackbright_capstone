@@ -66,6 +66,14 @@ def create_teammember(user_id, project_id):
     
     return 
 
+def get_project_ids_for_user_teams(user_id):
+    
+    team_ids = Team.query.filter(Team.user_id == user_id).all()
+    project_ids = []
+    for id in team_ids: 
+        project_ids.append(id.project_id)
+    return project_ids
+
 def get_all_teammembers(project_id): 
     teammember_ids = Team.query.filter(Team.project_id == project_id).all()
     teammembers = []
