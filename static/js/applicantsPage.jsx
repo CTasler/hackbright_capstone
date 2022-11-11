@@ -61,16 +61,16 @@ function ApplicantProfiles(props) {
         );
     }
   
-      return (
+    return (
+      <div>
         <div>
-          <div>
-            <h1> Applicants for {title} </h1>
-          </div>
-          <div className="grid">
-            {applicantProfiles}
-          </div>
+          <h1> Applicants for { title } </h1>
         </div>
-      );
+        <div className="grid">
+          { applicantProfiles }
+        </div>
+      </div>
+    );
     }
   
   

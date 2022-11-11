@@ -2,11 +2,6 @@
 
 function UserProjects(props) {
   
-  // const clickHandler = (event => {
-  
-  //   fetch(`/all-applicants?project_id=${props.id}`)
-
-  // });
 
   return (
     <div className="card">
