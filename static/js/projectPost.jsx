@@ -93,7 +93,7 @@ function ProjectPost(props) {
         <p> GitHub URL: {props.project_github}</p>
         <p> Required Experience Level: {props.req_exp_level}</p>
         <p> Required Current or Previous Roles: {props.roles}</p>
-        <p>Project ID: {props.id}</p>
+        <p> Project ID: {props.id}</p>
       </div>
       <div id="joinbuttondiv">
           <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
@@ -103,7 +103,7 @@ function ProjectPost(props) {
 }
 
 function ProjectPostContainer() {
-    const [projects, setProjects] = React.useState([])
+    const [projects, setProjects] = React.useState([]);
 
     React.useEffect(() => {
       fetch("/projects.json")

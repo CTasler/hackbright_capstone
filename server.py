@@ -116,7 +116,7 @@ def add_applicant():
 @app.route('/favorite', methods=["POST"])
 def favorite():
     project_id = request.json.get("project_id")
-    
+    print(project_id)
     username = session.get("username")
     if username is None: 
         return {"loggedIn": "false"}
@@ -224,6 +224,7 @@ def add_user():
 @app.route('/login-page')
 def show_login_page():
     session["post_created"] = False
+    
     return render_template('login_page.html')
 
 
@@ -301,7 +302,8 @@ def show_user_info():
             else: 
                 profile_roles += f"{role}, "
     else: 
-        profile_roles = str(roles)
+        print("working")
+        profile_roles = ("").join(roles)
     
     
     user_info = {
@@ -327,47 +329,155 @@ def show_user_projects():
     user = crud.get_user_by_username(username)
     project_posts = crud.get_all_projects_by_user(user.user_id)
     
-    if project_posts: 
-        posts_data = []
-        for project in project_posts: 
-            applicants = crud.get_all_project_applicants(project.project_id)
-            project_roles = crud.get_project_roles(project.project_id)
-            req_roles = []
-            if project_roles.back_end == True: 
-                req_roles.append("Back-end Engineer")
-            if project_roles.front_end == True: 
-                req_roles.append("Front-end Engineer")
-            if project_roles.mobile == True: 
-                req_roles.append("Mobile Developer")
-            if project_roles.game == True: 
-                req_roles.append("Game Developer")
-            if project_roles.devops == True: 
-                req_roles.append("DevOps Engineer")
-            if project_roles.security == True: 
-                req_roles.append("Security Engineer")
-            if project_roles.qa == True: 
-                req_roles.append("QA Engineer")
-            data = {
+    # if project_posts: 
+    posts_data = []
+    for project in project_posts: 
+        applicants = crud.get_all_project_applicants(project.project_id)
+        project_roles = crud.get_project_roles(project.project_id)
+        req_roles = []
+        if project_roles.back_end == True: 
+            req_roles.append("Back-end Engineer")
+        if project_roles.front_end == True: 
+            req_roles.append("Front-end Engineer")
+        if project_roles.mobile == True: 
+            req_roles.append("Mobile Developer")
+        if project_roles.game == True: 
+            req_roles.append("Game Developer")
+        if project_roles.devops == True: 
+            req_roles.append("DevOps Engineer")
+        if project_roles.security == True: 
+            req_roles.append("Security Engineer")
+        if project_roles.qa == True: 
+            req_roles.append("QA Engineer")
+        data = {
+                "project_id": project.project_id,
                 "title": project.title, 
-                 "summary": project.summary, 
-                 "specs": project.specs, 
-                 "project_github": project.github_url, 
-                 "req_exp_level": project.req_exp_level,
-                 "req_roles": req_roles,
-                 "applicants": applicants
-            }
-            posts_data.append(data)
-            
-        return jsonify({"user_projects": posts_data})
+                "summary": project.summary, 
+                "specs": project.specs, 
+                "project_github": project.github_url, 
+                "req_exp_level": project.req_exp_level,
+                "req_roles": req_roles,
+                "applicants": applicants
+        }
+        posts_data.append(data)
+        
+    return jsonify({"user_projects": posts_data})
 
 
-# @app.route('/user-favorites.json')
-# def show_user_favorites():
+@app.route('/all-applicants/<project_id>')
+def show_all_applicants(project_id):
+    # session["project_id"] = project_id
+    # print(session["project_id"])
     
-#     username = request.args.get("username")
-#     user = crud.get_user_by_username(username)
-#     favorited_projects = crud.get_all_user_favorites(user.user_id)
-#     return jsonify({"project": favorited_projects})
+    return render_template("applicants_page.html")
+
+
+@app.route('/project-applicant-profiles.json')
+def show_applicant_profiles():
+    
+    # project_id = session["project_id"]
+    project_id = request.args.get("project_id")
+    print(project_id)
+    print("working")
+    # project_id = request.json.get("project_id")
+    project = crud.get_project_by_id(project_id)
+    
+    applicant_usernames = crud.get_all_project_applicants(project_id)
+    applicant_profiles = []
+    for applicant in applicant_usernames: 
+        user = crud.get_user_by_username(applicant)
+        preferences = user.contact_pref
+        profile_preferences = preferences[1:-1]
+        contact_prefs = ''
+        for char in profile_preferences: 
+            if char == ",":
+                contact_prefs += ", "
+            else: 
+                contact_prefs += char
+                
+        user_roles = crud.get_user_roles(user.user_id)
+        roles = []
+        if user_roles.back_end == True: 
+            roles.append("Back-end Engineer")
+        if user_roles.front_end == True: 
+            roles.append("Front-end Engineer")
+        if user_roles.mobile == True: 
+            roles.append("Mobile Developer")
+        if user_roles.game == True: 
+            roles.append("Game Developer")
+        if user_roles.devops == True: 
+            roles.append("DevOps Engineer")
+        if user_roles.security == True: 
+            roles.append("Security Engineer")
+        if user_roles.qa == True: 
+            roles.append("QA Engineer")
+        
+        
+        profile_roles = ""
+        if len(roles) > 1: 
+            for role in roles: 
+                if role == roles[-1]:
+                    profile_roles += role
+                else: 
+                    profile_roles += f"{role}, "
+        else: 
+            profile_roles = ("").join(roles)
+        
+        data = {
+                "fname": user.fname, 
+                "lname": user.lname, 
+                "username": user.username, 
+                "bio": user.bio, 
+                "contact_prefs": user.contact_pref, 
+                "github_url": user.github_link, 
+                "linkedin_url": user.linkedin_link, 
+                "exp_level": user.exp_level,
+                "roles": roles,
+        }
+        applicant_profiles.append(data)
+        
+    return jsonify({"profiles_data": applicant_profiles, "project_title": project.title})
+
+
+@app.route('/user-favorites.json')
+def show_user_favorites():
+    
+    username = session["username"]
+    user = crud.get_user_by_username(username)
+    
+    favorited_projects = crud.get_all_user_favorites(user.user_id)
+    # if all_projects: 
+    favorites_data = []
+    for project in favorited_projects: 
+        user = crud.get_user_by_id(project.user_id)
+        project_roles = crud.get_project_roles(project.project_id)
+        req_roles = []
+        if project_roles.back_end == True: 
+            req_roles.append("Back-end Engineer")
+        if project_roles.front_end == True: 
+            req_roles.append("Front-end Engineer")
+        if project_roles.mobile == True: 
+            req_roles.append("Mobile Developer")
+        if project_roles.game == True: 
+            req_roles.append("Game Developer")
+        if project_roles.devops == True: 
+            req_roles.append("DevOps Engineer")
+        if project_roles.security == True: 
+            req_roles.append("Security Engineer")
+        if project_roles.qa == True: 
+            req_roles.append("QA Engineer")
+        data = {
+                "username": user.username,
+                "project_id": project.project_id,
+                "title": project.title, 
+                "summary": project.summary, 
+                "specs": project.specs, 
+                "project_github": project.github_url, 
+                "req_exp_level": project.req_exp_level,
+                "req_roles": req_roles
+                }
+        favorites_data.append(data)
+    return jsonify({"user_favorites": favorites_data})
 
 
 @app.route('/user-teams.json')
@@ -398,6 +508,74 @@ def show_user_teams():
     
     return jsonify({"user_teams": teams_data})
 
+
+@app.route('/team-page')
+def show_team_page():
+    return render_template('team-page.html')
+
+
+@app.route('/teammember-profiles.json')
+def show_teammembers_profiles():
+    
+    project_id = request.args.get("project_id")
+    teammember_usernames = crud.get_all_teammembers(project_id)
+    
+    teammember_profiles = []
+    for teammember in teammember_usernames: 
+        user = crud.get_user_by_username(teammember)
+        preferences = user.contact_pref
+        profile_preferences = preferences[1:-1]
+        contact_prefs = ''
+        for char in profile_preferences: 
+            if char == ",":
+                contact_prefs += ", "
+            else: 
+                contact_prefs += char
+                
+        user_roles = crud.get_user_roles(user.user_id)
+        roles = []
+        if user_roles.back_end == True: 
+            roles.append("Back-end Engineer")
+        if user_roles.front_end == True: 
+            roles.append("Front-end Engineer")
+        if user_roles.mobile == True: 
+            roles.append("Mobile Developer")
+        if user_roles.game == True: 
+            roles.append("Game Developer")
+        if user_roles.devops == True: 
+            roles.append("DevOps Engineer")
+        if user_roles.security == True: 
+            roles.append("Security Engineer")
+        if user_roles.qa == True: 
+            roles.append("QA Engineer")
+        
+        
+        profile_roles = ""
+        if len(roles) > 1: 
+            for role in roles: 
+                if role == roles[-1]:
+                    profile_roles += role
+                else: 
+                    profile_roles += f"{role}, "
+        else: 
+            print("working")
+            profile_roles = ("").join(roles)
+        
+        data = {
+                "fname": user.fname, 
+                "lname": user.lname, 
+                "username": user.username, 
+                "bio": user.bio, 
+                "contact_prefs": user.contact_pref, 
+                "github_url": user.github_link, 
+                "linkedin_url": user.linkedin_link, 
+                "exp_level": user.exp_level,
+                "roles": roles
+        }
+        teammember_profiles.append(data)
+    
+    return jsonify({"profiles_data": teammember_profiles})
+    
 
 @app.route('/create-project-proposal')
 def show_pp_form():

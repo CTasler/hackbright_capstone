@@ -74,6 +74,7 @@ def get_project_ids_for_user_teams(user_id):
         project_ids.append(id.project_id)
     return project_ids
 
+
 def get_all_teammembers(project_id): 
     teammember_ids = Team.query.filter(Team.project_id == project_id).all()
     teammembers = []
@@ -82,6 +83,7 @@ def get_all_teammembers(project_id):
         teammembers.append(user.username)
     
     return teammembers
+
 
 def create_project_roles(project_id, back_end, front_end, mobile, game, devops,
                          security, qa): 

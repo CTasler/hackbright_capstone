@@ -2,11 +2,13 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-{% if session["username"]%}
-<p>Welcome {{session["username"]}}!</p>
-{% endif %}
-<div id="title-cont"> </div>
-<div id="posts-cont"></div>
+<div class="pagecontentcontainer">
+    {% if session["username"]%}
+    <p>Welcome {{session["username"]}}!</p>
+    {% endif %}
+    <div id="title-cont"> </div>
+    <div id="posts-cont"></div>
+</div>
 <script type="text/jsx" src="/static/js/title.jsx"></script>
 <script type="text/jsx" src="/static/js/projectPost.jsx"></script>
 {% endblock body %}

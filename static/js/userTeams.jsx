@@ -1,7 +1,7 @@
 function UserTeams(props) {
 
     return(
-    <div className="boxes">
+    <div className="team">
         <div>
             <h4>
                 Project Title: { props.title }
@@ -63,8 +63,12 @@ function TeamsContainer() {
   
       return (
         <div>
-           <h1> Your Teams </h1>
-          { userTeams }
+          <div>
+            <h1> Your Teams </h1>
+          </div>
+          <div className="teamsgrid">
+            { userTeams }
+          </div>
         </div>
       );
     }

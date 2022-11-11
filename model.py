@@ -133,6 +133,7 @@ class Team(db.Model):
     user = db.relationship("User", back_populates="team")
     project = db.relationship("Project", back_populates="team")
                 
+                
 class Applicant(db.Model):
     """Project info."""
 

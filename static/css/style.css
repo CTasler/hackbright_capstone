@@ -1,3 +1,8 @@
+.pagecontentcontainer {
+  position: relative; 
+  top: 4em;
+}
+
 .boxes { 
     border-style: solid;
     margin-top: 20px;
@@ -12,6 +17,40 @@
 .boarder {
     border-style: solid;
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr;
+    grid-gap: 10px;
+    align-items: center;
+  }
+  
+.card {
+    border-radius: 3px;
+    border: 3px solid black;
+    width: 30em;
+    height: 30em;
+    margin: 2em;
+    padding: 1em;
+    display: inline-block;
+  }
+
+.teamsgrid {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr 3fr;
+    grid-gap: 10px;
+    align-items: center;
+  }
+
+.team {
+    border-radius: 3px;
+    border: 3px solid black;
+    width: 25em;
+    height: 25em;
+    margin: 2em;
+    padding: 1em;
+    display: inline-block;
+  }
 
 #ppost { 
     align-content: center;

@@ -1,7 +1,15 @@
+
+
 function UserProjects(props) {
   
+  // const clickHandler = (event => {
+  
+  //   fetch(`/all-applicants?project_id=${props.id}`)
+
+  // });
+
   return (
-    <div className="boxes">
+    <div className="card">
       <div>
         <h4> Title: {props.title} </h4>
       </div>
@@ -12,9 +20,12 @@ function UserProjects(props) {
         <p> Required Experience Level: {props.req_exp_level}</p>
         <p> Required Current or Previous Roles: {props.roles}</p>
       </div>
+      <div> Project ID: {props.id}</div>
       <div> Applicants: { props.applicants }</div>
       <div>
+        <a href={`/all-applicants/${props.id}`}>
           <button>View Applicant Profiles</button>
+        </a>
       </div>
     </div>
   );
@@ -38,7 +49,8 @@ function ProjectsContainer() {
   for (const currentProject of projects) {
     projectPosts.push(
     <UserProjects
-      key={currentProject.projectId}
+      key={currentProject.project_id}
+      id={currentProject.project_id}
       title={currentProject.title} 
       summary={currentProject.summary}
       specs={currentProject.specs}
@@ -52,8 +64,12 @@ function ProjectsContainer() {
 
     return (
       <div>
-         <h1> Your Projects </h1>
-        { projectPosts }
+        <div>
+          <h1> Your Projects </h1>
+        </div>
+        <div className="grid">
+          { projectPosts }
+        </div>
       </div>
     );
   }
