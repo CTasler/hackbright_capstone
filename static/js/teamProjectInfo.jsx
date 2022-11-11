@@ -1,8 +1,11 @@
 function TeamProject() {
     const [projectData, setProjectData] = React.useState([]);
 
+    const hyperlinkList = window.location.pathname.split("/");
+    const project_id = hyperlinkList[hyperlinkList.length - 1];
+
     React.useEffect(() => {
-        fetch("/team-project_info.json")
+        fetch(`/team-project-info.json?project_id=${project_id}`)
         .then((response) => response.json())
         .then((responseJson) => {
             console.log(responseJson.team_project_info);
@@ -11,23 +14,23 @@ function TeamProject() {
     }, []);
 
     return (
-        <div className="card">
+        <div>
             <div>
-                <h4> Title: {projectData.title} </h4>
+                <h2>Project Info</h2>
             </div>
-            <div>
-                <p> Summary: {projectData.summary} </p>
-                <p> Libraries: {projectData.specs} </p>
-                <p> GitHub URL: {projectData.project_github}</p>
-                <p> Required Experience Level: {projectData.req_exp_level}</p>
-                <p> Required Current or Previous Roles: {projectData.roles}</p>
-            </div>
-            <div> Project ID: {projectData.id}</div>
-            <div> Applicants: { projectData.applicants }</div>
-            <div>
-                <a href={`/all-applicants/${projectData.id}`}>
-                <button>View Applicant Profiles</button>
-                </a>
+            <div className="card">
+                <div>
+                    <h4> Title: {projectData.title} </h4>
+                </div>
+                <div>
+                    <p> Project Creator: {projectData.username}</p>
+                    <p> Summary: {projectData.summary} </p>
+                    <p> Libraries: {projectData.specs} </p>
+                    <p> GitHub URL: <a href={`${projectData.project_github}`}>{projectData.project_github}</a> </p>
+                    <p> Required Experience Level: {projectData.req_exp_level}</p>
+                    <p> Required Current or Previous Roles: {projectData.req_roles}</p>
+                    <p> Project ID: {projectData.project_id}</p>
+                </div>
             </div>
         </div>
     );

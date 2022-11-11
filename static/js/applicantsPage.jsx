@@ -8,8 +8,8 @@ function ApplicantProfiles(props) {
           <p> Username: {props.username} </p>
           <p> Bio: {props.bio}</p>
           <p> Contact Preferences: {props.contactPrefs}</p>
-          <p> GitHub URL: {props.github} </p>
-          <p> Linkedin URL: {props.linkedin} </p>
+          <p> GitHub URL: <a href={`${props.github}`}>{props.github}</a> </p>
+          <p> Linkedin URL: <a href={`${props.linkedin}`}>{props.linkedin}</a> </p>
           <p> Experience Level: {props.expLvl}</p>
           <p> Current or Previous Roles: {props.roles} </p>
         </div>

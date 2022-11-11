@@ -509,15 +509,22 @@ def show_user_teams():
     return jsonify({"user_teams": teams_data})
 
 
-@app.route('/team-page')
-def show_team_page():
-    return render_template('team-page.html')
+@app.route('/team-page/<projectID>')
+def show_team_page(projectID):
+    
+    
+    
+    return render_template('team_page.html')
+
+
 
 
 @app.route('/teammember-profiles.json')
 def show_teammembers_profiles():
     
+    
     project_id = request.args.get("project_id")
+    print(project_id)
     teammember_usernames = crud.get_all_teammembers(project_id)
     
     teammember_profiles = []
@@ -566,15 +573,52 @@ def show_teammembers_profiles():
                 "lname": user.lname, 
                 "username": user.username, 
                 "bio": user.bio, 
-                "contact_prefs": user.contact_pref, 
+                "contact_prefs": contact_prefs, 
                 "github_url": user.github_link, 
                 "linkedin_url": user.linkedin_link, 
                 "exp_level": user.exp_level,
                 "roles": roles
         }
         teammember_profiles.append(data)
+  
     
     return jsonify({"profiles_data": teammember_profiles})
+
+@app.route('/team-project-info.json')
+def show_team_project_inf():
+    
+    project_id = request.args.get("project_id")
+    project = crud.get_project_by_id(project_id)
+    user = crud.get_user_by_id(project.user_id)
+    
+    project_roles = crud.get_project_roles(project.project_id)
+    req_roles = []
+    if project_roles.back_end == True: 
+        req_roles.append("Back-end Engineer")
+    if project_roles.front_end == True: 
+        req_roles.append("Front-end Engineer")
+    if project_roles.mobile == True: 
+        req_roles.append("Mobile Developer")
+    if project_roles.game == True: 
+        req_roles.append("Game Developer")
+    if project_roles.devops == True: 
+        req_roles.append("DevOps Engineer")
+    if project_roles.security == True: 
+        req_roles.append("Security Engineer")
+    if project_roles.qa == True: 
+        req_roles.append("QA Engineer")
+    project_data = {
+            "username": user.username,
+            "project_id": project.project_id,
+            "title": project.title, 
+            "summary": project.summary, 
+            "specs": project.specs, 
+            "project_github": project.github_url, 
+            "req_exp_level": project.req_exp_level,
+            "req_roles": req_roles
+            }
+    
+    return jsonify({"team_project_info": project_data})
     
 
 @app.route('/create-project-proposal')

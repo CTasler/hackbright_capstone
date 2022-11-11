@@ -14,7 +14,7 @@ function UserTeams(props) {
         </div>
         <div>
             <p>
-                GitHub URL: { props.github }
+                GitHub URL: <a href={`${props.github}`}>{ props.github }</a>
             </p>
         </div>
         <div>
@@ -28,7 +28,9 @@ function UserTeams(props) {
             </p>
         </div>
         <div>
+          <a href={`/team-page/${props.projectID}`}>
             <button>Team Page</button>
+          </a>
         </div>
     </div>);
 }

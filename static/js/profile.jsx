@@ -18,8 +18,8 @@ function Profile() {
           <p> Username: {data.username} </p>
           <p> Bio: {data.bio}</p>
           <p> Contact Preferences: {data.contact_pref}</p>
-          <p> GitHub URL: {data.github_url} </p>
-          <p> Linkedin URL: {data.linkedin_url} </p>
+          <p> GitHub URL: <a href={`${data.github_url}`}>{data.github_url}</a> </p>
+          <p> Linkedin URL: <a href={`${data.linkedin_url}`}>{data.linkedin_url}</a> </p>
           <p> Experience Level: {data.exp_level}</p>
           <p> Current or Previous Roles: {data.roles} </p>
       </div>

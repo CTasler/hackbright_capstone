@@ -53,7 +53,7 @@ function Favorite(props) {
       <div>
         <p> Summary: {props.summary} </p>
         <p> Libraries: {props.specs} </p>
-        <p> GitHub URL: {props.project_github}</p>
+        <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
         <p> Required Experience Level: {props.req_exp_level}</p>
         <p> Required Current or Previous Roles: {props.req_roles}</p>
         <p> Project ID: { props.id }</p>

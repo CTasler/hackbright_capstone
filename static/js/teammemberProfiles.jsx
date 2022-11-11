@@ -8,8 +8,12 @@ function TeammemberProfiles(props) {
                 <p> Username: {props.username} </p>
                 <p> Bio: {props.bio}</p>
                 <p> Contact Preferences: {props.contactPrefs}</p>
-                <p> GitHub URL: {props.github} </p>
-                <p> Linkedin URL: {props.linkedin} </p>
+                <p> 
+                    GitHub URL: <a href={`${props.github}`}>{props.github}</a> 
+                </p>
+                <p> 
+                    Linkedin URL: <a href={`${props.linkedin}`}>{props.linkedin}</a> 
+                </p>
                 <p> Experience Level: {props.expLvl}</p>
                 <p> Current or Previous Roles: {props.roles} </p>
             </div>
@@ -18,16 +22,20 @@ function TeammemberProfiles(props) {
 }
 
 function ProfilesContainer() {
-    const [profiles, setProfiles] = useState([]);
+    const [profiles, setProfiles] = React.useState([]);
+
+    const hyperlinkList = window.location.pathname.split("/");
+    const project_id = hyperlinkList[hyperlinkList.length - 1];
+    console.log(project_id)
 
     React.useEffect(() => {
-        fetch("/teammember-profiles.json")
+        fetch(`/teammember-profiles.json?project_id=${project_id}`)
         .then((response) => response.json())
         .then((responseJson) => {
-            setProfiles(responseJson.teammember_profiles)
-            console.log(responseJson.teammember_profiles)
+            setProfiles(responseJson.profiles_data)
+            console.log(responseJson.profiles_data)
         })
-    });
+    }, []);
 
     const teamProfiles = []
     for (const currentProfile of profiles) {
@@ -38,8 +46,8 @@ function ProfilesContainer() {
             username={currentProfile.username}
             bio={currentProfile.bio}
             contactPrefs={currentProfile.contact_prefs}
-            github={currentProfile.github_link}
-            linkedin={currentProfile.linkedin_link}
+            github={currentProfile.github_url}
+            linkedin={currentProfile.linkedin_url}
             expLvl={currentProfile.exp_level}
             roles={currentProfile.roles}
             />
@@ -49,7 +57,7 @@ function ProfilesContainer() {
     return (
         <div>
             <div>
-                <h2> Teammembers </h2>
+                <h2> Team members </h2>
             </div>
             <div className="grid">
                 { teamProfiles }
@@ -58,4 +66,4 @@ function ProfilesContainer() {
     );
 }
 
-ReactDOM.render(<TeammemberProfiles/>, document.querySelector("#teammember-profiles-cont"));
+ReactDOM.render(<ProfilesContainer/>, document.querySelector("#teammember-profiles-cont"));
