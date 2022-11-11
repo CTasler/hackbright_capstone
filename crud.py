@@ -184,6 +184,11 @@ def get_all_project_applicants(project_id):
         
     return project_applicants
 
+def delete_applicant(user_id, project_id): 
+    Applicant.query.filter((Applicant.user_id == user_id) & (Applicant.project_id == project_id)).delete()
+    db.session.commit()
+    return
+    
 
 
 if __name__ == "__main__": 

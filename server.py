@@ -438,6 +438,21 @@ def show_applicant_profiles():
         
     return jsonify({"profiles_data": applicant_profiles, "project_title": project.title})
 
+@app.route('/add-or-remove-applicant.json', methods=["POST"])
+def handle_applicant():
+    applicant_username = request.json.get("username")
+    project_id = request.json.get("project_id")
+    project_title = request.json.get("project_title")
+    add_or_reject = request.json.get("add_or_reject")
+    user = crud.get_user_by_username(applicant_username)
+    crud.delete_applicant(user.user_id, project_id)
+    print(applicant_username, project_id, add_or_reject)
+    
+    if add_or_reject == "add": 
+        crud.create_teammember(user.user_id, project_id)
+    
+    return jsonify({"result": add_or_reject, "projectTitle": project_title})
+
 
 @app.route('/user-favorites.json')
 def show_user_favorites():
@@ -511,9 +526,6 @@ def show_user_teams():
 
 @app.route('/team-page/<projectID>')
 def show_team_page(projectID):
-    
-    
-    
     return render_template('team_page.html')
 
 
