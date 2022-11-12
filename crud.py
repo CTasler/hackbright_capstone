@@ -105,7 +105,7 @@ def get_project_roles(project_id):
 
 def get_all_projects():
     # all_projects = Project.query.order_by(Project.project_id.desc).all()
-    all_projects = Project.query.all()
+    all_projects = Project.query.order_by(Project.project_id.desc()).all()
     return all_projects
 
 def get_user_project_by_title(user_id, proj_title):

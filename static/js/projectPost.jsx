@@ -76,7 +76,7 @@ function ProjectPost(props) {
   return (
     <div className="boxes" id="ppost">
       <div>
-      <i id="favbutton" className="fa-regular fa-heart" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+        <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
       </div>
       <div>
         <h4> Title: {props.title} </h4>
