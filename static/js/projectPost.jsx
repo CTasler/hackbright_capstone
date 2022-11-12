@@ -1,11 +1,12 @@
-// function FavoriteButton() {
-//   return (
-//     <div>
-//       {/* send username and project id to backend 
-//       turn color of button to red  */}
-//     </div>
-//   );
 
+
+
+
+// * <div id="favbuttondiv" style={{ backgroundColor: 'black' }}>
+//<button onClick={favButtonHandler} id="favbutton" >  
+//<i className="fa fa-heart"></i>
+//</button>
+//</div>  
 
 
 function ProjectPost(props) {
@@ -40,15 +41,15 @@ function ProjectPost(props) {
   })  
 
   const favButtonHandler = (event => {
+    if (event.target.classList.contains('fa-regular')) {
+      event.target.classList.toggle('fa-solid');
+    }
+ 
     const data = {
       project_id: props.id, 
 
     }
-    let x =  document.getElementById("favbuttondiv");
-    console.log(x);
 
-
-    const button = event.target;
     fetch('/favorite', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -60,26 +61,22 @@ function ProjectPost(props) {
     .then((responseJson) => {
         if (responseJson.loggedIn === "false") {
           alert("You need to be logged in to add a project to your favorites.");
-        } else if (responseJson.already_favorited === "true") {
-          // button.style.backgroundColor = "gray";
-          document.getElementById("favbuttondiv").style.color = "black"
+        // } else if (responseJson.already_favorited === "true") {
+        //   event.target.classList.contains('fa-regular')
           
         } else if (responseJson.post_creator === "true") {
           alert("As amazing as it is, you cannot favorite your own project.")
-        } else {
-          // button.style.backgroundColor = "red";
-          document.getElementById("favbuttondiv").style.color = "red"
+        // } else {
+        //   event.target.classList.toggle('fa-solid');
         }
     })
-    // butoon not changing color also double click react issue
+    // when homepage loads...all liked posts need to have heart already red
 })  
  
   return (
     <div className="boxes" id="ppost">
-      <div id="favbuttondiv" style={{ backgroundColor: 'black' }}>
-          <button onClick={favButtonHandler} id="favbutton" >  
-          <i className="fa fa-heart"></i>
-          </button>
+      <div>
+      <i id="favbutton" className="fa-regular fa-heart" style={{ color: 'red'}} onClick={favButtonHandler}></i>
       </div>
       <div>
         <h4> Title: {props.title} </h4>
