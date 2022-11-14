@@ -1,7 +1,18 @@
+/* <div className="hover-button">
+<button className='floatbuttonr'>
+  X
+</button>
+<span className= "tooltip-text">Leave this team</span>
+</div> */
 function UserTeams(props) {
 
     return(
     <div className="team">
+        <div>
+          <button data-toggle="tooltip" data-placement="top" title="Leave this team">
+            X
+          </button>
+        </div>
         <div>
             <h4>
                 Project Title: { props.title }

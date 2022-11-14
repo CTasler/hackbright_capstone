@@ -1,7 +1,24 @@
+// {/* <a href="/login-page"><LoginButton/></a> */}
+
 function LoginButton() {
-    const handleClick = ('click', () => {
-        console.log("You clicked me")
+    const handleClick = (event => { 
+        console.log("wokring");
+        console.log(document.querySelector('#login_button'))
+        if (document.querySelector('#login_button').innerHTML === "Login") {
+            window.location = '/login-page'
+        } else {
+            fetch('/process-logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+              }) 
+              .then((response) => window.location.replace(response.url))
+        }
+    
+    
     });
+
 
     return (
         <div>    
@@ -13,12 +30,20 @@ function LoginButton() {
 }
 
 function Navbar() {
+    fetch('/check-logged-in')
+    .then(response => response.json())
+    .then(responseJson => {
+        // console.log(responseJson.logged_in);
+        // console.log(document.querySelector('#login_button').innerHTML);
+        if (responseJson.logged_in) {
+            document.querySelector('#login_button').innerHTML = "Logout";
+        }})
     return (
         <div>
             <nav className="navbar fixed-top navbar-expand-md navbar-light" style={{backgroundColor: "#a50000"}}>
                 <a href="/" className="navbar-brand mb-0 h1"> Coders Assemble</a>
                 <div id="login-b-cont"></div>
-                <a href="/login-page"><LoginButton/></a>
+                <LoginButton/>
                 <button type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar"
                     className="navbar-toggler" aria-controls="navbarNav" 

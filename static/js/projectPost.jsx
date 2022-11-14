@@ -1,22 +1,15 @@
-
-
-
-
-// * <div id="favbuttondiv" style={{ backgroundColor: 'black' }}>
-//<button onClick={favButtonHandler} id="favbutton" >  
-//<i className="fa fa-heart"></i>
-//</button>
-//</div>  
+// hidden readONly
 
 
 function ProjectPost(props) {
+  console.log(props.favorited)
+
   
-  const data = {
-        post_creator: props.username,
-        project_id: props.id
-      }
-      
   const joinButtonHandler = (event => {
+    const data = {
+          post_creator: props.username,
+          project_id: props.id
+        }
       console.log(data)
 
       fetch('/apply', {
@@ -41,9 +34,7 @@ function ProjectPost(props) {
   })  
 
   const favButtonHandler = (event => {
-    if (event.target.classList.contains('fa-regular')) {
-      event.target.classList.toggle('fa-solid');
-    }
+    event.persist();
  
     const data = {
       project_id: props.id, 
@@ -61,56 +52,85 @@ function ProjectPost(props) {
     .then((responseJson) => {
         if (responseJson.loggedIn === "false") {
           alert("You need to be logged in to add a project to your favorites.");
-        // } else if (responseJson.already_favorited === "true") {
-        //   event.target.classList.contains('fa-regular')
-          
         } else if (responseJson.post_creator === "true") {
           alert("As amazing as it is, you cannot favorite your own project.")
-        // } else {
-        //   event.target.classList.toggle('fa-solid');
+        } else {
+          if (event.target.classList.contains('fa-regular')) {
+            event.target.classList.toggle('fa-solid');
+          }
         }
     })
     // when homepage loads...all liked posts need to have heart already red
 })  
- 
-  return (
-    <div className="boxes" id="ppost">
-      <div>
-        <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+  if (props.favorited === true) {
+    return (
+      <div className="boxes" id="ppost">
+        <div>
+          <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+        </div>
+        <div>
+          <h4> Title: {props.title} </h4>
+        </div>
+        <div>
+          <p> Posted by: {props.username}</p>
+        </div>
+        <div>
+          <p> Summary: {props.summary} </p>
+          <p> Libraries: {props.specs} </p>
+          <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+          <p> Required Experience Level: {props.req_exp_level}</p>
+          <p> Required Current or Previous Roles: {props.roles}</p>
+          <p> Project ID: {props.id}</p>
+        </div>
+        <div id="joinbuttondiv">
+            <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
+        </div>
       </div>
-      <div>
-        <h4> Title: {props.title} </h4>
+    );
+  } else {
+    return (
+      <div className="boxes" id="ppost">
+        <div>
+          <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+        </div>
+        <div>
+          <h4> Title: {props.title} </h4>
+        </div>
+        <div>
+          <p> Posted by: {props.username}</p>
+        </div>
+        <div>
+          <p> Summary: {props.summary} </p>
+          <p> Libraries: {props.specs} </p>
+          <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+          <p> Required Experience Level: {props.req_exp_level}</p>
+          <p> Required Current or Previous Roles: {props.roles}</p>
+          <p> Project ID: {props.id}</p>
+        </div>
+        <div id="joinbuttondiv">
+            <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
+        </div>
       </div>
-      <div>
-        <p> Posted by: {props.username}</p>
-      </div>
-      <div>
-        <p> Summary: {props.summary} </p>
-        <p> Libraries: {props.specs} </p>
-        <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
-        <p> Required Experience Level: {props.req_exp_level}</p>
-        <p> Required Current or Previous Roles: {props.roles}</p>
-        <p> Project ID: {props.id}</p>
-      </div>
-      <div id="joinbuttondiv">
-          <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
-      </div>
-    </div>
   );
+  }
 }
 
 function ProjectPostContainer() {
     const [projects, setProjects] = React.useState([]);
+    // const [loggedIn, setLoggedIn] = React.useState('');
 
     React.useEffect(() => {
       fetch("/projects.json")
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.project)
-          setProjects(data.project)
+          console.log(data.project);
+          setProjects(data.project);
+          // setLoggedIn(data.logged_in);
+          // console.log(data.logged_in);
         }
           )
     }, []);
+
     const projectPosts = [];
     for (const currentProject of projects) {
       projectPosts.push(
@@ -124,6 +144,7 @@ function ProjectPostContainer() {
         project_github={currentProject.project_github}
         req_exp_level={currentProject.req_exp_level}
         roles={currentProject.req_roles.join(", ")}
+        favorited={currentProject.favorited}
       />
       );
     }

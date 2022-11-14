@@ -1,3 +1,7 @@
+// {/* <button onClick={favButtonHandler} id="favbutton" >  
+// <i className="fa fa-heart"></i>
+// // </button> */}
+
 function Favorite(props) {
 
   const data = {
@@ -40,10 +44,10 @@ function Favorite(props) {
 
   return (
     <div className="boxes">
-      <div id="favbuttondiv" style={{ backgroundColor: 'black' }}>
-        <button onClick={favButtonHandler} id="favbutton" >  
-          <i className="fa fa-heart"></i>
-        </button>
+      <div>
+        <div>
+          <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+        </div>
       </div>
       <div>
         <h4> Title: {props.title} </h4>

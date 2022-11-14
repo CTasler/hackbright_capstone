@@ -49,11 +49,25 @@ def show_homepage():
 
 @app.route('/projects.json')
 def show_project_posts():
-    
+    if session.get("username", None) != None:
+        username = session["username"]
+        user = crud.get_user_by_username(username)
+        favorited_projects = crud.get_all_user_favorites(user.user_id)
+        favorited_ids = []
+        for project in favorited_projects: 
+            favorited_ids.append(project.project_id)
+
     all_projects = crud.get_all_projects()
     if all_projects: 
         project_data = []
         for project in all_projects: 
+            if session.get("username", None) != None:
+                if project.project_id in favorited_ids: 
+                    favorited = True
+                else: 
+                    favorited = False
+            else: 
+                favorited = False
             user = crud.get_user_by_id(project.user_id)
             project_roles = crud.get_project_roles(project.project_id)
             req_roles = []
@@ -79,12 +93,25 @@ def show_project_posts():
                  "specs": project.specs, 
                  "project_github": project.github_url, 
                  "req_exp_level": project.req_exp_level,
-                 "req_roles": req_roles
+                 "req_roles": req_roles,
+                 "favorited": favorited
             }
             project_data.append(data)
         return jsonify({"project": project_data})
     
     return jsonify({"project": test_data})
+
+# @app.route('/check-favorites.json')
+# def check_all_favorites():
+#     if session.get("username", None) != None: 
+#         username = session["username"]
+#         user = crud.get_user_by_username(username)
+#         favorited_projects = crud.get_all_user_favorites(user.user_id)
+#         favorited_project_ids = []
+#         for project in favorited_projects: 
+#             favorited_project_ids.append(project.project_id)
+        
+#     return jsonify({"project_ids": favorited_project_ids})
 
 
 @app.route('/apply', methods=["POST"])
@@ -220,6 +247,12 @@ def add_user():
     # return redirect(url_for("show_homepage"))
 #url_for flask utility that searches for name of function and matches to route
 
+@app.route('/check-logged-in')
+def check_if_already_logged_in():
+    if session.get("username", None) != None: 
+        return jsonify({"logged_in": True})
+    return jsonify({"logged_in": False})
+        
 
 @app.route('/login-page')
 def show_login_page():
@@ -248,6 +281,12 @@ def login_user():
         session["incorrect_login"] = False
         session["username"] = username
     return redirect("/")
+
+@app.route('/process-logout', methods=["POST"])
+def logout_user():
+    
+    session.pop("username", None)
+    return redirect('/')
         
 
 @app.route('/profile')

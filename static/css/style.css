@@ -3,6 +3,11 @@
   top: 4em;
 }
 
+.flashmessages {
+  position: relative; 
+  top: 4em;
+}
+
 .boxes { 
     border-style: solid;
     margin-top: 20px;
@@ -69,3 +74,22 @@
     text-align: center;
 }
 
+.floatbuttonr {
+  float: right;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  background-color: black;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 5px 0;
+}
+
+.hover-button:hover .tooltip-text {
+  visibility: visible;
+}
