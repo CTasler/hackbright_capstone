@@ -20,7 +20,7 @@ function PPPreview(props) {
                 <p> Languages, Libraries, APIs: {props.specs} </p>
                 <p> GitHub URL: {props.projectGithub} </p>
                 <p> Required Experience Level: {props.reqExpLevel} </p>
-                <p>Current or Previous Roles: {reqRolesString}</p>
+                <p> Current or Previous Roles: {reqRolesString} </p>
                 <div id="joinbuttondiv">
                     <button id="joinbutton">Join Team</button>
                 </div>
@@ -30,17 +30,38 @@ function PPPreview(props) {
   }
 
 
-function ProjectProposalForm() {
+function EditPost() {
     
     const [data, setData] = React.useState({
-        user: "",
-        title: "",
-        summary: "",
-        specs: "",
-        project_github: "", 
-        req_exp_level: "", 
+        user: '',
+        title: '',
+        summary: '',
+        specs: '',
+        project_github: '', 
+        req_exp_level: '', 
         req_roles: [],
       });
+
+      const hyperlinkList = window.location.pathname.split("/");
+      const project_id = hyperlinkList[hyperlinkList.length - 1];
+
+      React.useEffect(() => {
+        fetch(`/team-project-info.json?project_id=${project_id}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson.team_project_info)
+          setData({
+            id: project_id,
+            user: responseJson.team_project_info.username,
+            title: responseJson.team_project_info.title,
+            summary: responseJson.team_project_info.summary,
+            specs: responseJson.team_project_info.specs,
+            project_github: responseJson.team_project_info.project_github, 
+            req_exp_level: responseJson.team_project_info.req_exp_level, 
+            req_roles: [],
+            })
+        })
+        }, []);
     
     const changeHandler = (event) => {
         setData({...data, [event.target.name]: event.target.value});
@@ -75,41 +96,22 @@ function ProjectProposalForm() {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        fetch('/confirm-username')
-        .then((response) => response.text())
-        .then((username_in_session) => {
-            console.log(username_in_session)
-            if (data.user !== username_in_session) {
-                alert("You entered your username incorrectly. Please correct your username and resubmit.")
-            } else {
-    //POST request: data/body should be your data object
-    //fetch('/submissionurl); 
-    //separate route @app.route('/submissionurl') for receiving info
-            fetch('/ppform-submission', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }) 
-            .then((response) => response.json())
-            .then((responseJson) => {
-                window.location.replace(responseJson.url)
-            })
+
+        fetch('/edit-post-submission.json', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
             }
-        })
+        }) 
+        .then((response) => window.location.replace(response.url))
     };
     
 
     return (
     <div>
         <form onSubmit={submitHandler}>
-            <div>
-                <label htmlFor="user">Username:</label>
-                <input type="text" name="user" id="user"
-                 value={data.user} onChange={changeHandler} required />
-            </div>
             <div>
                 <label htmlFor="title">Project Title:</label>
                 <input type="text" name="title" id="title" value={data.title} 
@@ -233,6 +235,6 @@ function ProjectProposalForm() {
       );
     }
 
-    ReactDOM.render(<ProjectProposalForm />, 
-    document.querySelector('#ppform-cont'));
+    ReactDOM.render(<EditPost />, 
+    document.querySelector('#edit-post-cont'));
 

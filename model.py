@@ -24,7 +24,6 @@ class User(db.Model):
     github_link = db.Column(db.String(150), nullable=True)
     linkedin_link = db.Column(db.String(150), nullable=True)
     exp_level = db.Column(db.String(), nullable=False)
-    # roles = db.Column(db.String(), nullable=False)
                          
 
     project = db.relationship("Project", back_populates="user")
@@ -49,8 +48,6 @@ class Project(db.Model):
     specs= db.Column(db.String(120), nullable=False)
     github_url = db.Column(db.String(150), nullable=True)
     req_exp_level = db.Column(db.String(), nullable=True)
-    # req_roles = db.Column(db.String(),nullable=True)
-    # num_teamembers = db.Column(db.Integer, nullable=True)
 
     user = db.relationship("User", back_populates="project")
     favorite = db.relationship("Favorite", back_populates="project")

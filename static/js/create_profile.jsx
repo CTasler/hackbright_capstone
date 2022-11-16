@@ -17,7 +17,7 @@ function ProfilePreview(props) {
 
   return (
       <div>
-          <h1> Profile Preview </h1>
+          <h2> Profile Preview </h2>
           <p> First Name: {props.fname} </p>
           <p> Last Name: {props.lname} </p>
           <p> Username: {props.username} </p>
@@ -55,9 +55,9 @@ function CreateProfile() {
       fetch(`/available-usernames?username=${event.target.value}`)
       .then((response) => response.text())
       .then((status) => {
-        if (status == "unavailable") {
+        if (status === "unavailable") {
           document.querySelector("#username-available").innerHTML = "*username NOT available"
-        } else if (status == "available") {
+        } else if (status === "available") {
           document.querySelector("#username-available").innerHTML = "*username is available"
         }
       })

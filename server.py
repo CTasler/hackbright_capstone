@@ -197,7 +197,6 @@ def add_user():
     github_link = request.json.get("github_link")
     linkedin_link = request.json.get("linkedin_link")
     exp_level = request.json.get("exp_level")
-    
     roles = request.json.get("roles")
 
 
@@ -361,6 +360,84 @@ def show_user_info():
     return jsonify({"user_data": user_info})
 
 
+@app.route('/edit-profile')
+def show_profile_editing_page():
+    return render_template('edit_profile.html')
+
+
+@app.route('/profile-edit-submission.json', methods=['POST'])
+def process_profile_edit():
+    username = session["username"]
+    user = crud.get_user_by_username(username)
+    
+    new_username = request.json.get("username")
+    new_pwd = request.json.get("pwd")
+    new_fname = request.json.get("fname")
+    new_lname = request.json.get("lname")
+    new_bio = request.json.get("bio")
+    new_contact_pref = request.json.get("contact_pref")
+    new_github_link = request.json.get("github_link")
+    new_linkedin_link = request.json.get("linkedin_link")
+    new_exp_level = request.json.get("exp_level")
+    new_roles = request.json.get("roles")
+    
+    if user.username != new_username: 
+        crud.update_username(user.user_id, new_username)
+        session["username"] = new_username
+    if not werkzeug.security.check_password_hash(user.password, new_pwd):
+        hash = werkzeug.security.generate_password_hash(new_pwd)
+        crud.update_password(user.user_id, hash)
+    if user.fname != new_fname: 
+        crud.update_fname(user.user_id, new_fname)
+    if user.lname != new_lname: 
+        crud.update_lname(user.user_id, new_lname)
+    if user.bio != new_bio: 
+        crud.update_bio(user.user_id, new_bio)
+    if user.contact_pref != new_contact_pref: 
+        crud.update_contact_pref(user.user_id, new_contact_pref)
+    if user.github_link != new_github_link: 
+        crud.update_github(user.user_id, new_github_link)
+    if user.linkedin_link != new_linkedin_link: 
+        crud.update_linkedin(user.user_id, new_linkedin_link)
+    if user.exp_level != new_exp_level: 
+        crud.update_exp_level(user.user_id, new_exp_level)
+    
+    if "QA Engineer" in new_roles: 
+        qa = True
+    else: 
+        qa = False
+    if "Security Engineer" in new_roles: 
+        security = True
+    else: 
+        security = False
+    if "DevOps Engineer" in new_roles: 
+        devops = True
+    else: 
+        devops = False
+    if "Game Developer" in new_roles: 
+        game = True
+    else: 
+       game = False
+    if "Mobile Developer" in new_roles: 
+        mobile = True
+    else: 
+        mobile = False
+    if "Front-end Engineer" in new_roles: 
+        front_end = True
+    else: 
+        front_end = False
+    if "Back-end Engineer" in new_roles: 
+        back_end = True
+    else: 
+        back_end = False
+        
+    crud.delete_user_roles(user.user_id)
+    crud.create_user_roles(user.user_id, back_end, front_end, mobile, game, 
+                           devops, security, qa)
+    
+    return redirect('/profile')
+
+
 @app.route('/user-projects.json')
 def show_user_projects():
     
@@ -405,8 +482,6 @@ def show_user_projects():
 
 @app.route('/all-applicants/<project_id>')
 def show_all_applicants(project_id):
-    # session["project_id"] = project_id
-    # print(session["project_id"])
     
     return render_template("applicants_page.html")
 
@@ -562,12 +637,25 @@ def show_user_teams():
     
     return jsonify({"user_teams": teams_data})
 
+@app.route('/leave-team.json', methods=["POST"])
+def leave_team():
+    username = session["username"]
+    project_id = request.json.get('project_id')
+    
+    user = crud.get_user_by_username(username)
+    project = crud.get_project_by_id(project_id)
+    
+    if user.user_id == project.user_id: 
+        return jsonify({"team_captain": True})
+    
+    crud.leave_team(user.user_id, project_id)
+
+    return {"leave_team": "successful"}
+
 
 @app.route('/team-page/<projectID>')
 def show_team_page(projectID):
     return render_template('team_page.html')
-
-
 
 
 @app.route('/teammember-profiles.json')
@@ -670,6 +758,26 @@ def show_team_project_inf():
             }
     
     return jsonify({"team_project_info": project_data})
+
+
+@app.route('/get-all-user-project-titles')
+def show_all_user_project_titles():
+    project_title = request.args.get("title")
+    username = session["username"]
+    
+    user = crud.get_user_by_username(username)
+    all_projects = crud.get_all_projects_by_user(user.user_id)
+    
+    all_project_titles = []
+    for project in all_projects: 
+        all_project_titles.append(project.title)
+
+    
+    if project_title in all_project_titles: 
+        return jsonify({"title_repeat": True})
+    
+    return jsonify({"title_repeat": False })
+    
     
 
 @app.route('/create-project-proposal')
@@ -684,6 +792,11 @@ def show_pp_form():
         return redirect("/")
 
     return render_template('project_proposal_form.html', post_created=post_created)
+
+@app.route('/confirm-username')
+def check_correct_username():
+    username = session['username']
+    return (username)
     
 
 @app.route('/ppform-submission', methods=["POST"])
@@ -748,6 +861,71 @@ def add_project():
     session["post_created"] = True
     
     return {"url": "/create-project-proposal"}
+
+
+@app.route('/edit-post/<id>')
+def show_post_editing_form(id):
+    return render_template('edit_post.html')
+
+
+@app.route('/edit-post-submission.json', methods=['POST'])
+def process_post_edit():
+    
+    project_id = request.json.get("id")
+    new_title = request.json.get("title")
+    new_summary = request.json.get("summary")
+    new_specs = request.json.get("specs")
+    new_github_url = request.json.get("project_github")
+    new_req_exp_level = request.json.get("req_exp_level")
+    new_req_roles = request.json.get("req_roles")
+    
+    project = crud.get_project_by_id(project_id)
+    
+    if project.title != new_title: 
+        crud.update_title(project_id, new_title)
+    if project.summary != new_summary: 
+        crud.update_summary(project_id, new_summary)
+    if project.specs != new_specs: 
+        crud.update_specs(project_id, new_specs)
+    if project.github_url != new_github_url: 
+        crud.update_project_github(project_id, new_github_url)
+    if project.req_exp_level != new_req_exp_level: 
+        crud.update_req_exp_level(project_id, new_req_exp_level)
+
+    if "QA Engineer" in new_req_roles: 
+        qa = True
+    else: 
+        qa = False
+    if "Security Engineer" in new_req_roles: 
+        security = True
+    else: 
+        security = False
+    if "DevOps Engineer" in new_req_roles: 
+        devops = True
+    else: 
+        devops = False
+    if "Game Developer" in new_req_roles: 
+        game = True
+    else: 
+       game = False
+    if "Mobile Developer" in new_req_roles: 
+        mobile = True
+    else: 
+        mobile = False
+    if "Front-end Engineer" in new_req_roles: 
+        front_end = True
+    else: 
+        front_end = False
+    if "Back-end Engineer" in new_req_roles: 
+        back_end = True
+    else: 
+        back_end = False
+        
+    crud.delete_project_roles(project_id)
+    crud.create_project_roles(project_id, back_end, front_end, mobile, game, 
+                           devops, security, qa)
+    
+    return redirect('/profile')
 
 
 if __name__ == "__main__": 

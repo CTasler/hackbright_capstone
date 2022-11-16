@@ -5,6 +5,13 @@ function UserProjects(props) {
 
   return (
     <div className="card">
+      <div className="floatbuttonr">
+        <a href={`/edit-post/${props.id}`}>
+          <button>
+            Edit Project
+          </button>
+        </a>
+      </div>
       <div>
         <h4> Title: {props.title} </h4>
       </div>

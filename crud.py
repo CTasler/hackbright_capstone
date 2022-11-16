@@ -15,6 +15,51 @@ def create_user(username, password, fname, lname, bio, contact_pref,
     
     return user
 
+def update_username(user_id, new_username): 
+    User.query.filter(User.user_id == user_id).update({'username': new_username})
+    db.session.commit()
+    return 
+
+def update_password(user_id, new_password): 
+    User.query.filter(User.user_id == user_id).update({'password': new_password})
+    db.session.commit()
+    return 
+
+def update_fname(user_id, new_fname): 
+    User.query.filter(User.user_id == user_id).update({'fname': new_fname})
+    db.session.commit()
+    return 
+
+def update_lname(user_id, new_lname): 
+    User.query.filter(User.user_id == user_id).update({'lname': new_lname})
+    db.session.commit()
+    return 
+
+def update_bio(user_id, new_bio): 
+    User.query.filter(User.user_id == user_id).update({'bio': new_bio})
+    db.session.commit()
+    return 
+
+def update_contact_pref(user_id, new_contact_pref): 
+    User.query.filter(User.user_id == user_id).update({'contact_pref': new_contact_pref})
+    db.session.commit()
+    return 
+
+def update_github(user_id, new_github_link): 
+    User.query.filter(User.user_id == user_id).update({'github_link': new_github_link})
+    db.session.commit()
+    return 
+
+def update_linkedin(user_id, new_linkedin_link): 
+    User.query.filter(User.user_id == user_id).update({'linkedin_link': new_linkedin_link})
+    db.session.commit()
+    return 
+
+def update_exp_level(user_id, new_exp_level): 
+    User.query.filter(User.user_id == user_id).update({'exp_level': new_exp_level})
+    db.session.commit()
+    return 
+
 def create_user_roles(user_id, back_end, front_end, mobile, game, devops, security, qa):
     user_roles = UserRole(user_id=user_id, back_end=back_end, front_end=front_end, mobile=mobile, game=game, devops=devops, security=security, qa=qa)
     
@@ -27,6 +72,11 @@ def get_user_roles(user_id):
     user_roles = UserRole.query.filter(UserRole.user_id == user_id).first()
     
     return user_roles
+
+def delete_user_roles(user_id):
+    user_roles = UserRole.query.filter(UserRole.user_id == user_id).delete()
+    db.session.commit()
+    return 
 
 def get_user_by_username(username):
     
@@ -58,12 +108,44 @@ def create_project(user_id, title, summary, specs, github_url, req_exp_level):
     
     return project
 
+def update_title(project_id, new_title):
+    Project.query.filter(Project.project_id == project_id).update({'title': new_title})
+    db.session.commit()
+    return
+
+def update_summary(project_id, new_summary):
+    Project.query.filter(Project.project_id == project_id).update({'summary': new_summary})
+    db.session.commit()
+    return 
+
+
+def update_specs(project_id, new_specs):
+    Project.query.filter(Project.project_id == project_id).update({'specs': new_specs})
+    db.session.commit()
+    return 
+
+def update_project_github(project_id, new_github_url):
+    Project.query.filter(Project.project_id == project_id).update({'github_url': new_github_url})
+    db.session.commit()
+    return
+
+def update_req_exp_level(project_id, new_req_exp_level):
+    Project.query.filter(Project.project_id == project_id).update({'req_exp_level': new_req_exp_level})
+    db.session.commit()
+    return
+
 def create_teammember(user_id, project_id):
     
     team_entry = Team(user_id=user_id, project_id=project_id)
     db.session.add(team_entry)
     db.session.commit()
     
+    return 
+
+def leave_team(user_id, project_id):
+    Team.query.filter((Team.user_id == user_id) & (Team.project_id == project_id)).delete()
+    db.session.commit()
+
     return 
 
 def get_project_ids_for_user_teams(user_id):
@@ -101,6 +183,11 @@ def get_project_roles(project_id):
     project_roles = ProjectRole.query.filter(ProjectRole.project_id == 
                                              project_id).first()
     return project_roles
+
+def delete_project_roles(project_id):
+    ProjectRole.query.filter(ProjectRole.project_id == project_id).delete()
+    db.session.commit()
+    return 
     
 
 def get_all_projects():
@@ -118,7 +205,10 @@ def get_project_by_id(project_id):
     return Project.query.get(project_id)
 
 def get_all_projects_by_user(user_id):
-    return Project.query.filter(User.user_id == user_id).join(User).all()
+    all_projects = Project.query.filter(User.user_id == user_id).join(User).all()
+    
+    return all_projects
+
 
 def get_applicants_for_project(project_id):
     applicants = Applicant.query.filter(Applicant.project_id == project_id).all()
