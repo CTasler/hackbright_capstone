@@ -166,6 +166,15 @@ def favorite():
     return {"favorite_created": "true"}
 
 
+@app.route('/search')
+def show_search_page():
+    return render_template('search_page.html')
+
+@app.route('/results')
+def show_search_results(): 
+    return render_template('search_results.html')
+
+
 @app.route('/create-profile')
 def show_profile_form():
     session["post_created"] = False
