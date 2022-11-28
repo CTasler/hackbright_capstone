@@ -22,7 +22,7 @@ function LoginButton() {
 
     return (
         <div>    
-            <button onClick={handleClick} type="button" id="login_button" className="btn btn-sm btn-outline-secondary">
+            <button onClick={handleClick} type="button" id="login_button" className="btn btn-sm btn-outline-dark">
                 Login
             </button>
         </div>  
@@ -40,7 +40,7 @@ function Navbar() {
         }})
     return (
         <div>
-            <nav className="navbar fixed-top navbar-expand-md navbar-light" style={{backgroundColor: "#a50000"}}>
+            <nav className="navbar fixed-top navbar-expand-md navbar-light" style={{backgroundColor: "#D8C3A5"}}>
                 <a href="/" className="navbar-brand mb-0 h1"> Coders Assemble</a>
                 <div id="login-b-cont"></div>
                 <LoginButton/>
@@ -53,17 +53,17 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul className="navbar-nav">
-                        <li className="nav-item disabled">
+                        <li className="nav-item">
                             <a href="/create-profile" className="nav-link">
                                 Create a Profile
                             </a>
                         </li>
-                        <li className="nav-item disabled">
+                        <li className="nav-item">
                             <a href="/profile" className="nav-link">
                                 View Profile
                             </a>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <a href="/create-project-proposal" 
                             className="nav-link">
                                 Post a Project

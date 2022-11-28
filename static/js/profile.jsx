@@ -11,10 +11,10 @@ function Profile() {
 
 
     return (
-        <div className="boarder">
+        <div className="profile">
           <div className="floatbuttonr">
             <a href="/edit-profile">
-              <button>Edit Profile</button>
+              <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E98074"}}>Edit Profile</button>
             </a>
           </div>
           <div>

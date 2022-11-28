@@ -18,7 +18,7 @@ function TeamProject() {
             <div>
                 <h2>Project Info</h2>
             </div>
-            <div className="card">
+            <div className="profile">
                 <div>
                     <h4> Title: {projectData.title} </h4>
                 </div>

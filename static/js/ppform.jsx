@@ -10,9 +10,9 @@ function PPPreview(props) {
     return (
         <div>
             <h2> Project Post Preview </h2>
-            <div className="boxes">
+            <div className="rounded card">
             <div>
-                <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: 'red'}}></i>
+                <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
             </div>
                 <h4> Title: {props.title} </h4>
                 <p> Username: {props.user} </p>
@@ -21,8 +21,8 @@ function PPPreview(props) {
                 <p> GitHub URL: {props.projectGithub} </p>
                 <p> Required Experience Level: {props.reqExpLevel} </p>
                 <p>Current or Previous Roles: {reqRolesString}</p>
-                <div id="joinbuttondiv">
-                    <button id="joinbutton">Join Team</button>
+                <div className="center-button-div">
+                    <button id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
                 </div>
             </div>
         </div>
@@ -103,16 +103,18 @@ function ProjectProposalForm() {
     
 
     return (
-    <div>
+    <div className="flex-container">
+        <div className="rounded form">
+        <h2>Project Info:</h2>
         <form onSubmit={submitHandler}>
-            <div>
+            <div className="col-5">
                 <label htmlFor="user">Username:</label>
                 <input type="text" name="user" id="user"
-                 value={data.user} onChange={changeHandler} required />
+                 className="rounded" value={data.user} onChange={changeHandler} required />
             </div>
-            <div>
+            <div className="col-5">
                 <label htmlFor="title">Project Title:</label>
-                <input type="text" name="title" id="title" value={data.title} 
+                <input type="text" name="title" id="title" className="rounded" value={data.title} 
                 onChange={changeHandler} required />
                 <p id="title-available">*Title is unique</p>
             </div>
@@ -120,7 +122,7 @@ function ProjectProposalForm() {
                 <label htmlFor="summary">Project Summary:</label>
             </div>
             <div>
-                <textarea name="summary" id="summary" rows="4" cols="50" 
+                <textarea name="summary" id="summary" className="rounded" rows="4" cols="50" 
                 value={data.summary} onChange={changeHandler} required>
                 </textarea>
             </div>
@@ -131,20 +133,19 @@ function ProjectProposalForm() {
                 </label>
             </div>
             <div>
-                <textarea name="specs" id="specs" rows="4" cols="50" 
+                <textarea name="specs" id="specs" className="rounded" rows="4" cols="50" 
                 value={data.specs} onChange={changeHandler} required>
                 </textarea>
             </div>
-            <div>
+            <div className="col-5">
                 <label htmlFor="project_github">
                     Your Project's GitHub URL:
                 </label>
-                <input type="url" name="project_github" id="project_github" 
-                value={data.project_github} onChange={changeHandler}/>
+                <input type="url" name="project_github" id="project_github" className="rounded" value={data.project_github} onChange={changeHandler}/>
             </div>
             <div> 
-                <fieldset>
-                    <legend>
+                <fieldset className="rounded border p-3">
+                    <legend className="float-none w-auto">
                         Required Experience Level for Your Project:
                     </legend>
                     <div>
@@ -179,8 +180,8 @@ function ProjectProposalForm() {
                 </fieldset>
             </div>
             <div>
-                <fieldset>
-                    <legend>
+                <fieldset className="rounded border p-3">
+                    <legend className="float-none w-auto">
                     Desired Current or Previous Role of Prospective Partners:
                     </legend>
                     <div>
@@ -220,11 +221,12 @@ function ProjectProposalForm() {
                     </div>
                 </fieldset>
                 </div>
-                <div>
-                <input type="submit" />
+                <div className="d-grid gap-2">
+                    <input type="submit" className="submit btn btn-outline-dark btn-md"/>
                 </div>
             </form>
-            <div>
+        </div>
+            <div className="rounded profile-preview" style={{alignContent: "center"}}>
                 <PPPreview user={data.user} title={data.title} summary={data.summary} 
                 specs={data.specs} projectGithub={data.project_github} 
                 reqExpLevel={data.req_exp_level} reqRoles={data.req_roles}/>

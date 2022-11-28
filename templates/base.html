@@ -27,8 +27,9 @@
     </title>
     {% block head %}{% endblock %}
   </head>
-  <body>
+  <body style="background-color: #E85A4F">
     <div id="navbar-cont"></div>
+    <div class="pagecontentcontainer">
     <div class="flashmessages">
       {% for msg in get_flashed_messages() %}
           <p class="flash-msg">
@@ -37,7 +38,7 @@
       {% endfor %}
     </div>
     {% block body %}{% endblock %}
-
+    <div class="pagecontentcontainer">
     {% block after_body %}{% endblock %}
     <script type="text/jsx" src="/static/js/navbar.jsx"></script>
     <script src=

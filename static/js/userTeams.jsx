@@ -33,9 +33,9 @@ function UserTeams(props) {
     
 
     return(
-    <div className="team">
+    <div className="rounded card">
         <div>
-          <button data-toggle="tooltip" data-placement="top" title="Leave this team" onClick={leaveTeamHandler}>
+          <button data-toggle="tooltip" data-placement="top" title="Leave this team" onClick={leaveTeamHandler} className="floatbuttonr btn btn-sm btn-outline-dark" style={{backgroundColor: "#E98074"}}>
             X
           </button>
         </div>
@@ -64,9 +64,9 @@ function UserTeams(props) {
                 Project ID: { props.projectID }
             </p>
         </div>
-        <div>
+        <div className="center-button-div">
           <a href={`/team-page/${props.projectID}`}>
-            <button>Team Page</button>
+            <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Team Page</button>
           </a>
         </div>
     </div>);
@@ -105,7 +105,7 @@ function TeamsContainer() {
           <div>
             <h1> Your Teams </h1>
           </div>
-          <div className="teamsgrid">
+          <div className="flex-container-horizontal horizontal-scroll">
             { userTeams }
           </div>
         </div>

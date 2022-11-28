@@ -48,7 +48,7 @@ function ApplicantProfiles(props) {
 
 
     return (
-      <div className="card">
+      <div className=" rounded card">
         <div>
           <p> First Name: {props.firstName} </p>
           <p> Last Name: {props.lastName} </p>
@@ -60,11 +60,13 @@ function ApplicantProfiles(props) {
           <p> Experience Level: {props.expLvl}</p>
           <p> Current or Previous Roles: {props.roles} </p>
         </div>
-        <div>
-          <button value="add" onClick={addHandler}>Add to Team</button>
-        </div>
-        <div>
-          <button value="reject" onClick={addHandler}>Reject Applicant</button>
+        <div className="flex-container">
+          <div>
+            <button value="add" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Add to Team</button>
+          </div>
+          <div>
+            <button value="reject" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Reject Applicant</button>
+          </div>
         </div>
       </div>
     );
@@ -115,7 +117,7 @@ function ProfilesContainer() {
       <div>
         <h1> Applicants for { title }</h1>
       </div>
-      <div className="grid">
+      <div className="flex-container-horizontal horizontal-scroll">
         { applicantProfiles }
       </div>
     </div>

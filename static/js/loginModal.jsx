@@ -24,32 +24,41 @@ function Login() {
 
 
     return (
-        <div className="modalBackground">
-            <div className="modalContainer">
+        <div>
+            <div>
                 <div className="title">
                     <h1>Login</h1>
+                    <hr></hr>
                 </div>
-                <div className="body">
+                <div id= "login-form">
                     <form onSubmit={submitHandler}>
-                        <div>
-                            <label htmlFor="username">Username</label>
+                        <div className="inner-flex-container">
+                            <div className="col-5">
+                                <div>
+                                    <label htmlFor="username">Username</label>
+                                </div>
+                                <div>
+                                    <input type="text" name="username" 
+                                    id="username_login" value={loginData.username} 
+                                    onChange={changeHandler}></input>
+                                </div>
+                            </div>
+                            <div className="col-5">
+                                <div>
+                                    <label htmlFor="password">Password</label>
+                                </div>
+                                <div>
+                                    <input type="password" name="password" 
+                                    id="password_login" value={loginData.password} 
+                                    onChange={changeHandler}></input>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <input type="text" name="username" 
-                            id="username_login" value={loginData.username} 
-                            onChange={changeHandler}></input>
+                        <div className="d-grid gap-2">
+                            <input type="submit" className="submit btn btn-outline-dark btn-md" value="Login"/>
+                            <p>Don't have an account?</p>
+                            <a href="/create-profile" >Create a profile</a>
                         </div>
-                        <div>
-                            <label htmlFor="password">Password</label>
-                        </div>
-                        <div>
-                            <input type="password" name="password" 
-                            id="password_login" value={loginData.password} 
-                            onChange={changeHandler}></input>
-                        </div>
-                        <input type="submit" value="Login"/>
-                        <p>Don't have an account?</p>
-                        <a href="/create-profile" >Create a profile</a>
                     </form>
                 </div>
             </div>

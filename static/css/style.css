@@ -9,7 +9,8 @@
 }
 
 .boxes { 
-    border-style: solid;
+    border-radius: 3px;
+    border: 3px solid black;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: auto;
@@ -17,20 +18,45 @@
     padding: 20px;
     width: 30%;
     min-width: 30em;
+    background-color: #8E8D8A;
 }
 
-.boarder {
-    border-style: solid;
-}
 
-.grid {
-    display: grid;
-    grid-template-columns: 3fr 3fr 3fr;
-    grid-gap: 10px;
-    align-items: center;
+.horizontal-scroll {
+    flex-wrap: nowrap;
+    overflow: auto;
   }
   
-.card {
+/* .card {
+    border-radius: 3px;
+    border: 3px solid black;
+    width: 35em;
+    height: 35em;
+    margin: 2em;
+    padding: 1em;
+    flex: 0 0 auto;
+  } */
+  .card {
+    border-radius: 3px;
+    border: 3px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 20px;
+    width: 30%;
+    min-width: 30em;
+    flex: 0 0 auto;
+    background-color: #8E8D8A;
+  }
+
+
+  .flex-container-horizontal {
+    display: flex;
+    justify-content: flex-start;
+}
+
+  /* .card {
     border-radius: 3px;
     border: 3px solid black;
     width: 30em;
@@ -38,7 +64,7 @@
     margin: 2em;
     padding: 1em;
     display: inline-block;
-  }
+  } */
 
 .teamsgrid {
     display: grid;
@@ -70,7 +96,7 @@
     float: right;
 }
 
-#joinbuttondiv {
+.center-button-div {
     text-align: center;
 }
 
@@ -78,7 +104,7 @@
   float: right;
 }
 
-.tooltip-text {
+/* .tooltip-text {
   visibility: hidden;
   position: absolute;
   top: 50%;
@@ -92,4 +118,82 @@
 
 .hover-button:hover .tooltip-text {
   visibility: visible;
+} */
+
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.inner-flex-container {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.profile-preview {
+  margin: 10px;
+  padding: 20px;
+  border-style: dashed;
+  border-width: 2px;
+  width: 500px;
+  height: 500px;
+  background-color: #EAE7DC;
+}
+
+.profile {
+  margin: 10px;
+  padding: 20px;
+  border-style: dashed;
+  border-width: 2px;
+  background-color: #EAE7DC;
+}
+
+.form {
+  margin: 10px;
+  padding: 20px;
+  border-style: dashed;
+  border-width: 2px;
+  background-color: #8E8D8A;
+}
+
+#login-form {
+  border-radius: 2px;
+  border: 2px dashed black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 20px;
+  width: 40%;
+  background-color: #8E8D8A;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+}
+
+fieldset {
+  background-color: #EAE7DC;
+}
+
+input[type=text] {
+  width: 300px;
+}
+
+input[type=password] {
+  width: 300px;
+}
+
+input[type=url] {
+  width: 300px;
+}
+
+.center-button {
+  text-align: center;
+}
+
+.submit {
+  margin: 10px;
 }

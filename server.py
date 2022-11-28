@@ -166,9 +166,23 @@ def favorite():
     return {"favorite_created": "true"}
 
 
-@app.route('/search')
+@app.route('/advanced-search')
 def show_search_page():
     return render_template('search_page.html')
+
+@app.route('/advanced-search-submission', methods=["POST"])
+def collect_search_results():
+    username = request.json.get("user")
+    title = request.json.get("title")
+    specs = request.json.get("specs")
+    req_exp_level = request.json.get("req_exp_level")
+    req_roles = request.json.get("req_roles")
+    print(f"***{username}{title}{specs}{req_exp_level}{req_roles}***")
+    
+    
+    data = None
+    return jsonify({"project_data": data})
+
 
 @app.route('/results')
 def show_search_results(): 

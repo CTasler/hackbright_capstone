@@ -43,10 +43,10 @@ function Favorite(props) {
   });
 
   return (
-    <div className="boxes">
+    <div className="rounded card" style={{backgroundColor: "#8E8D8A"}}>
       <div>
         <div>
-          <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: 'red'}} onClick={favButtonHandler}></i>
+          <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
         </div>
       </div>
       <div>
@@ -63,8 +63,8 @@ function Favorite(props) {
         <p> Required Current or Previous Roles: {props.req_roles}</p>
         <p> Project ID: { props.id }</p>
       </div>
-      <div id="joinbuttondiv">
-          <button onClick={joinButtonHandler} id="joinbutton">Join Team</button>
+      <div className="center-button-div">
+          <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
       </div>
     </div>
   );
@@ -102,8 +102,12 @@ function FavoritesContainer() {
 
     return (
       <div>
-         <h1> Your Favorites </h1>
-        { userFavorites }
+        <div>
+          <h1> Your Favorites </h1>
+        </div>
+        <div className="flex-container-horizontal horizontal-scroll">
+          { userFavorites }
+        </div>
       </div>
     );
   }

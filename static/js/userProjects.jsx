@@ -4,10 +4,10 @@ function UserProjects(props) {
   
 
   return (
-    <div className="card">
+    <div className="rounded card" style={{backgroundColor: "#8E8D8A"}}>
       <div className="floatbuttonr">
         <a href={`/edit-post/${props.id}`}>
-          <button>
+          <button className="floatbuttonr btn btn-sm btn-outline-dark" style={{backgroundColor: "#E98074"}}>
             Edit Project
           </button>
         </a>
@@ -24,9 +24,9 @@ function UserProjects(props) {
       </div>
       <div> Project ID: {props.id}</div>
       <div> Applicants: { props.applicants }</div>
-      <div>
+      <div className="center-button-div">
         <a href={`/all-applicants/${props.id}`}>
-          <button>View Applicant Profiles</button>
+          <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>View Applicant Profiles</button>
         </a>
       </div>
     </div>
@@ -69,7 +69,7 @@ function ProjectsContainer() {
         <div>
           <h1> Your Projects </h1>
         </div>
-        <div className="grid">
+        <div className="flex-container-horizontal horizontal-scroll">
           { projectPosts }
         </div>
       </div>

@@ -1,7 +1,7 @@
 function TeammemberProfiles(props) {
     
     return(
-        <div className="card">
+        <div className="rounded card">
             <div>
                 <p> First Name: {props.firstName} </p>
                 <p> Last Name: {props.lastName} </p>
@@ -59,7 +59,7 @@ function ProfilesContainer() {
             <div>
                 <h2> Team members </h2>
             </div>
-            <div className="grid">
+            <div className="flex-container-horizontal horizontal-scroll">
                 { teamProfiles }
             </div>
         </div>
