@@ -1,5 +1,116 @@
+function ProjectPost(props) {
+
+    const joinButtonHandler = (event => {
+      const data = {
+            post_creator: props.username,
+            project_id: props.id
+          }
+  
+        fetch('/apply', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+              'Content-Type': 'application/json',
+          }
+        }) 
+        .then((response) => response.json())
+        .then((responseJson) => {
+            if (responseJson.loggedIn === "false") {
+              alert("You need to be logged in to apply to join a team");
+            } else if (responseJson.already_applied === "true") {
+              alert("You already applied for this team.")
+            } else if (responseJson.on_team === "true") {
+              alert("You are already on this team.")
+            } else {
+            alert(`Your application was registered. If your application is accepted, the project will show up in the "Your Teams" section of your profile.`);
+            }
+        })
+    })  
+  
+    const favButtonHandler = (event => {
+      event.persist();
+   
+      const data = {
+        project_id: props.id, 
+  
+      }
+  
+      fetch('/favorite', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+      }) 
+      .then((response) => response.json())
+      .then((responseJson) => {
+          if (responseJson.loggedIn === "false") {
+            alert("You need to be logged in to add a project to your favorites.");
+          } else if (responseJson.post_creator === "true") {
+            alert("As amazing as it is, you cannot favorite your own project.")
+          } else {
+            if (event.target.classList.contains('fa-regular')) {
+              event.target.classList.toggle('fa-solid');
+            } else if (event.target.classList.contains('fa-solid')) {
+              event.target.classList.toggle('fa-regular');
+            }
+          }
+      })
+  })  
+    if (props.favorited === true) {
+      return (
+        <div className="rounded boxes" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
+          <div>
+            <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+          </div>
+          <div>
+            <h4> Title: {props.title} </h4>
+          </div>
+          <div>
+            <p> Posted by: {props.username}</p>
+          </div>
+          <div>
+            <p> Summary: {props.summary} </p>
+            <p> Libraries: {props.specs} </p>
+            <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+            <p> Required Experience Level: {props.req_exp_level}</p>
+            <p> Required Current or Previous Roles: {props.roles}</p>
+            <p> Project ID: {props.id}</p>
+          </div>
+          <div id="joinbuttondiv">
+              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="rounded boxes" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
+          <div>
+            <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+          </div>
+          <div>
+            <h4> Title: {props.title} </h4>
+          </div>
+          <div>
+            <p> Posted by: {props.username}</p>
+          </div>
+          <div>
+            <p> Summary: {props.summary} </p>
+            <p> Libraries: {props.specs} </p>
+            <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+            <p> Required Experience Level: {props.req_exp_level}</p>
+            <p> Required Current or Previous Roles: {props.roles}</p>
+            <p> Project ID: {props.id}</p>
+          </div>
+          <div className="center-button-div">
+              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+          </div>
+        </div>
+    );
+    }
+  }
+
 function SearchForm() {
-    
     const [data, setData] = React.useState({
         user: "",
         title: "",
@@ -7,7 +118,9 @@ function SearchForm() {
         req_exp_level: "", 
         req_roles: [],
       });
-    
+
+    const [projects, setProjects] = React.useState([])
+
     const changeHandler = (event) => {
         setData({...data, [event.target.name]: event.target.value});
     };
@@ -30,7 +143,9 @@ function SearchForm() {
     const submitHandler = (event) => {
         event.preventDefault();
         console.log(data)
-            fetch('/advanced-search-submission', {
+
+
+            fetch('/advanced-search-submission.json', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 credentials: 'include',
@@ -41,120 +156,199 @@ function SearchForm() {
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson)
+                setProjects(responseJson.matches)
             })
-    };
+    
+            
+        };
+        
+    const projectPosts = [];
+    if (projects) {
+        for (const currentProject of projects) {
+            projectPosts.push(
+                <ProjectPost 
+                key={currentProject.project_id}
+                id={currentProject.project_id}
+                username={currentProject.username}
+                title={currentProject.title} 
+                summary={currentProject.summary}
+                specs={currentProject.specs}
+                project_github={currentProject.project_github}
+                req_exp_level={currentProject.req_exp_level}
+                roles={currentProject.req_roles.join(", ")}
+                favorited={currentProject.favorited}
+                />
+            );
+        }
+    }
+
+    let radios = document.getElementsByName("req_exp_level");
     
 
     return (
-    <div className="flex-container">
-        <div className="rounded form">
-            <form onSubmit={submitHandler}>
-                <div className="col-5">
-                    <label htmlFor="user">Creator's Username:</label>
-                    <input type="text" name="user" id="user"
-                    className="rounded" value={data.user} onChange={changeHandler} required />
-                </div>
-                <div className="col-5">
-                    <label htmlFor="title">Project Title:</label>
-                    <input type="text" name="title" id="title" className="rounded" value={data.title} 
-                    onChange={changeHandler} required />
-                </div>
-                <div>
-                    <label htmlFor="specs">
-                        Languages, libraries, API's:
-                    </label>
-                </div>
-                <div>
-                    <textarea name="specs" id="specs" className="rounded" rows="4" cols="50" 
-                    value={data.specs} onChange={changeHandler} required>
-                    </textarea>
-                </div>
-                <div> 
-                    <fieldset className="rounded border p-3">
-                        <legend className="float-none w-auto">
-                            Required Experience Level:
-                        </legend>
-                        <div>
-                        <input type="radio" name="req_exp_level" id="pp-trainee" 
-                        value="Trainee Software Engineer" 
-                        onChange={changeHandler}/>
-                        <label htmlFor="trainee">Trainee Software Engineer</label>
-                        </div>
-                        <div>
-                        <input type="radio" name="req_exp_level" id="pp-junior" 
-                        value="Junior Software Engineer" onChange={changeHandler}/>
-                        <label htmlFor="junior">Junior Software Engineer</label>
-                        </div>
-                        <div>
-                        <input type="radio" name="req_exp_level" id="pp-mid_level" 
-                        value="Mid-level Software Engineer" 
-                        onChange={changeHandler}/>
-                        <label htmlFor="mid_level">
-                            Mid-level Software Engineer
+        <div className="flex-container">
+            <div className="rounded form" style={{maxHeight: "60em"}}>
+                <form onSubmit={submitHandler}>
+                    <div className="col-5">
+                        <label htmlFor="user">Creator's Username:</label>
+                        <input type="text" name="user" id="user"
+                        className="rounded" value={data.user} onChange={changeHandler} />
+                    </div>
+                    <div className="col-5">
+                        <label htmlFor="title">Project Title:</label>
+                        <input type="text" name="title" id="title" className="rounded" value={data.title} 
+                        onChange={changeHandler} />
+                    </div>
+                    <div>
+                        <label htmlFor="specs">
+                            Languages, libraries, API's:
                         </label>
+                    </div>
+                    <div>
+                        <textarea name="specs" id="specs" className="rounded" rows="4" cols="50" 
+                        value={data.specs} onChange={changeHandler}>
+                        </textarea>
+                    </div>
+                    <div> 
+                        <fieldset className="rounded border p-3">
+                            <legend className="float-none w-auto">
+                                Required Experience Level:
+                            </legend>
+                            <div>
+                            <input type="radio" name="req_exp_level" id="pp-trainee" 
+                            value="Trainee Software Engineer" 
+                            onChange={changeHandler}/>
+                            <label htmlFor="trainee">Trainee Software Engineer</label>
+                            </div>
+                            <div>
+                            <input type="radio" name="req_exp_level" id="pp-junior" 
+                            value="Junior Software Engineer" onChange={changeHandler}/>
+                            <label htmlFor="junior">Junior Software Engineer</label>
+                            </div>
+                            <div>
+                            <input type="radio" name="req_exp_level" id="pp-mid_level" 
+                            value="Mid-level Software Engineer" 
+                            onChange={changeHandler}/>
+                            <label htmlFor="mid_level">
+                                Mid-level Software Engineer
+                            </label>
+                            </div>
+                            <div>
+                            <input type="radio" name="req_exp_level" id="pp-senior" 
+                            value="Senior Software Engineer" onChange={changeHandler}/>
+                            <label htmlFor="senior">Senior Software Engineer</label>
+                            </div>
+                            <div>
+                            <input type="radio" name="req_exp_level" id="pp-lead" 
+                            value="Lead Software Engineer" onChange={changeHandler}/>
+                            <label htmlFor="lead">Lead Software Engineer</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div>
+                        <fieldset className="rounded border p-3">
+                            <legend className="float-none w-auto">
+                            Required Role:
+                            </legend>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-back_end" 
+                            value="Back-end Engineer" onChange={reqRoleHandler}/>
+                            <label htmlFor="back_end">Back-end Engineer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-front_end" 
+                            value="Front-end Engineer" onChange={reqRoleHandler}/>
+                            <label htmlFor="front_end">Front-end Engineer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox"className="checkbox" name="req_roles" id="pp-mobile" 
+                            value="Mobile Developer" onChange={reqRoleHandler}/>
+                            <label htmlFor="mobile">Mobile Developer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-game" 
+                            value="Game Developer" onChange={reqRoleHandler}/>
+                            <label htmlFor="game">Game Developer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-devops" 
+                            value="DevOps Engineer" onChange={reqRoleHandler}/>
+                            <label htmlFor="devops">DevOps Engineer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-security" 
+                            value="Security Engineer" onChange={reqRoleHandler}/>
+                            <label htmlFor="security">Security Engineer</label>
+                            </div>
+                            <div>
+                            <input type="checkbox" className="checkbox" name="req_roles" id="pp-qa" 
+                            value="QA Engineer" onChange={reqRoleHandler}/>
+                            <label htmlFor="qa">QA Engineer</label>
+                            </div>
+                        </fieldset>
                         </div>
-                        <div>
-                        <input type="radio" name="req_exp_level" id="pp-senior" 
-                        value="Senior Software Engineer" onChange={changeHandler}/>
-                        <label htmlFor="senior">Senior Software Engineer</label>
+                        <div className="d-grid gap-2">
+                            <input type="submit" className="submit btn btn-outline-dark btn-md"/>
                         </div>
-                        <div>
-                        <input type="radio" name="req_exp_level" id="pp-lead" 
-                        value="Lead Software Engineer" onChange={changeHandler}/>
-                        <label htmlFor="lead">Lead Software Engineer</label>
-                        </div>
-                    </fieldset>
+                    </form>
                 </div>
                 <div>
-                    <fieldset className="rounded border p-3">
-                        <legend className="float-none w-auto">
-                        Required Role:
-                        </legend>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-back_end" 
-                        value="Back-end Engineer" onChange={reqRoleHandler}/>
-                        <label htmlFor="back_end">Back-end Engineer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-front_end" 
-                        value="Front-end Engineer" onChange={reqRoleHandler}/>
-                        <label htmlFor="front_end">Front-end Engineer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox"className="checkbox" name="req_roles" id="pp-mobile" 
-                        value="Mobile Developer" onChange={reqRoleHandler}/>
-                        <label htmlFor="mobile">Mobile Developer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-game" 
-                        value="Game Developer" onChange={reqRoleHandler}/>
-                        <label htmlFor="game">Game Developer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-devops" 
-                        value="DevOps Engineer" onChange={reqRoleHandler}/>
-                        <label htmlFor="devops">DevOps Engineer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-security" 
-                        value="Security Engineer" onChange={reqRoleHandler}/>
-                        <label htmlFor="security">Security Engineer</label>
-                        </div>
-                        <div>
-                        <input type="checkbox" className="checkbox" name="req_roles" id="pp-qa" 
-                        value="QA Engineer" onChange={reqRoleHandler}/>
-                        <label htmlFor="qa">QA Engineer</label>
-                        </div>
-                    </fieldset>
-                    </div>
-                    <div className="d-grid gap-2">
-                        <input type="submit" className="submit btn btn-outline-dark btn-md"/>
-                    </div>
-                </form>
+                    {projectPosts}
+                </div>
             </div>
-        </div>
-      );
-    }
+          );
+}
+
+
+
+
+
+
+// function AdvSearchContainer() {
+    
+//     const [data, setData] = React.useState({
+//         user: "",
+//         title: "",
+//         specs: "",
+//         req_exp_level: "", 
+//         req_roles: [],
+//       });
+
+//     const [projects, setProjects] = React.useState([])
+
+
+//     const projectPosts = [];
+//       for (const currentProject of projects) {
+//           projectPosts.push(
+//             <ProjectPost 
+//               key={currentProject.project_id}
+//               id={currentProject.project_id}
+//               username={currentProject.username}
+//               title={currentProject.title} 
+//               summary={currentProject.summary}
+//               specs={currentProject.specs}
+//               project_github={currentProject.project_github}
+//               req_exp_level={currentProject.req_exp_level}
+//               roles={currentProject.req_roles.join(", ")}
+//               favorited={currentProject.favorited}
+//             />
+//           );
+//         }
+
+//     return (
+//         <div>
+//             <div>
+//                 <SearchForm/>
+//             </div>
+//             <div>
+//                 <h2>Results</h2>
+//                 {projectPosts}
+//             </div>
+//         </div>
+//       );
+//     }
+
+
 
     ReactDOM.render(<SearchForm />, 
     document.querySelector('#searchform-cont'));

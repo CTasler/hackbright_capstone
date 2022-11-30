@@ -1,6 +1,3 @@
-// hidden readONly
-
-
 function ProjectPost(props) {
 
   const joinButtonHandler = (event => {

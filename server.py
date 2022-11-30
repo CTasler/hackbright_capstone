@@ -170,18 +170,123 @@ def favorite():
 def show_search_page():
     return render_template('search_page.html')
 
-@app.route('/advanced-search-submission', methods=["POST"])
+@app.route('/advanced-search-submission.json', methods=["POST", "GET"])
 def collect_search_results():
-    username = request.json.get("user")
-    title = request.json.get("title")
-    specs = request.json.get("specs")
-    req_exp_level = request.json.get("req_exp_level")
-    req_roles = request.json.get("req_roles")
-    print(f"***{username}{title}{specs}{req_exp_level}{req_roles}***")
-    
-    
-    data = None
-    return jsonify({"project_data": data})
+    if request.method == "POST": 
+        username = request.json.get("user")
+        title = request.json.get("title")
+        specs = request.json.get("specs")
+        req_exp_level = request.json.get("req_exp_level")
+        req_roles = request.json.get("req_roles")
+        print(f"***{username}{title}{specs}{req_exp_level}{req_roles}***")
+        all_sets = []
+        if username: 
+            projs_with_username = crud.adv_search_username(username)
+            all_sets.append(projs_with_username)
+        else: 
+            projs_with_username = set()
+        if title: 
+            projs_with_title = crud.adv_search_title(title)
+            all_sets.append(projs_with_title)
+        else: 
+            projs_with_title = set()
+        if specs: 
+            projs_with_specs = crud.adv_search_specs(specs)
+            all_sets.append(projs_with_specs)
+        else: 
+            projs_with_specs = set()
+        if req_exp_level: 
+            projs_with_exp_level = crud.adv_search_exp_level(req_exp_level)
+            all_sets.append(projs_with_exp_level)
+        else: 
+            projs_with_exp_level = set()
+        if req_roles: 
+            if "QA Engineer" in req_roles: 
+                qa = True
+            else: 
+                qa = False
+            if "Security Engineer" in req_roles: 
+                security = True
+            else: 
+                security = False
+            if "DevOps Engineer" in req_roles: 
+                devops = True
+            else: 
+                devops = False
+            if "Game Developer" in req_roles: 
+                game = True
+            else: 
+                game = False
+            if "Mobile Developer" in req_roles: 
+                mobile = True
+            else: 
+                mobile = False
+            if "Front-end Engineer" in req_roles: 
+                front_end = True
+            else: 
+                front_end = False
+            if "Back-end Engineer" in req_roles: 
+                back_end = True
+            else: 
+                back_end = False
+            projs_with_roles = crud.adv_search_roles(qa, security, devops, game, mobile, front_end, back_end)
+            all_sets.append(projs_with_roles)
+        else: 
+            projs_with_roles = set()
+        
+        all_sets = [set for set in all_sets if set] 
+        final_ids = set.intersection(*all_sets)
+
+        # final_ids = projs_with_username & projs_with_title & projs_with_specs & projs_with_exp_level & projs_with_roles
+        print("****************************")
+        print(final_ids)
+        
+        if final_ids: 
+            project_data = []
+            for id in final_ids: 
+                project = crud.get_project_by_id(id)
+                if session.get("username", None) != None:
+                    logged_in_user = crud.get_user_by_username(session["username"])
+                    favorited_ids = crud.get_all_user_favorites(logged_in_user.user_id)
+                    if project.project_id in favorited_ids: 
+                        favorited = True
+                    else: 
+                        favorited = False
+                else: 
+                    favorited = False
+                user = crud.get_user_by_id(project.user_id)
+                project_roles = crud.get_project_roles(project.project_id)
+                req_roles = []
+                if project_roles.back_end == True: 
+                    req_roles.append("Back-end Engineer")
+                if project_roles.front_end == True: 
+                    req_roles.append("Front-end Engineer")
+                if project_roles.mobile == True: 
+                    req_roles.append("Mobile Developer")
+                if project_roles.game == True: 
+                    req_roles.append("Game Developer")
+                if project_roles.devops == True: 
+                    req_roles.append("DevOps Engineer")
+                if project_roles.security == True: 
+                    req_roles.append("Security Engineer")
+                if project_roles.qa == True: 
+                    req_roles.append("QA Engineer")
+                data = {
+                    "username": user.username,
+                    "project_id": project.project_id,
+                    "title": project.title, 
+                    "summary": project.summary, 
+                    "specs": project.specs, 
+                    "project_github": project.github_url, 
+                    "req_exp_level": project.req_exp_level,
+                    "req_roles": req_roles,
+                    "favorited": favorited
+                }
+                project_data.append(data)
+            return jsonify({"matches": project_data})
+        return jsonify({"matches": None})
+    else: 
+        return jsonify({"matches": None})
 
 
 @app.route('/results')

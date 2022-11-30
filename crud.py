@@ -279,7 +279,45 @@ def delete_applicant(user_id, project_id):
     db.session.commit()
     return
     
+def adv_search_username(username):
+    users = User.query.filter(User.username.contains(username)).all()
+    user_ids = []
+    for user in users: 
+        user_ids.append(user.user_id)
+    project_ids = set()
+    for id in user_ids:
+        projects = get_all_projects_by_user(id)
+        for project in projects: 
+            project_ids.add(project.project_id)
+    return project_ids
 
+def adv_search_title(title):
+    projects = Project.query.filter(Project.title.contains(title)).all()
+    project_ids = set()
+    for project in projects: 
+        project_ids.add(project.project_id)
+    return project_ids
+
+def adv_search_specs(specs):
+    projects = Project.query.filter(Project.specs.contains(specs)).all()
+    project_ids = set()
+    for project in projects: 
+        project_ids.add(project.project_id)
+    return project_ids
+
+def adv_search_exp_level(exp_level):
+    projects = Project.query.filter(Project.req_exp_level == exp_level).all()
+    project_ids = set()
+    for project in projects: 
+        project_ids.add(project.project_id)
+    return project_ids
+
+def adv_search_roles(qa, security, devops, game, mobile, front_end, back_end):
+    projects = ProjectRole.query.filter((ProjectRole.qa == qa) & (ProjectRole.security == security) & (ProjectRole.devops == devops) & (ProjectRole.game == game) & (ProjectRole.mobile == mobile) & (ProjectRole.front_end == front_end) & (ProjectRole.back_end == back_end)).all()
+    project_ids = set()
+    for project in projects: 
+        project_ids.add(project.project_id)
+    return project_ids
 
 if __name__ == "__main__": 
     from server import app 
