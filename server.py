@@ -832,7 +832,6 @@ def show_teammembers_profiles():
                 else: 
                     profile_roles += f"{role}, "
         else: 
-            print("working")
             profile_roles = ("").join(roles)
         
         data = {
@@ -844,7 +843,7 @@ def show_teammembers_profiles():
                 "github_url": user.github_link, 
                 "linkedin_url": user.linkedin_link, 
                 "exp_level": user.exp_level,
-                "roles": roles
+                "roles": profile_roles
         }
         teammember_profiles.append(data)
   
@@ -886,6 +885,22 @@ def show_team_project_inf():
             }
     
     return jsonify({"team_project_info": project_data})
+
+
+@app.route('/get-chat-messages.json')
+def show_all_chat_messages():
+    project_id = request.args.get("project_id")
+    messages_data = []
+    messages = crud.get_all_messages(project_id)
+    for message in messages: 
+        user = crud.get_user_by_id(message.user_id)
+        data = {
+            "username": user.username, 
+            "message": message.message, 
+            "date": message.date
+        }
+        messages_data.append(data)
+    return jsonify({"chat_messages": messages_data})
 
 
 @app.route('/get-all-user-project-titles')

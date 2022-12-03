@@ -29,7 +29,7 @@ function TeamProject() {
                     <p> GitHub URL: <a href={`${projectData.project_github}`}>{projectData.project_github}</a> </p>
                     <p> Required Experience Level: {projectData.req_exp_level}</p>
                     <p> Required Current or Previous Roles: {projectData.req_roles}</p>
-                    <p> Project ID: {projectData.project_id}</p>
+                    <p aria-hidden hidden> Project ID: {projectData.project_id}</p>
                 </div>
             </div>
         </div>

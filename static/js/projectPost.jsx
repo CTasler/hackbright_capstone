@@ -75,9 +75,9 @@ function ProjectPost(props) {
           <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
           <p> Required Experience Level: {props.req_exp_level}</p>
           <p> Required Current or Previous Roles: {props.roles}</p>
-          <p> Project ID: {props.id}</p>
+          <p aria-hidden hidden> Project ID: {props.id}</p>
         </div>
-        <div id="joinbuttondiv">
+        <div className="center-button-div">
             <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
         </div>
       </div>
@@ -100,7 +100,7 @@ function ProjectPost(props) {
           <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
           <p> Required Experience Level: {props.req_exp_level}</p>
           <p> Required Current or Previous Roles: {props.roles}</p>
-          <p> Project ID: {props.id}</p>
+          <p aria-hidden hidden> Project ID: {props.id}</p>
         </div>
         <div className="center-button-div">
             <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
@@ -188,6 +188,11 @@ function ProjectPostContainer() {
           </div>
         </div>
         {projectPosts}
+          <div>
+            <a id="back-to-top" href="#" 
+            className="btn btn-outline-dark btn-lg back-to-top" 
+            roll="button"><i class="fas fa-chevron-up"></i></a>
+          </div>
       </div>
     );
   }

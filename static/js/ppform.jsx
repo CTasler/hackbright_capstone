@@ -226,7 +226,7 @@ function ProjectProposalForm() {
                 </div>
             </form>
         </div>
-            <div className="rounded profile-preview" style={{alignContent: "center"}}>
+            <div className="rounded project-preview" style={{alignItems: "center", justifyContent: "center"}}>
                 <PPPreview user={data.user} title={data.title} summary={data.summary} 
                 specs={data.specs} projectGithub={data.project_github} 
                 reqExpLevel={data.req_exp_level} reqRoles={data.req_roles}/>

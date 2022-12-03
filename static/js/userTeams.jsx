@@ -64,9 +64,9 @@ function UserTeams(props) {
                 Project ID: { props.projectID }
             </p>
         </div>
-        <div className="center-button-div">
+        <div style={{position: "absolute", bottom: 20}}>
           <a href={`/team-page/${props.projectID}`}>
-            <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Team Page</button>
+            <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 225}}>Team Page</button>
           </a>
         </div>
     </div>);

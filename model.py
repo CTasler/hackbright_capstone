@@ -31,6 +31,7 @@ class User(db.Model):
     applicant = db.relationship("Applicant", back_populates="user")
     user_roles = db.relationship("UserRole", back_populates="user")
     team = db.relationship("Team", back_populates="user")
+    # message = db.relationship("Message", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} username={self.username}>"
@@ -54,6 +55,7 @@ class Project(db.Model):
     applicant = db.relationship("Applicant", back_populates="project")
     project_roles = db.relationship("ProjectRole", back_populates="project")
     team = db.relationship("Team", back_populates="project")
+    # message = db.relationship("Message", back_populates="project")
 
     def __repr__(self):
         return f"""<Project project_id={self.project_id} user_id={self.user_id} 
@@ -76,7 +78,12 @@ class UserRole(db.Model):
 
 
     user = db.relationship("User", back_populates="user_roles")
-
+    
+    def __repr__(self): 
+        return f"""<UserRole user_role_id={self.user_role_id} 
+    user_id={self.user_id} back_end={self.back_end} 
+    front_end={self.front_end} mobile={self.mobile} game={self.game} 
+    devops={self.devops} security={self.security} qa={self.qa}>"""
 
 
 # id | user id |back-end  | front-end | game-developer | security |
@@ -98,6 +105,12 @@ class ProjectRole(db.Model):
     qa = db.Column(db.Boolean, nullable=False)
 
     project = db.relationship("Project", back_populates="project_roles")
+    
+    def __repr__(self): 
+        return f"""<ProjectRole project_role_id={self.project_role_id} 
+    project_id={self.project_id} back_end={self.back_end} 
+    front_end={self.front_end} mobile={self.mobile} game={self.game} 
+    devops={self.devops} security={self.security} qa={self.qa}>"""
 
 
 
@@ -129,6 +142,10 @@ class Team(db.Model):
 
     user = db.relationship("User", back_populates="team")
     project = db.relationship("Project", back_populates="team")
+    
+    def __repr__(self):
+        return f"""<Team id={self.id} user_id={self.user_id} 
+    project_id={self.project_id}>"""
                 
                 
 class Applicant(db.Model):
@@ -140,13 +157,33 @@ class Applicant(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     
-    user = db.relationship("User", back_populates="applicant")
     project = db.relationship("Project", back_populates="applicant")
+    user = db.relationship("User", back_populates="applicant")
 
     def __repr__(self):
         return f"""<Applicant applicant_id={self.applicant_id} 
         project_id={self.project_id} user_id={self.user_id}>"""
+        
 
+# class Message(db.Model):
+#     """Messages Info"""
+    
+#     __tablename__ = "messages"
+    
+#     message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     project_id = db.Column(db.Integer, db.ForeignKey("project.project_id"))
+#     message = db.Column(db.String(1000), nullable=False)
+#     date = db.Column(db.DateTime(), nullable=False)
+    
+#     user = db.relationship("User", back_populates="message")
+#     project = db.relationship("Project", back_populates="message")
+    
+    
+#     def __repr__(self):
+#         return f"""<Message message_id={self.message_id} message={self.message} 
+#     date={self.date}>"""
+    
 
 
 def connect_to_db(app, db_uri="postgresql:///codele"):

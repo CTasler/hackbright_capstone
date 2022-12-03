@@ -63,8 +63,8 @@ function Favorite(props) {
         <p> Required Current or Previous Roles: {props.req_roles}</p>
         <p> Project ID: { props.id }</p>
       </div>
-      <div className="center-button-div">
-          <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+      <div style={{position: "absolute", bottom: 20,}}>
+          <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 225}}>Join Team</button>
       </div>
     </div>
   );

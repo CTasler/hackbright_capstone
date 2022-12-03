@@ -100,6 +100,15 @@
     text-align: center;
 }
 
+.center-button-dv {
+  position: absolute;
+  bottom: 15;
+}
+
+.center-button {
+  margin-left: 225;
+}
+
 .floatbuttonr {
   float: right;
 }
@@ -137,6 +146,16 @@
   border-style: dashed;
   border-width: 2px;
   width: 500px;
+  height: 500px;
+  background-color: #EAE7DC;
+}
+
+.project-preview {
+  margin: 10px;
+  padding: 20px;
+  border-style: dashed;
+  border-width: 2px;
+  width: 570px;
   height: 500px;
   background-color: #EAE7DC;
 }
@@ -190,10 +209,17 @@ input[type=url] {
   width: 300px;
 }
 
-.center-button {
+/* .center-button {
   text-align: center;
-}
+} */
 
 .submit {
   margin: 10px;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  
 }

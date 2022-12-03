@@ -22,11 +22,11 @@ function UserProjects(props) {
         <p> Required Experience Level: {props.req_exp_level}</p>
         <p> Required Current or Previous Roles: {props.roles}</p>
       </div>
-      <div> Project ID: {props.id}</div>
       <div> Applicants: { props.applicants }</div>
-      <div className="center-button-div">
+      <div aria-hidden hidden> Project ID: {props.id}</div>
+      <div style={{position: "absolute", bottom: 20}}>
         <a href={`/all-applicants/${props.id}`}>
-          <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>View Applicant Profiles</button>
+          <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 200}}>View Applicant Profiles</button>
         </a>
       </div>
     </div>

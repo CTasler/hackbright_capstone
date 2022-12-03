@@ -319,6 +319,11 @@ def adv_search_roles(qa, security, devops, game, mobile, front_end, back_end):
         project_ids.add(project.project_id)
     return project_ids
 
+def get_all_messages(project_id):
+    
+    messages = Message.query.filter(Message.project_id == project_id).all()
+    return messages
+
 if __name__ == "__main__": 
     from server import app 
     
