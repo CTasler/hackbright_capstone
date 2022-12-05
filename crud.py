@@ -1,7 +1,7 @@
 """CRUD operations"""
 
 from model import (db, User, Project, Favorite, Applicant, UserRole, 
-                   ProjectRole, Team, connect_to_db)
+                   ProjectRole, Team, Message, connect_to_db)
 
 def create_user(username, password, fname, lname, bio, contact_pref, 
                 github_link, linkedin_link, exp_level):
@@ -319,10 +319,19 @@ def adv_search_roles(qa, security, devops, game, mobile, front_end, back_end):
         project_ids.add(project.project_id)
     return project_ids
 
+def create_message(user_id, project_id, message, date, time):
+    new_message = Message(user_id=user_id, project_id=project_id, message=message, date=date, time=time)
+    
+    db.session.add(new_message)
+    db.session.commit()
+    return new_message
+
+
 def get_all_messages(project_id):
     
     messages = Message.query.filter(Message.project_id == project_id).all()
     return messages
+
 
 if __name__ == "__main__": 
     from server import app 

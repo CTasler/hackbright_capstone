@@ -20,10 +20,10 @@ class User(db.Model):
     fname = db.Column(db.String(150), nullable=False)
     lname = db.Column(db.String(150), nullable= True)
     bio = db.Column(db.String(150), nullable=False)
-    contact_pref = db.Column(db.String(), nullable=False)
+    contact_pref = db.Column(db.String(), nullable=True)
     github_link = db.Column(db.String(150), nullable=True)
     linkedin_link = db.Column(db.String(150), nullable=True)
-    exp_level = db.Column(db.String(), nullable=False)
+    exp_level = db.Column(db.String(), nullable=True)
                          
 
     project = db.relationship("Project", back_populates="user")
@@ -31,7 +31,7 @@ class User(db.Model):
     applicant = db.relationship("Applicant", back_populates="user")
     user_roles = db.relationship("UserRole", back_populates="user")
     team = db.relationship("Team", back_populates="user")
-    # message = db.relationship("Message", back_populates="user")
+    message = db.relationship("Message", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} username={self.username}>"
@@ -55,7 +55,7 @@ class Project(db.Model):
     applicant = db.relationship("Applicant", back_populates="project")
     project_roles = db.relationship("ProjectRole", back_populates="project")
     team = db.relationship("Team", back_populates="project")
-    # message = db.relationship("Message", back_populates="project")
+    message = db.relationship("Message", back_populates="project")
 
     def __repr__(self):
         return f"""<Project project_id={self.project_id} user_id={self.user_id} 
@@ -165,24 +165,25 @@ class Applicant(db.Model):
         project_id={self.project_id} user_id={self.user_id}>"""
         
 
-# class Message(db.Model):
-#     """Messages Info"""
+class Message(db.Model):
+    """Messages Info"""
     
-#     __tablename__ = "messages"
+    __tablename__ = "messages"
     
-#     message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     project_id = db.Column(db.Integer, db.ForeignKey("project.project_id"))
-#     message = db.Column(db.String(1000), nullable=False)
-#     date = db.Column(db.DateTime(), nullable=False)
+    message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.project_id"))
+    message = db.Column(db.String(1000), nullable=False)
+    date = db.Column(db.String(20), nullable=False)
+    time = db.Column(db.String(10), nullable=False)
     
-#     user = db.relationship("User", back_populates="message")
-#     project = db.relationship("Project", back_populates="message")
+    user = db.relationship("User", back_populates="message")
+    project = db.relationship("Project", back_populates="message")
     
     
-#     def __repr__(self):
-#         return f"""<Message message_id={self.message_id} message={self.message} 
-#     date={self.date}>"""
+    def __repr__(self):
+        return f"""<Message message_id={self.message_id} message={self.message} 
+    date={self.date}>"""
     
 
 

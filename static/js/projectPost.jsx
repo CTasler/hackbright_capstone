@@ -78,7 +78,7 @@ function ProjectPost(props) {
           <p aria-hidden hidden> Project ID: {props.id}</p>
         </div>
         <div className="center-button-div">
-            <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+            <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
         </div>
       </div>
     );
@@ -103,7 +103,7 @@ function ProjectPost(props) {
           <p aria-hidden hidden> Project ID: {props.id}</p>
         </div>
         <div className="center-button-div">
-            <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+            <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
         </div>
       </div>
   );
@@ -175,23 +175,23 @@ function ProjectPostContainer() {
       <div>
         <div>
           <div>
-            <input type="text" style={{width: 300, backgroundColor: "#D8C3A5"}} 
+            <input type="text" style={{width: 300, backgroundColor: "#EAE7DC"}} 
             placeholder="Filter by Experience Level or Role" 
             className="rounded Search" 
             onChange={(e) => setQuery(e.target.value)}/>
           </div>
           <div>
             <a href="/advanced-search">
-              <button className="btn btn-sm btn-outline-dark" 
-              style={{backgroundColor: "#8E8D8A"}}>Advanced Search</button>
+              <button className="btn btn-md btn-outline-dark" 
+              style={{backgroundColor: "#E85A4F"}}>Advanced Search</button>
             </a>
           </div>
         </div>
         {projectPosts}
           <div>
             <a id="back-to-top" href="#" 
-            className="btn btn-outline-dark btn-lg back-to-top" 
-            roll="button"><i class="fas fa-chevron-up"></i></a>
+            className="btn btn-outline-light btn-lg back-to-top" 
+            roll="button"><i class="fas fa-chevron-up" style={{color: '#E85A4F'}}></i></a>
           </div>
       </div>
     );

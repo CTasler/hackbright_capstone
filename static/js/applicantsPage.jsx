@@ -62,10 +62,10 @@ function ApplicantProfiles(props) {
         </div>
         <div className="flex-container">
           <div>
-            <button value="add" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Add to Team</button>
+            <button value="add" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Add to Team</button>
           </div>
           <div>
-            <button value="reject" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Reject Applicant</button>
+            <button value="reject" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Reject Applicant</button>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ function ProfilesContainer() {
   return (
     <div>
       <div>
-        <h1> Applicants for { title }</h1>
+        <h1 className="title" style={{textAlign: "left"}}> Applicants for { title }</h1>
       </div>
       <div className="flex-container-horizontal horizontal-scroll">
         { applicantProfiles }

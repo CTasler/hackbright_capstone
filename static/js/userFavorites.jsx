@@ -103,7 +103,7 @@ function FavoritesContainer() {
     return (
       <div>
         <div>
-          <h1> Your Favorites </h1>
+          <h1 className="title" style={{textAlign: "left"}}> Your Favorites </h1>
         </div>
         <div className="flex-container-horizontal horizontal-scroll">
           { userFavorites }

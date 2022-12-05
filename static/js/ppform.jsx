@@ -22,7 +22,7 @@ function PPPreview(props) {
                 <p> Required Experience Level: {props.reqExpLevel} </p>
                 <p>Current or Previous Roles: {reqRolesString}</p>
                 <div className="center-button-div">
-                    <button id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+                    <button id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
                 </div>
             </div>
         </div>

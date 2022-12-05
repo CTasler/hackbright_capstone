@@ -78,7 +78,7 @@ function ProjectPost(props) {
             <p> Project ID: {props.id}</p>
           </div>
           <div id="joinbuttondiv">
-              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
           </div>
         </div>
       );
@@ -103,7 +103,7 @@ function ProjectPost(props) {
             <p> Project ID: {props.id}</p>
           </div>
           <div className="center-button-div">
-              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+              <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
           </div>
         </div>
     );

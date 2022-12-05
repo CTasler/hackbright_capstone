@@ -8,6 +8,17 @@
   top: 4em;
 }
 
+.main-background {
+  background: linear-gradient(rgba(232, 90, 79, 0.01), rgb(232, 90, 79, 0.01)), 
+  url('/static/css/prism.png') center center;
+  background-color: #E85A4F;
+  background-size: cover;
+}
+
+/* .main-background {
+  background-color: #E85A4F;
+} */
+
 .boxes { 
     border-radius: 3px;
     border: 3px solid black;
@@ -191,22 +202,31 @@
 
 .title {
   text-align: center;
+  font-family: 'Orbitron', serif;
+  color: #EAE7DC;
 }
 
 fieldset {
-  background-color: #EAE7DC;
+  background-color: #E85A4F;
 }
 
 input[type=text] {
   width: 300px;
+  background-color: #EAE7DC;
 }
 
 input[type=password] {
   width: 300px;
+  background-color: #EAE7DC;
 }
 
 input[type=url] {
   width: 300px;
+  background-color: #EAE7DC;
+}
+
+textarea {
+  background-color: #EAE7DC;
 }
 
 /* .center-button {
@@ -223,3 +243,48 @@ input[type=url] {
   right: 25px;
   
 }
+
+button {
+  font-size: 200px;
+}
+
+.chatbox {
+  background-color: #EAE7DC;
+}
+
+.chat-name {
+  border-radius: 3px;
+  border: 3px solid black;
+  margin: 2px;
+  background-color: #E85A4F;
+}
+
+.chat-message {
+  border-radius: 3px;
+  border: 3px solid black;
+  margin: 5px;
+  width: 90%;
+  background-color: #EAE7DC;
+}
+
+.chat-time {
+  border-radius: 3px;
+  border: 3px solid black;
+  margin: 5px;
+  padding: 2px;
+  background-color: #8E8D8A;
+}
+
+.chat-date {
+  border-radius: 3px;
+  border: 3px solid black;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 2px;
+  background-color: #8E8D8A;
+}
+/* #E85A4F red
+#E98074 light pink
+#EAE7DC light grey 
+#8E8D8A grey 
+#D8C3A5 brown*/

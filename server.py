@@ -886,10 +886,26 @@ def show_team_project_inf():
     
     return jsonify({"team_project_info": project_data})
 
+@app.route('/chat-submission', methods=["POST"])
+def submit_chat_message():
+    project_id = request.json.get("project_id")
+    chat_message = request.json.get("message")
+    date = request.json.get("date")
+    time = request.json.get("time")
+    username = session["username"]
+    user = crud.get_user_by_username(username)
+    print("*********")
+    print(f"{project_id} {chat_message} {date} {time}")
+    crud.create_message(user_id=user.user_id, project_id=project_id, message=chat_message, date=date, time=time)
+    return jsonify({"successful": True})
 
-@app.route('/get-chat-messages.json')
+
+@app.route('/get-chat-messages')
 def show_all_chat_messages():
     project_id = request.args.get("project_id")
+    print(f"*****")
+    print(project_id)
+    
     messages_data = []
     messages = crud.get_all_messages(project_id)
     for message in messages: 
@@ -897,7 +913,8 @@ def show_all_chat_messages():
         data = {
             "username": user.username, 
             "message": message.message, 
-            "date": message.date
+            "date": message.date,
+            "time": message.time
         }
         messages_data.append(data)
     return jsonify({"chat_messages": messages_data})

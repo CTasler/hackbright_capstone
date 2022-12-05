@@ -14,11 +14,10 @@ function Profile() {
         <div className="profile">
           <div className="floatbuttonr">
             <a href="/edit-profile">
-              <button className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E98074"}}>Edit Profile</button>
+              <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E98074"}}>Edit Profile</button>
             </a>
           </div>
           <div>
-            <h1> Profile: </h1>
             <p> First Name: {data.fname} </p>
             <p> Last Name: {data.lname} </p>
             <p> Username: {data.username} </p>

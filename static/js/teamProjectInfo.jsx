@@ -16,7 +16,7 @@ function TeamProject() {
     return (
         <div>
             <div>
-                <h2>Project Info</h2>
+                <h2 className="title" style={{textAlign: "left"}}>Project Info</h2>
             </div>
             <div className="profile">
                 <div>
