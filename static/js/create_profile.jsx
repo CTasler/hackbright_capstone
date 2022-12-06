@@ -16,7 +16,8 @@ function ProfilePreview(props) {
   }
 
   return (
-      <div>
+    <div>
+      <div style={{wordBreak: "break-word"}}>
           <h2> Profile Preview </h2>
           <p> First Name: {props.fname} </p>
           <p> Last Name: {props.lname} </p>
@@ -28,6 +29,7 @@ function ProfilePreview(props) {
           <p> Experience Level: {props.exp_level} </p>
           <p> Current or Previous Roles: {rolesString}</p>
       </div>
+    </div>
   )
 }
 

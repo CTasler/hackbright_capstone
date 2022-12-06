@@ -173,9 +173,9 @@ def show_search_page():
 @app.route('/advanced-search-submission.json', methods=["POST", "GET"])
 def collect_search_results():
     if request.method == "POST": 
-        username = request.json.get("user")
-        title = request.json.get("title")
-        specs = request.json.get("specs")
+        username = request.json.get("user").lower()
+        title = request.json.get("title").lower()
+        specs = request.json.get("specs").lower()
         req_exp_level = request.json.get("req_exp_level")
         req_roles = request.json.get("req_roles")
         print(f"***{username}{title}{specs}{req_exp_level}{req_roles}***")
@@ -897,7 +897,7 @@ def submit_chat_message():
     print("*********")
     print(f"{project_id} {chat_message} {date} {time}")
     crud.create_message(user_id=user.user_id, project_id=project_id, message=chat_message, date=date, time=time)
-    return jsonify({"successful": True})
+    return jsonify({"username": username})
 
 
 @app.route('/get-chat-messages')
@@ -953,8 +953,8 @@ def show_pp_form():
 
     return render_template('project_proposal_form.html', post_created=post_created)
 
-@app.route('/confirm-username')
-def check_correct_username():
+@app.route('/get-username')
+def get_username_from_session():
     username = session['username']
     return (username)
     
@@ -962,7 +962,7 @@ def check_correct_username():
 @app.route('/ppform-submission', methods=["POST"])
 def add_project():
     
-    username = request.json.get("user")
+    username = session["username"]
     title = request.json.get("title")
     summary = request.json.get("summary")
     specs = request.json.get("specs")

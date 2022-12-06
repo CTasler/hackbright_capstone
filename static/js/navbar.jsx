@@ -2,9 +2,8 @@
 
 function LoginButton() {
     const handleClick = (event => { 
-        console.log("wokring");
-        console.log(document.querySelector('#login_button'))
-        if (document.querySelector('#login_button').innerHTML === "Login") {
+        console.log(document.querySelector('#login-button'))
+        if (document.querySelector('#login-button').innerHTML === "Login") {
             window.location = '/login-page'
         } else {
             fetch('/process-logout', {
@@ -22,7 +21,8 @@ function LoginButton() {
 
     return (
         <div>    
-            <button onClick={handleClick} type="button" id="login_button" className="btn btn-md btn-outline-dark">
+            <button onClick={handleClick} type="button" id="login-button" 
+            className="btn btn-md btn-dark" style={{fontFamily: "Orbitron", color: "#EAE7DC"}}>
                 Login
             </button>
         </div>  
@@ -33,16 +33,13 @@ function Navbar() {
     fetch('/check-logged-in')
     .then(response => response.json())
     .then(responseJson => {
-        // console.log(responseJson.logged_in);
-        // console.log(document.querySelector('#login_button').innerHTML);
         if (responseJson.logged_in) {
-            document.querySelector('#login_button').innerHTML = "Logout";
+            document.querySelector('#login-button').innerHTML = "Logout";
         }})
     return (
         <div>
             <nav className="navbar fixed-top navbar-expand-md navbar-light" style={{backgroundColor: "#E85A4F"}}>
-                <a href="/" className="navbar-brand mb-0 h1"> Coders Assemble</a>
-                <div id="login-b-cont"></div>
+                <a href="/" className="navbar-brand mb-0 home-link"> Coders Assemble</a>
                 <LoginButton/>
                 <button type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar"
@@ -52,20 +49,20 @@ function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul className="navbar-nav">
+                    <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <a href="/create-profile" className="nav-link">
+                            <a href="/create-profile" className="nav-link big-text">
                                 Create a Profile
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a href="/profile" className="nav-link">
+                            <a href="/profile" className="nav-link big-text">
                                 View Profile
                             </a>
                         </li>
                         <li className="nav-item">
                             <a href="/create-project-proposal" 
-                            className="nav-link">
+                            className="nav-link big-text">
                                 Post a Project
                             </a>
                         </li>

@@ -5,6 +5,8 @@
 <span className= "tooltip-text">Leave this team</span>
 </div> */
 
+// {/* <button data-toggle="tooltip" data-placement="top" title="Leave this team" */}
+
 
 function UserTeams(props) {
 
@@ -35,7 +37,7 @@ function UserTeams(props) {
     return(
     <div className="rounded card">
         <div>
-          <button data-toggle="tooltip" data-placement="top" title="Leave this team" onClick={leaveTeamHandler} className="floatbuttonr btn btn-md btn-outline-dark" style={{backgroundColor: "#E98074"}}>
+          <button type="button" className="floatbuttonr btn btn-md btn-outline-dark" data-title="Leave this team" onClick={leaveTeamHandler} style={{backgroundColor: "#E98074"}}>
             X
           </button>
         </div>
@@ -64,9 +66,9 @@ function UserTeams(props) {
                 Project ID: { props.projectID }
             </p>
         </div>
-        <div style={{position: "absolute", bottom: 20}}>
+        <div style={{bottom: 20, textAlign: "center"}}>
           <a href={`/team-page/${props.projectID}`}>
-            <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 225}}>Team Page</button>
+            <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Team Page</button>
           </a>
         </div>
     </div>);

@@ -24,9 +24,9 @@ function UserProjects(props) {
       </div>
       <div> Applicants: { props.applicants }</div>
       <div aria-hidden hidden> Project ID: {props.id}</div>
-      <div style={{position: "absolute", bottom: 20}}>
+      <div style={{bottom: 20, textAlign: "center"}}>
         <a href={`/all-applicants/${props.id}`}>
-          <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 200}}>View Applicant Profiles</button>
+          <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>View Applicant Profiles</button>
         </a>
       </div>
     </div>

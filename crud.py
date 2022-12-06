@@ -3,6 +3,8 @@
 from model import (db, User, Project, Favorite, Applicant, UserRole, 
                    ProjectRole, Team, Message, connect_to_db)
 
+from sqlalchemy import func
+
 def create_user(username, password, fname, lname, bio, contact_pref, 
                 github_link, linkedin_link, exp_level):
     
@@ -280,7 +282,7 @@ def delete_applicant(user_id, project_id):
     return
     
 def adv_search_username(username):
-    users = User.query.filter(User.username.contains(username)).all()
+    users = User.query.filter(func.lower(User.username).contains(username)).all()
     user_ids = []
     for user in users: 
         user_ids.append(user.user_id)
@@ -292,14 +294,14 @@ def adv_search_username(username):
     return project_ids
 
 def adv_search_title(title):
-    projects = Project.query.filter(Project.title.contains(title)).all()
+    projects = Project.query.filter(func.lower(Project.title).contains(title)).all()
     project_ids = set()
     for project in projects: 
         project_ids.add(project.project_id)
     return project_ids
 
 def adv_search_specs(specs):
-    projects = Project.query.filter(Project.specs.contains(specs)).all()
+    projects = Project.query.filter(func.lower(Project.specs).contains(specs)).all()
     project_ids = set()
     for project in projects: 
         project_ids.add(project.project_id)

@@ -5,24 +5,29 @@ function PPPreview(props) {
         if (role != null) {
         reqRolesString += `${role}, `
         }
+
+    console.log(props.username)
     }
 
     return (
         <div>
             <h2> Project Post Preview </h2>
-            <div className="rounded card">
-            <div>
-                <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
-            </div>
-                <h4> Title: {props.title} </h4>
-                <p> Username: {props.user} </p>
-                <p> Summary: {props.summary} </p>
-                <p> Languages, Libraries, APIs: {props.specs} </p>
-                <p> GitHub URL: {props.projectGithub} </p>
-                <p> Required Experience Level: {props.reqExpLevel} </p>
-                <p>Current or Previous Roles: {reqRolesString}</p>
-                <div className="center-button-div">
-                    <button id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+            <div className="rounded pppreview" style={{position: "relative"}}>
+                <div>
+                    <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
+                </div>
+                <div style={{wordBreak: "break-word"}}>
+                    <h4> Title: {props.title} </h4>
+                    <p> Posted by: {props.username} </p>
+                    <p> Summary: {props.summary} </p>
+                    <p> Languages, Libraries, APIs: {props.specs} </p>
+                    <p> GitHub URL: {props.projectGithub} </p>
+                    <p> Required Experience Level: {props.reqExpLevel} </p>
+                    <p>Current or Previous Roles: {reqRolesString}</p>
+
+                </div>
+                <div style={{position: "absolute", bottom: "5px", left: "50%", transform: "translate(-50%, 0)"}}>
+                    <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
                 </div>
             </div>
         </div>
@@ -33,7 +38,6 @@ function PPPreview(props) {
 function ProjectProposalForm() {
     
     const [data, setData] = React.useState({
-        user: "",
         title: "",
         summary: "",
         specs: "",
@@ -41,6 +45,17 @@ function ProjectProposalForm() {
         req_exp_level: "", 
         req_roles: [],
       });
+
+
+    const [username, setUsername] = React.useState('')
+
+      React.useEffect(() => {
+          fetch('/get-username')
+          .then((response) => response.text())
+          .then((username_in_session) => {
+              setUsername({username_in_session})
+          })
+      }, []);
     
     const changeHandler = (event) => {
         setData({...data, [event.target.name]: event.target.value});
@@ -74,14 +89,9 @@ function ProjectProposalForm() {
 
     const submitHandler = (event) => {
         event.preventDefault();
-
-        fetch('/confirm-username')
-        .then((response) => response.text())
-        .then((username_in_session) => {
-            console.log(username_in_session)
-            if (data.user !== username_in_session) {
-                alert("You entered your username incorrectly. Please correct your username and resubmit.")
-            } else {
+            // if (data.user !== username_in_session) {
+            //     alert("You entered your username incorrectly. Please correct your username and resubmit.")
+            // } else {
     //POST request: data/body should be your data object
     //fetch('/submissionurl); 
     //separate route @app.route('/submissionurl') for receiving info
@@ -98,20 +108,12 @@ function ProjectProposalForm() {
                 window.location.replace(responseJson.url)
             })
             }
-        })
-    };
     
-
     return (
     <div className="flex-container">
         <div className="rounded form">
         <h2>Project Info:</h2>
         <form onSubmit={submitHandler}>
-            <div className="col-5">
-                <label htmlFor="user">Username:</label>
-                <input type="text" name="user" id="user"
-                 className="rounded" value={data.user} onChange={changeHandler} required />
-            </div>
             <div className="col-5">
                 <label htmlFor="title">Project Title:</label>
                 <input type="text" name="title" id="title" className="rounded" value={data.title} 
@@ -227,7 +229,7 @@ function ProjectProposalForm() {
             </form>
         </div>
             <div className="rounded project-preview" style={{alignItems: "center", justifyContent: "center"}}>
-                <PPPreview user={data.user} title={data.title} summary={data.summary} 
+                <PPPreview username={username.username_in_session} title={data.title} summary={data.summary} 
                 specs={data.specs} projectGithub={data.project_github} 
                 reqExpLevel={data.req_exp_level} reqRoles={data.req_roles}/>
             </div>
@@ -237,4 +239,12 @@ function ProjectProposalForm() {
 
     ReactDOM.render(<ProjectProposalForm />, 
     document.querySelector('#ppform-cont'));
+
+
+    //  {/* <div className="col-5">
+    //             <label htmlFor="user">Username:</label>
+    //             <input type="text" name="user" id="user"
+    //              className="rounded" value={data.user} onChange={changeHandler} required />
+    //         </div> */}
+    // <p> Username: {props.user} </p>
 

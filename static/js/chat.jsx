@@ -105,10 +105,19 @@ function Chat() {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
+            }}) 
+        .then((response) => response.json())
+        .then((responseJson) => {
+            const new_data = {
+                username: responseJson.username,
+                message: newMessage,
+                date: date, 
+                time: formatTime, 
             }
+            setMessages(messages => [...messages, new_data])
         })
-        .then(window.location.reload())
-        
+
+        document.querySelector('#textbox').value = '';
     };
 
 
@@ -123,7 +132,7 @@ function Chat() {
         </div>
         <div style={{marginTop: "10px"}}>
             <form className="flex-container" onSubmit={submitHandler}>
-                <input type="text" placeholder="Message Your Team" style={{width: "90%"}} className="rounded" onChange={changeHandler}/>
+                <input type="text" id="textbox" placeholder="Message Your Team" style={{width: "90%"}} className="rounded" onChange={changeHandler} autoFocus/>
                 <input type="submit" value="SEND" className="submit btn btn-outline-light btn-md" style={{color: "#E85A4F"}}/>
             </form>
         </div>

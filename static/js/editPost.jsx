@@ -1,3 +1,24 @@
+// return (
+//     <div>
+//         <h2> Project Post Preview </h2>
+//         <div className=" rounded pppreview">
+//         <div>
+//             <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
+//         </div>
+//             <h4> Title: {props.title} </h4>
+//             <p> Posted by: {props.user} </p>
+//             <p> Summary: {props.summary} </p>
+//             <p> Languages, Libraries, APIs: {props.specs} </p>
+//             <p> GitHub URL: {props.projectGithub} </p>
+//             <p> Required Experience Level: {props.reqExpLevel} </p>
+//             <p> Current or Previous Roles: {reqRolesString} </p>
+//             <div id="joinbuttondiv">
+//                 <button id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+//             </div>
+//         </div>
+//     </div>
+// );
+
 function PPPreview(props) {
     let reqRolesString = '';
     const roles = props.reqRoles
@@ -10,19 +31,22 @@ function PPPreview(props) {
     return (
         <div>
             <h2> Project Post Preview </h2>
-            <div className=" rounded card">
-            <div>
-                <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
-            </div>
-                <h4> Title: {props.title} </h4>
-                <p> Username: {props.user} </p>
-                <p> Summary: {props.summary} </p>
-                <p> Languages, Libraries, APIs: {props.specs} </p>
-                <p> GitHub URL: {props.projectGithub} </p>
-                <p> Required Experience Level: {props.reqExpLevel} </p>
-                <p> Current or Previous Roles: {reqRolesString} </p>
-                <div id="joinbuttondiv">
-                    <button id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+            <div className="rounded pppreview" style={{position: "relative"}}>
+                <div>
+                    <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
+                </div>
+                <div style={{wordBreak: "break-word"}}>
+                    <h4> Title: {props.title} </h4>
+                    <p> Posted by: {props.user} </p>
+                    <p> Summary: {props.summary} </p>
+                    <p> Languages, Libraries, APIs: {props.specs} </p>
+                    <p> GitHub URL: {props.projectGithub} </p>
+                    <p> Required Experience Level: {props.reqExpLevel} </p>
+                    <p>Current or Previous Roles: {reqRolesString}</p>
+
+                </div>
+                <div style={{position: "absolute", bottom: "5px", left: "50%", transform: "translate(-50%, 0)"}}>
+                    <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
                 </div>
             </div>
         </div>
@@ -229,7 +253,7 @@ function EditPost() {
                 </div>
             </form>
             </div>
-            <div className="rounded profile-preview" style={{alignContent: "center"}}>
+            <div className="rounded project-preview" style={{alignItems: "center", justifyContent: "center"}}>
                 <PPPreview user={data.user} title={data.title} summary={data.summary} 
                 specs={data.specs} projectGithub={data.project_github} 
                 reqExpLevel={data.req_exp_level} reqRoles={data.req_roles}/>

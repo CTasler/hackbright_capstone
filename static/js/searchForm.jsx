@@ -59,7 +59,7 @@ function ProjectPost(props) {
   })  
     if (props.favorited === true) {
       return (
-        <div className="rounded boxes" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
+        <div className="rounded pppreview" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
           <div>
             <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
           </div>
@@ -84,7 +84,7 @@ function ProjectPost(props) {
       );
     } else {
       return (
-        <div className="rounded boxes" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
+        <div className="rounded pppreview" id="ppost" style={{backgroundColor: "#8E8D8A"}}>
           <div>
             <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
           </div>
