@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.secret_key = "unicorn"
 
 test_data = [
-            {"username": "lovely",
-            "title": "We got this", 
+            {"username": "test user1",
+            "title": "Coders Assemble", 
             "summary": "Keep Pushing", 
             "specs": "libraries", 
             "project_github": "link", 
@@ -99,7 +99,7 @@ def show_project_posts():
             project_data.append(data)
         return jsonify({"project": project_data})
     
-    return jsonify({"project": test_data})
+    return jsonify({"test_project": test_data})
 
 # @app.route('/check-favorites.json')
 # def check_all_favorites():

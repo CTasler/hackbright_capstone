@@ -5,7 +5,6 @@ import os
 
 db = SQLAlchemy()
 
-
 # os.system("dropdb codele")
 # os.system("createdb codele")
 
@@ -37,6 +36,15 @@ class User(db.Model):
         return f"<User user_id={self.user_id} username={self.username}>"
     
     
+# def example_user():
+#     user = User(username="test2", password="password", fname="Claire", 
+#                 lname="Tasler", bio="Hackbright Academy Graduate", 
+#                 contact_pref="Email", github_link="www.github.com", linkedin_link="www.linkedin/CTasler.com", exp_level="Junior Software Engineer")
+#     db.session.add(user)
+#     db.session.commit()
+#     return 
+
+    
 class Project(db.Model):
     """Project info."""
 
@@ -61,6 +69,17 @@ class Project(db.Model):
         return f"""<Project project_id={self.project_id} user_id={self.user_id} 
                 title={self.title}>"""
                 
+                
+# def example_project():
+#     project = Project(user_id=1, title="Coders Assemble Test", 
+#                       summary="""website where users can come to collaborate 
+#                       on project ideas""", specs="Python", 
+#                       github_url="www.github.com", 
+#                       req_exp_level="Junior Software Engineer")          
+#     db.session.add(project)
+#     db.session.commit()
+#     return       
+
                 
 class UserRole(db.Model): 
     
@@ -205,3 +224,9 @@ if __name__ == "__main__":
         connect_to_db(app)
         db.create_all()
         db.session.commit()
+
+
+# psql codele to interact with database in terminal 
+# \dt to see all tables 
+# \d show table details
+# exp SQL: SELECT * FROM users
