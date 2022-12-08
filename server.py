@@ -9,43 +9,13 @@ import werkzeug.security
 app = Flask(__name__)
 app.secret_key = "unicorn"
 
-test_data = [
-            {"username": "test user1",
-            "title": "Coders Assemble", 
-            "summary": "Keep Pushing", 
-            "specs": "libraries", 
-            "project_github": "link", 
-            "req_exp_level": "none", 
-            "req_roles": "none"}, 
-            {"username": "frank",
-            "title": "Melons", 
-            "summary": "I hate melons",
-            "specs": "libraries", 
-            "project_github": "link", 
-            "req_exp_level": "none", 
-            "req_roles": "none"},
-            {"username": "unicorn",
-            "title": "something", 
-            "summary": "something else",
-            "specs": "libraries", 
-            "project_github": "link", 
-            "req_exp_level": "none", 
-            "req_roles": "none"},
-            {"username": "apples",
-            "title": "Awesomeness", 
-            "summary": "Epicness",
-            "specs": "libraries", 
-            "project_github": "link", 
-            "req_exp_level": "none", 
-            "req_roles": "none"}
-            ]
-
 
 @app.route('/')
 def show_homepage():
     session["incorrect_login"] = False
     session["post_created"] = False
     return render_template('homepage.html')
+
 
 @app.route('/projects.json')
 def show_project_posts():
@@ -58,49 +28,46 @@ def show_project_posts():
             favorited_ids.append(project.project_id)
 
     all_projects = crud.get_all_projects()
-    if all_projects: 
-        print("working")
-        project_data = []
-        for project in all_projects: 
-            if session.get("username", None) != None:
-                if project.project_id in favorited_ids: 
-                    favorited = True
-                else: 
-                    favorited = False
+    project_data = []
+    for project in all_projects: 
+        if session.get("username", None) != None:
+            if project.project_id in favorited_ids: 
+                favorited = True
             else: 
                 favorited = False
-            user = crud.get_user_by_id(project.user_id)
-            project_roles = crud.get_project_roles(project.project_id)
-            req_roles = []
-            if project_roles.back_end == True: 
-                req_roles.append("Back-end Engineer")
-            if project_roles.front_end == True: 
-                req_roles.append("Front-end Engineer")
-            if project_roles.mobile == True: 
-                req_roles.append("Mobile Developer")
-            if project_roles.game == True: 
-                req_roles.append("Game Developer")
-            if project_roles.devops == True: 
-                req_roles.append("DevOps Engineer")
-            if project_roles.security == True: 
-                req_roles.append("Security Engineer")
-            if project_roles.qa == True: 
-                req_roles.append("QA Engineer")
-            data = {
-                "username": user.username,
-                "project_id": project.project_id,
-                "title": project.title, 
-                 "summary": project.summary, 
-                 "specs": project.specs, 
-                 "project_github": project.github_url, 
-                 "req_exp_level": project.req_exp_level,
-                 "req_roles": req_roles,
-                 "favorited": favorited
-            }
-            project_data.append(data)
-        return jsonify({"project": project_data})
+        else: 
+            favorited = False
+        user = crud.get_user_by_id(project.user_id)
+        project_roles = crud.get_project_roles(project.project_id)
+        req_roles = []
+        if project_roles.back_end == True: 
+            req_roles.append("Back-end Engineer")
+        if project_roles.front_end == True: 
+            req_roles.append("Front-end Engineer")
+        if project_roles.mobile == True: 
+            req_roles.append("Mobile Developer")
+        if project_roles.game == True: 
+            req_roles.append("Game Developer")
+        if project_roles.devops == True: 
+            req_roles.append("DevOps Engineer")
+        if project_roles.security == True: 
+            req_roles.append("Security Engineer")
+        if project_roles.qa == True: 
+            req_roles.append("QA Engineer")
+        data = {
+            "username": user.username,
+            "project_id": project.project_id,
+            "title": project.title, 
+                "summary": project.summary, 
+                "specs": project.specs, 
+                "project_github": project.github_url, 
+                "req_exp_level": project.req_exp_level,
+                "req_roles": req_roles,
+                "favorited": favorited
+        }
+        project_data.append(data)
+    return jsonify({"project": project_data})
     
-    return jsonify({"test_project": test_data})
 
 # @app.route('/check-favorites.json')
 # def check_all_favorites():

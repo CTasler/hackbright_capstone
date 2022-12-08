@@ -118,99 +118,58 @@ function ProjectPost(props) {
 
 function ProjectPostContainer() {
     const [projects, setProjects] = React.useState([]);
-    const [testProjects, setTestProjects] = React.useState([]);
     const [query, setQuery] = React.useState('');
 
     React.useEffect(() => {
       fetch("/projects.json")
         .then((response) => response.json())
         .then((data) => {
-          if (data.test_project) {
-            setTestProjects(data.test_project)
-          } else {
             setProjects(data.project);
-            console.log("working")
-          }
         }
           )
     }, []);
 
     const projectPosts = [];
+    let index = 0;
+    for (const currentProject of projects) {
+      function onFavoriteClicked(listIndex) {
 
-    if (testProjects.length != 0) {
-      console.log(testProjects)
-      for (const currentTestProject of testProjects) {
-        projectPosts.push(
-          <ProjectPost 
-          username={currentTestProject.username}
-          title={currentTestProject.title} 
-          summary={currentTestProject.summary}
-          specs={currentTestProject.specs}
-          project_github={currentTestProject.project_github}
-          req_exp_level={currentTestProject.req_exp_level}
-          roles={currentTestProject.req_roles}
-          />
-          );
-      }
-    } else {
-        let index = 0;
-        for (const currentProject of projects) {
-        function onFavoriteClicked(listIndex) {
-  
-          const data = {
-            project_id: currentProject.project_id, 
-          }
-  
-          fetch('/favorite', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-          }) 
-          .then((response) => response.json())
-          .then((responseJson) => {
-              if (responseJson.loggedIn === "false") {
-                alert("You need to be logged in to add a project to your favorites.");
-              } else if (responseJson.post_creator === "true") {
-                alert("As amazing as it is, you cannot favorite your own project.")
-              } else {
-                // Make a copy of the list
-                const projectsCopy = JSON.parse(JSON.stringify(projects));
-                // Edit the copy
-                console.log(projectsCopy);
-                console.log(listIndex);
-  
-                //Find the project with the matching key (project_id), then change that
-  
-                projectsCopy[listIndex].favorited = !projectsCopy[listIndex].favorited;
-                // Set the state to the edited list
-                setProjects(projectsCopy)
-              }
-          })
+        const data = {
+          project_id: currentProject.project_id, 
         }
-        if (query) {
-          console.log(query)
-  
-          if (currentProject.req_exp_level.toLowerCase().includes(query.toLowerCase()) || currentProject.req_roles.join(", ").toLowerCase().includes(query.toLowerCase())) {
-            projectPosts.push(
-              <ProjectPost 
-                key={currentProject.project_id}
-                id={currentProject.project_id}
-                username={currentProject.username}
-                title={currentProject.title} 
-                summary={currentProject.summary}
-                specs={currentProject.specs}
-                project_github={currentProject.project_github}
-                req_exp_level={currentProject.req_exp_level}
-                roles={currentProject.req_roles.join(", ")}
-                favorited={currentProject.favorited}
-                favFunction={onFavoriteClicked}
-                listIndex={index}
-              />
-            );
+
+        fetch('/favorite', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+              'Content-Type': 'application/json',
           }
-        } else {
+        }) 
+        .then((response) => response.json())
+        .then((responseJson) => {
+            if (responseJson.loggedIn === "false") {
+              alert("You need to be logged in to add a project to your favorites.");
+            } else if (responseJson.post_creator === "true") {
+              alert("As amazing as it is, you cannot favorite your own project.")
+            } else {
+              // Make a copy of the list
+              const projectsCopy = JSON.parse(JSON.stringify(projects));
+              // Edit the copy
+              console.log(projectsCopy);
+              console.log(listIndex);
+
+              //Find the project with the matching key (project_id), then change that
+
+              projectsCopy[listIndex].favorited = !projectsCopy[listIndex].favorited;
+              // Set the state to the edited list
+              setProjects(projectsCopy)
+            }
+        })
+      }
+      if (query) {
+        console.log(query)
+
+        if (currentProject.req_exp_level.toLowerCase().includes(query.toLowerCase()) || currentProject.req_roles.join(", ").toLowerCase().includes(query.toLowerCase())) {
           projectPosts.push(
             <ProjectPost 
               key={currentProject.project_id}
@@ -228,8 +187,25 @@ function ProjectPostContainer() {
             />
           );
         }
-        index += 1
+      } else {
+        projectPosts.push(
+          <ProjectPost 
+            key={currentProject.project_id}
+            id={currentProject.project_id}
+            username={currentProject.username}
+            title={currentProject.title} 
+            summary={currentProject.summary}
+            specs={currentProject.specs}
+            project_github={currentProject.project_github}
+            req_exp_level={currentProject.req_exp_level}
+            roles={currentProject.req_roles.join(", ")}
+            favorited={currentProject.favorited}
+            favFunction={onFavoriteClicked}
+            listIndex={index}
+          />
+        );
       }
+      index += 1
     }
 
     return (
@@ -258,7 +234,7 @@ function ProjectPostContainer() {
           </div>
       </div>
     );
-  }
+}
 
 ReactDOM.render(<ProjectPostContainer/>, document.querySelector('#posts-cont'));
 
