@@ -3,7 +3,7 @@
 
 {% block body %}
     {% if session["username"]%}
-    <p style="color: #EAE7DC">Welcome {{session["username"]}}!</p>
+    <p id="welcome-user" style="color: #EAE7DC">Welcome {{session["username"]}}!</p>
     {% endif %}
     <div id="title-cont"> </div>
     <div id="posts-cont"></div>

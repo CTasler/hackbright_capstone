@@ -55,7 +55,7 @@ function Login() {
                             </div>
                         </div>
                         <div className="d-grid gap-2">
-                            <input type="submit" className="submit btn btn-outline-dark btn-md" value="Login"/>
+                            <input type="submit" id="login-btn-submit" className="submit btn btn-outline-dark btn-md" value="Login"/>
                             <p>Don't have an account?</p>
                             <a href="/create-profile" >Create a profile</a>
                         </div>

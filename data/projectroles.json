@@ -1,0 +1,62 @@
+[
+    {
+        "project_id": 1, 
+        "back_end": true,
+        "front_end": true, 
+        "mobile": true, 
+        "game": false, 
+        "devops": false, 
+        "security": false, 
+        "qa": false
+    },
+    {
+        "project_id": 2, 
+        "back_end": false,
+        "front_end": true, 
+        "mobile": true, 
+        "game": false, 
+        "devops": false, 
+        "security": false, 
+        "qa": false
+    },
+    {
+        "project_id": 3, 
+        "back_end": false,
+        "front_end": false, 
+        "mobile": true, 
+        "game": false, 
+        "devops": false, 
+        "security": false, 
+        "qa": true
+    },
+    {
+        "project_id": 4, 
+        "back_end": false,
+        "front_end": false, 
+        "mobile": true, 
+        "game": false, 
+        "devops": false, 
+        "security": true, 
+        "qa": true
+    },
+    {
+        "project_id": 5, 
+        "back_end": true,
+        "front_end": false, 
+        "mobile": false, 
+        "game": true, 
+        "devops": false, 
+        "security": true, 
+        "qa": false
+    },
+    {
+        "project_id": 6, 
+        "back_end": false,
+        "front_end": false, 
+        "mobile": false, 
+        "game": true, 
+        "devops": true, 
+        "security": true, 
+        "qa": false
+    }
+]

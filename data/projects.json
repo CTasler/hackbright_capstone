@@ -1,0 +1,50 @@
+[
+    {
+        "user_id": 1, 
+        "title": "Coders Assemble",
+        "summary": "Website where users can post their project ideas and find team members to collaborate with on these projects.",
+        "specs": "Python, Javascript, React, SQLAlchemy", 
+        "github_url": "https://github.com/CTasler/hackbright_capstone",  
+        "req_exp_level": "Trainee Software Engineer"
+    }, 
+    {
+        "user_id": 1, 
+        "title": "Puppy Finder",
+        "summary": "App that allows users to see the 'friendly' dogs that are in the area when they go for walks. Users can find these dogs and pet them on their walk!",
+        "specs": "Java, Google Maps API", 
+        "github_url": "https://github.com/CTasler",  
+        "req_exp_level": "Senior Software Engineer"
+    }, 
+    {
+        "user_id": 4, 
+        "title": "Rememberall",
+        "summary": "App that keeps track of important things a user needs to remember and will remind them of these things when needed.",
+        "specs": "Java, React, Magic", 
+        "github_url": "https://github.com",  
+        "req_exp_level": "Lead Software Engineer"
+    }, 
+    {
+        "user_id": 1, 
+        "title": "! Treat Yourself",
+        "summary": "Don't Treat Yourself is a web extension that tracks a users bank account amount and will advise the user how much money they will have left if they decide to purchase whatever they are shopping for online.",
+        "specs": "Java, Weka, Bank account tracking API", 
+        "github_url": "https://github.com/CTasler",  
+        "req_exp_level": "Mid-level Software Engineer"
+    },
+    {
+        "user_id": 2, 
+        "title": "Kobayashi Maru Cheatcode",
+        "summary": "Program that allows any user to beat the Kobayashi Maru test.",
+        "specs": "Futuristic technologies", 
+        "github_url": "https://github.com",  
+        "req_exp_level": "Senior Software Engineer"
+    },
+    {
+        "user_id": 3, 
+        "title": "Kobayashi Maru",
+        "summary": "The Kobayashi Maru is a training exercise designed to test the character of Starfleet cadets in a no-win scenario.",
+        "specs": "Futuristic technologies", 
+        "github_url": "https://github.com",  
+        "req_exp_level": "Lead Software Engineer"
+    }
+]

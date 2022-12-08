@@ -1,0 +1,42 @@
+[
+    {
+        "user_id": 1, 
+        "back_end": true,
+        "front_end": true, 
+        "mobile": false, 
+        "game": false, 
+        "devops": false, 
+        "security": false, 
+        "qa": false
+    },
+    {
+        "user_id": 2, 
+        "back_end": false,
+        "front_end": true, 
+        "mobile": false, 
+        "game": true, 
+        "devops": false, 
+        "security": true, 
+        "qa": false
+    },
+    {
+        "user_id": 3, 
+        "back_end": false,
+        "front_end": false, 
+        "mobile": false, 
+        "game": true, 
+        "devops": false, 
+        "security": true, 
+        "qa": false
+    },
+    {
+        "user_id": 4, 
+        "back_end": true,
+        "front_end": true, 
+        "mobile": false, 
+        "game": false, 
+        "devops": false, 
+        "security": false, 
+        "qa": true
+    }
+]

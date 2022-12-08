@@ -3,7 +3,7 @@
 
 {% block body %}
     {% if session["incorrect_login"]%}
-    <p style="color: #EAE7DC">Incorrect username/password combination.</p>
+    <p id="wrong-entry" style="color: #EAE7DC">Incorrect username/password combination.</p>
     {% endif %}
     <div id="login-cont"></div>
     <script type="text/jsx" src="/static/js/loginModal.jsx"></script>       

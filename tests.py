@@ -7,6 +7,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+from time import sleep
+
 from server import app
 from model import (db, User, Project, Favorite, Applicant, UserRole, 
                    ProjectRole, Team, Message, connect_to_db) 
@@ -26,11 +28,28 @@ browser.get("http://localhost:5000")
 
 assert browser.title == "Coders Assemble"
 
-filter_input = browser.find_element(By.ID, 'filter')
-filter_input.send_keys("Trainee")
+# filter_input = browser.find_element(By.ID, 'filter')
+# filter_input.send_keys("Trainee")
 
-# assert browser.
-print("Test Passed")
+browser.get("http://localhost:5000/login-page")
+
+username_input = browser.find_element(By.ID, "username_login")
+username_input.send_keys("tasl0368")
+
+password_input = browser.find_element(By.ID, "password_login")
+password_input.send_keys("notpassword")
+
+login_button = browser.find_element(By.ID, "login-btn-submit")
+login_button.click()
+
+sleep(5)
+
+assert browser.title == "Login Page"
+result = browser.find_element(By.ID, "wrong-entry")
+text = result.get_attribute('innerText')
+assert "Incorrect" in text
+
+print("Frontend Tests Passed")
 
 browser.quit()
     

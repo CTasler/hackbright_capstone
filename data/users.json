@@ -1,0 +1,46 @@
+[
+    {
+        "username": "tasl0368", 
+        "password": "p",
+        "fname": "Claire",
+        "lname": "Tasler", 
+        "bio": "My motto= Why worship legends when you know that you can join them?",
+        "contact_pref": "Phone", 
+        "github_link": "https://github.com/CTasler", 
+        "linkedin_link": "https://www.linkedin.com/in/claire-tasler/", 
+        "exp_level": "Trainee Software Engineer"
+    }, 
+    {
+        "username": "Captain", 
+        "password": "p",
+        "fname": "James",
+        "lname": "Kirk", 
+        "bio": "Ladies man and adventure addict with an uncanny ability to sniff out danger",
+        "contact_pref": "Email", 
+        "github_link": "https://github.com/JamesTKirk", 
+        "linkedin_link": "https://www.linkedin.com/in/james-kirk-startrek/", 
+        "exp_level": "Lead Software Engineer"
+    }, 
+    {
+        "username": "green-blooded-goblin", 
+        "password": "p",
+        "fname": "Spock",
+        "lname": "", 
+        "bio": "My motto= Live long and prosper",
+        "contact_pref": "Discord", 
+        "github_link": "https://github.com/Spock", 
+        "linkedin_link": "https://www.linkedin.com/in/spock/", 
+        "exp_level": "Senior Software Engineer"
+    }, 
+    {
+        "username": "scar", 
+        "password": "p",
+        "fname": "Harry",
+        "lname": "Potter", 
+        "bio": "The boy who lived",
+        "contact_pref": "Email", 
+        "github_link": "https://github.com/HarryPotter", 
+        "linkedin_link": "https://www.linkedin.com/in/harry-potter/", 
+        "exp_level": "Mid-Level Software Engineer"
+    }
+]
