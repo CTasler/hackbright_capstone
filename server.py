@@ -59,6 +59,7 @@ def show_project_posts():
 
     all_projects = crud.get_all_projects()
     if all_projects: 
+        print("working")
         project_data = []
         for project in all_projects: 
             if session.get("username", None) != None:

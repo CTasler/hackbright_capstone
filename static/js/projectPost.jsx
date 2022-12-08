@@ -22,9 +22,7 @@ function ProjectPost(props) {
           } else if (responseJson.on_team === "true") {
             alert("You are already on this team.")
           } else {
-          alert(`Your application was registered. If your application is 
-          accepted, the project will show up in the "Your Teams" section of 
-          your profile.`);
+          alert(`Your application was registered. If your application is accepted, the project will show up in the "Your Teams" section of your profile.`);
           }
       })
   })  
@@ -238,7 +236,7 @@ function ProjectPostContainer() {
       <div>
         <div>
           <div>
-            <input type="text" style={{width: 300, backgroundColor: "#EAE7DC"}} 
+            <input type="text" id="filter" style={{width: 300, backgroundColor: "#EAE7DC"}} 
             placeholder="Filter by Experience Level or Role" 
             className="rounded Search" 
             onChange={(e) => setQuery(e.target.value)}/>

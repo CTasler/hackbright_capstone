@@ -39,7 +39,7 @@ function Navbar() {
     return (
         <div>
             <nav className="navbar fixed-top navbar-expand-md navbar-light" style={{backgroundColor: "#E85A4F"}}>
-                <a href="/" className="navbar-brand mb-0 home-link"> Coders Assemble</a>
+                <a href="/" className="navbar-brand mb-0 home-link" style={{marginLeft: "10px"}}> Coders Assemble</a>
                 <LoginButton/>
                 <button type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar"
@@ -48,8 +48,8 @@ function Navbar() {
                     aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul className="navbar-nav ms-auto">
+                <div className="collapse navbar-collapse" id="collapsibleNavbar" style={{textAlign: 'center'}}>
+                    <ul className="navbar-nav ms-auto" style={{marginRight: "10px"}}>
                         <li className="nav-item">
                             <a href="/create-profile" className="nav-link big-text">
                                 Create a Profile
