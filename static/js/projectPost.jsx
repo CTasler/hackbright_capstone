@@ -63,6 +63,8 @@ function ProjectPost(props) {
   //     favButtonHandler();
   //   }
   // })
+// .focus
+
 
   if (props.favorited === true) {
     return (
@@ -70,10 +72,15 @@ function ProjectPost(props) {
       <div className="rounded boxes" id="ppost" 
       style={{backgroundColor: "#8E8D8A"}}>
         <div>
-          <i id="favbutton" className="fa-solid fa-heart fa-2x" 
-          style={{ color: '#E98074'}} roll="button" tabIndex="0" onClick={favButtonHandler}>
-          <span className="sr-only">Favorite this Post</span>
+          <button id="favbuttonbackground" className="floatbuttonr" 
+          style={{backgroundColor: 'transparent', border: 'none'}}  
+          onClick={favButtonHandler}>
+            <i id="favbutton" className="fa-solid fa-heart fa-2x" 
+            style={{ color: '#E98074'}} 
+            role="button" tabIndex="-1">
+            <span className="sr-only">Favorite this Post</span>
           </i>
+          </button>
         </div>
         <div>
           <h4> Title: {props.title} </h4>
@@ -104,10 +111,15 @@ function ProjectPost(props) {
       <div className="rounded boxes" id="ppost" 
       style={{backgroundColor: "#8E8D8A"}}>
         <div>
-        <i id="favbutton" className="fa-regular fa-heart fa-2x" 
-          style={{ color: '#E98074'}} tabIndex="0" onClick={favButtonHandler}>
-          <span className="sr-only">Favorite this Post</span>
-          </i>
+          <button id="favbuttonbackground" 
+          className="floatbuttonr" 
+          style={{backgroundColor: 'transparent', border: 'none'}} 
+          onClick={favButtonHandler}>
+            <i id="favbutton" className="fa-regular fa-heart fa-2x" 
+              style={{ color: '#E98074'}} role="button" tabIndex="-1">
+              <span className="sr-only">Favorite this Post</span>
+              </i>
+          </button>
         </div>
         <div>
           <h4> Title: {props.title} </h4>

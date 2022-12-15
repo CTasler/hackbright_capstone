@@ -295,7 +295,8 @@ def add_user():
     exp_level = request.json.get("exp_level")
     roles = request.json.get("roles")
 
-
+    contact_pref = [e for e in contact_pref if e]
+    
    #generate a password hash
     hash = werkzeug.security.generate_password_hash(pwd)
          

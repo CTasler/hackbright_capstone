@@ -1110,6 +1110,7 @@
   .flashmessages {
     position: relative; 
     color: #EAE7DC;
+    text-align: left;
   }
   
   .main-background {
@@ -1339,6 +1340,9 @@
     background-color: #EAE7DC;
   }
   
+  .full-input {
+    min-width: 280px;
+  }
   
   .submit {
     margin: 10px;
@@ -1455,6 +1459,7 @@
   .flashmessages {
     position: relative; 
     color: #EAE7DC;
+    text-align: left;
   }
   
   .main-background {
@@ -1676,8 +1681,8 @@
   textarea {
     background-color: #EAE7DC;
   }
-  
-  
+
+
   .submit {
     margin: 10px;
   }
