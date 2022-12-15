@@ -57,7 +57,7 @@ function ProfilesContainer() {
     return (
         <div>
             <div>
-                <h2 className="title" style={{textAlign: "left"}}> Team members </h2>
+                <h2 className="title" style={{textAlign: "left"}}> Team Members </h2>
             </div>
             <div className="flex-container-horizontal horizontal-scroll">
                 { teamProfiles }

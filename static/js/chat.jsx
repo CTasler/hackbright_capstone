@@ -21,7 +21,8 @@ function ChatMessage(props) {
                 <div className="chat-date" style={{textAlign: "center"}}>
                     {props.date}
                 </div>
-                <div className="flex-container" style={{justifyContent: "start"}}>
+                <div className="flex-container" 
+                style={{justifyContent: "start"}}>
                     <div className="chat-name rounded">
                         {props.username}
                     </div>
@@ -132,8 +133,12 @@ function Chat() {
         </div>
         <div style={{marginTop: "10px"}}>
             <form className="flex-container" onSubmit={submitHandler}>
-                <input type="text" id="textbox" placeholder="Message Your Team" style={{width: "90%"}} className="rounded" onChange={changeHandler} autoFocus/>
-                <input type="submit" value="SEND" className="submit btn btn-outline-light btn-md" style={{color: "#E85A4F"}}/>
+                <input type="text" id="textbox" placeholder="Message Your Team" 
+                style={{width: "100%"}} className="rounded" 
+                onChange={changeHandler} autoFocus/>
+                <input type="submit" value="SEND" 
+                className="submit btn btn-outline-light btn-md" 
+                style={{color: "#E85A4F"}}/>
             </form>
         </div>
     </div>

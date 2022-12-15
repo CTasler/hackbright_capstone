@@ -1,3 +1,5 @@
+// marginLeft: 225
+
 function ApplicantProfiles(props) {
 
     const addHandler = ((event) => {
@@ -60,7 +62,7 @@ function ApplicantProfiles(props) {
           <p> Experience Level: {props.expLvl}</p>
           <p> Current or Previous Roles: {props.roles} </p>
         </div>
-        <div className="flex-container">
+        <div className="col d-flex justify-content-between align-items-end">
           <div>
             <button value="add" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}} onClick={addHandler}>Add to Team</button>
           </div>

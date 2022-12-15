@@ -2,6 +2,8 @@
 // <i className="fa fa-heart"></i>
 // // </button> */}
 
+// marginLeft: 210
+
 function Favorite(props) {
 
   const data = {
@@ -44,27 +46,35 @@ function Favorite(props) {
 
   return (
     <div className="rounded card" style={{backgroundColor: "#8E8D8A"}}>
-      <div>
+      <div style={{paddingBottom: "30px"}}>
         <div>
-          <i id="favbutton" className="fa-solid fa-heart fa-2x" style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+          <div>
+            <i id="favbutton" className="fa-solid fa-heart fa-2x" 
+            style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+          </div>
+        </div>
+        <div>
+          <h4> Title: {props.title} </h4>
+        </div>
+        <div>
+          <p> Posted by: {props.username}</p>
+        </div>
+        <div>
+          <p> Summary: {props.summary} </p>
+          <p> Libraries: {props.specs} </p>
+          <p> GitHub URL: 
+            <a href={`${props.project_github}`}>{props.project_github}</a>
+          </p>
+          <p> Required Experience Level: {props.req_exp_level}</p>
+          <p> Required Current or Previous Roles: {props.req_roles}</p>
+          <p aria-hidden hidden> Project ID: { props.id }</p>
         </div>
       </div>
-      <div>
-        <h4> Title: {props.title} </h4>
-      </div>
-      <div>
-        <p> Posted by: {props.username}</p>
-      </div>
-      <div>
-        <p> Summary: {props.summary} </p>
-        <p> Libraries: {props.specs} </p>
-        <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
-        <p> Required Experience Level: {props.req_exp_level}</p>
-        <p> Required Current or Previous Roles: {props.req_roles}</p>
-        <p> Project ID: { props.id }</p>
-      </div>
-      <div style={{position: "absolute", bottom: 20,}}>
-          <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-sm btn-outline-dark" style={{backgroundColor: "#E85A4F", marginLeft: 225}}>Join Team</button>
+      <div className="col d-flex justify-content-center align-items-end">
+          <button onClick={joinButtonHandler} id="joinbutton" 
+          className="btn btn-md btn-outline-dark" 
+          style={{backgroundColor: "#E85A4F"}}>
+            Join Team</button>
       </div>
     </div>
   );
@@ -103,7 +113,8 @@ function FavoritesContainer() {
     return (
       <div>
         <div>
-          <h1 className="title" style={{textAlign: "left"}}> Your Favorites </h1>
+          <h1 className="title" 
+          style={{textAlign: "left"}}> Your Favorites </h1>
         </div>
         <div className="flex-container-horizontal horizontal-scroll">
           { userFavorites }

@@ -55,13 +55,25 @@ function ProjectPost(props) {
     //     }
     // })
   })  
+
+  // const accessibleFavButtonHandler = (event => {
+  //   console.log("coolio")
+  //   if (event.key === 'T') {
+  //     console.log("working")
+  //     favButtonHandler();
+  //   }
+  // })
+
   if (props.favorited === true) {
     return (
+      <div>
       <div className="rounded boxes" id="ppost" 
       style={{backgroundColor: "#8E8D8A"}}>
         <div>
           <i id="favbutton" className="fa-solid fa-heart fa-2x" 
-          style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+          style={{ color: '#E98074'}} roll="button" tabIndex="0" onClick={favButtonHandler}>
+          <span className="sr-only">Favorite this Post</span>
+          </i>
         </div>
         <div>
           <h4> Title: {props.title} </h4>
@@ -85,14 +97,17 @@ function ProjectPost(props) {
             style={{backgroundColor: "#E85A4F"}}>Join Team</button>
         </div>
       </div>
+      </div>
     );
   } else {
     return (
       <div className="rounded boxes" id="ppost" 
       style={{backgroundColor: "#8E8D8A"}}>
         <div>
-          <i id="favbutton" className="fa-regular fa-heart fa-2x" 
-          style={{ color: '#E98074'}} onClick={favButtonHandler}></i>
+        <i id="favbutton" className="fa-regular fa-heart fa-2x" 
+          style={{ color: '#E98074'}} tabIndex="0" onClick={favButtonHandler}>
+          <span className="sr-only">Favorite this Post</span>
+          </i>
         </div>
         <div>
           <h4> Title: {props.title} </h4>
@@ -103,13 +118,17 @@ function ProjectPost(props) {
         <div>
           <p> Summary: {props.summary} </p>
           <p> Libraries: {props.specs} </p>
-          <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+          <p> GitHub URL: 
+            <a href={`${props.project_github}`}>{props.project_github}</a>
+          </p>
           <p> Required Experience Level: {props.req_exp_level}</p>
           <p> Required Current or Previous Roles: {props.roles}</p>
           <p aria-hidden hidden> Project ID: {props.id}</p>
         </div>
         <div className="center-button-div">
-            <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+            <button onClick={joinButtonHandler} id="joinbutton" 
+            className="btn btn-md btn-outline-dark" 
+            style={{backgroundColor: "#E85A4F"}}>Join Team</button>
         </div>
       </div>
   );
@@ -212,13 +231,16 @@ function ProjectPostContainer() {
       <div>
         <div>
           <div>
-            <input type="text" id="filter" style={{width: 300, backgroundColor: "#EAE7DC"}} 
+            <label className="hide-element" type="search" 
+            htmlFor="filter projects">Filter Projects: </label>
+            <input type="text" id="filter projects" 
+            style={{width: 300, backgroundColor: "#EAE7DC"}} 
             placeholder="Filter by Experience Level or Role" 
             className="rounded Search" 
             onChange={(e) => setQuery(e.target.value)}/>
           </div>
           <div>
-            <a href="/advanced-search">
+            <a href="/advanced-search" tabIndex="-1">
               <button className="btn btn-md btn-outline-dark" 
               style={{backgroundColor: "#E85A4F"}}>Advanced Search</button>
             </a>
@@ -230,7 +252,9 @@ function ProjectPostContainer() {
             className="btn btn-outline-light btn-lg back-to-top" 
             style={{borderColor: "#EAE7DC"}}
             roll="button"><i className="fas fa-chevron-up" 
-            style={{color: '#E85A4F'}}></i></a>
+            style={{color: '#E85A4F'}} aria-hidden="true"></i>
+            <span className="sr-only">Return to Top of Page</span>
+            </a>
           </div>
       </div>
     );

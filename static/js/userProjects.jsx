@@ -1,30 +1,32 @@
-
+// marginLeft: 170
 
 function UserProjects(props) {
   
 
   return (
     <div className="rounded card" style={{backgroundColor: "#8E8D8A"}}>
-      <div className="floatbuttonr">
-        <a href={`/edit-post/${props.id}`}>
-          <button className="floatbuttonr btn btn-md btn-outline-dark" style={{backgroundColor: "#E98074"}}>
-            Edit Project
-          </button>
-        </a>
+      <div style={{paddingBottom: "45px"}}>
+        <div className="floatbuttonr">
+          <a href={`/edit-post/${props.id}`}>
+            <button className="floatbuttonr btn btn-md btn-outline-dark" style={{backgroundColor: "#E98074"}}>
+              Edit Project
+            </button>
+          </a>
+        </div>
+        <div>
+          <h4> Title: {props.title} </h4>
+        </div>
+        <div>
+          <p> Summary: {props.summary} </p>
+          <p> Libraries: {props.specs} </p>
+          <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
+          <p> Required Experience Level: {props.req_exp_level}</p>
+          <p> Required Current or Previous Roles: {props.roles}</p>
+        </div>
+        <div> Applicants: { props.applicants }</div>
+        <div aria-hidden hidden> Project ID: {props.id}</div>
       </div>
-      <div>
-        <h4> Title: {props.title} </h4>
-      </div>
-      <div>
-        <p> Summary: {props.summary} </p>
-        <p> Libraries: {props.specs} </p>
-        <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
-        <p> Required Experience Level: {props.req_exp_level}</p>
-        <p> Required Current or Previous Roles: {props.roles}</p>
-      </div>
-      <div> Applicants: { props.applicants }</div>
-      <div aria-hidden hidden> Project ID: {props.id}</div>
-      <div style={{bottom: 20, textAlign: "center"}}>
+      <div className="col d-flex justify-content-center align-items-end">
         <a href={`/all-applicants/${props.id}`}>
           <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>View Applicant Profiles</button>
         </a>

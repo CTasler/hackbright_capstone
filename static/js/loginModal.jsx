@@ -35,7 +35,7 @@ function Login() {
                         <div className="inner-flex-container">
                             <div className="col-5">
                                 <div>
-                                    <label htmlFor="username">Username</label>
+                                    <label htmlFor="username_login">Username</label>
                                 </div>
                                 <div>
                                     <input type="text" name="username" 
@@ -45,7 +45,7 @@ function Login() {
                             </div>
                             <div className="col-5">
                                 <div>
-                                    <label htmlFor="password">Password</label>
+                                    <label htmlFor="password_login">Password</label>
                                 </div>
                                 <div>
                                     <input type="password" name="password" 

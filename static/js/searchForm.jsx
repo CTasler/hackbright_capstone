@@ -75,7 +75,7 @@ function ProjectPost(props) {
             <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
             <p> Required Experience Level: {props.req_exp_level}</p>
             <p> Required Current or Previous Roles: {props.roles}</p>
-            <p> Project ID: {props.id}</p>
+            <p aria-hidden hidden> Project ID: {props.id}</p>
           </div>
           <div id="joinbuttondiv">
               <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
@@ -100,7 +100,7 @@ function ProjectPost(props) {
             <p> GitHub URL: <a href={`${props.project_github}`}>{props.project_github}</a></p>
             <p> Required Experience Level: {props.req_exp_level}</p>
             <p> Required Current or Previous Roles: {props.roles}</p>
-            <p> Project ID: {props.id}</p>
+            <p aria-hidden hidden> Project ID: {props.id}</p>
           </div>
           <div className="center-button-div">
               <button onClick={joinButtonHandler} id="joinbutton" className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
@@ -186,17 +186,18 @@ function SearchForm() {
     
 
     return (
-        <div className="flex-container">
-            <div className="rounded form" style={{maxHeight: "60em"}}>
+        <div>
+          <div className="flex-container">
+            <div className="rounded form" style={{maxHeight: "910px"}}>
                 <form onSubmit={submitHandler}>
                     <div className="col-5">
                         <label htmlFor="user">Creator's Username:</label>
                         <input type="text" name="user" id="user"
-                        className="rounded" value={data.user} onChange={changeHandler} />
+                        className="rounded full-input" value={data.user} onChange={changeHandler} />
                     </div>
                     <div className="col-5">
                         <label htmlFor="title">Project Title:</label>
-                        <input type="text" name="title" id="title" className="rounded" value={data.title} 
+                        <input type="text" name="title" id="title" className="rounded full-input" value={data.title} 
                         onChange={changeHandler} />
                     </div>
                     <div>
@@ -218,30 +219,30 @@ function SearchForm() {
                             <input type="radio" name="req_exp_level" id="pp-trainee" 
                             value="Trainee Software Engineer" 
                             onChange={changeHandler}/>
-                            <label htmlFor="trainee">Trainee Software Engineer</label>
+                            <label htmlFor="pp-trainee">Trainee Software Engineer</label>
                             </div>
                             <div>
                             <input type="radio" name="req_exp_level" id="pp-junior" 
                             value="Junior Software Engineer" onChange={changeHandler}/>
-                            <label htmlFor="junior">Junior Software Engineer</label>
+                            <label htmlFor="pp-junior">Junior Software Engineer</label>
                             </div>
                             <div>
                             <input type="radio" name="req_exp_level" id="pp-mid_level" 
                             value="Mid-level Software Engineer" 
                             onChange={changeHandler}/>
-                            <label htmlFor="mid_level">
+                            <label htmlFor="pp-mid_level">
                                 Mid-level Software Engineer
                             </label>
                             </div>
                             <div>
                             <input type="radio" name="req_exp_level" id="pp-senior" 
                             value="Senior Software Engineer" onChange={changeHandler}/>
-                            <label htmlFor="senior">Senior Software Engineer</label>
+                            <label htmlFor="pp-senior">Senior Software Engineer</label>
                             </div>
                             <div>
                             <input type="radio" name="req_exp_level" id="pp-lead" 
                             value="Lead Software Engineer" onChange={changeHandler}/>
-                            <label htmlFor="lead">Lead Software Engineer</label>
+                            <label htmlFor="pp-lead">Lead Software Engineer</label>
                             </div>
                         </fieldset>
                     </div>
@@ -253,49 +254,61 @@ function SearchForm() {
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-back_end" 
                             value="Back-end Engineer" onChange={reqRoleHandler}/>
-                            <label htmlFor="back_end">Back-end Engineer</label>
+                            <label htmlFor="pp-back_end">Back-end Engineer</label>
                             </div>
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-front_end" 
                             value="Front-end Engineer" onChange={reqRoleHandler}/>
-                            <label htmlFor="front_end">Front-end Engineer</label>
+                            <label htmlFor="pp-front_end">Front-end Engineer</label>
                             </div>
                             <div>
                             <input type="checkbox"className="checkbox" name="req_roles" id="pp-mobile" 
                             value="Mobile Developer" onChange={reqRoleHandler}/>
-                            <label htmlFor="mobile">Mobile Developer</label>
+                            <label htmlFor="pp-mobile">Mobile Developer</label>
                             </div>
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-game" 
                             value="Game Developer" onChange={reqRoleHandler}/>
-                            <label htmlFor="game">Game Developer</label>
+                            <label htmlFor="pp-game">Game Developer</label>
                             </div>
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-devops" 
                             value="DevOps Engineer" onChange={reqRoleHandler}/>
-                            <label htmlFor="devops">DevOps Engineer</label>
+                            <label htmlFor="pp-devops">DevOps Engineer</label>
                             </div>
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-security" 
                             value="Security Engineer" onChange={reqRoleHandler}/>
-                            <label htmlFor="security">Security Engineer</label>
+                            <label htmlFor="pp-security">Security Engineer</label>
                             </div>
                             <div>
                             <input type="checkbox" className="checkbox" name="req_roles" id="pp-qa" 
                             value="QA Engineer" onChange={reqRoleHandler}/>
-                            <label htmlFor="qa">QA Engineer</label>
+                            <label htmlFor="pp-qa">QA Engineer</label>
                             </div>
                         </fieldset>
                         </div>
                         <div className="d-grid gap-2">
-                            <input type="submit" className="submit btn btn-outline-dark btn-md"/>
+                            <input type="submit" value="Submit" className="submit btn btn-outline-dark btn-md"/>
+
                         </div>
                     </form>
                 </div>
                 <div>
                     {projectPosts}
                 </div>
-            </div>
+          </div>
+          <div>
+            <a id="back-to-top" href="#" 
+            className="btn btn-outline-light btn-lg back-to-top" 
+            style={{borderColor: "#EAE7DC"}}
+            roll="button">
+                <i className="fas fa-chevron-up" 
+              style={{color: '#E85A4F'}}></i>
+            <span class="sr-only">Return to Top of Page</span>
+            </a>
+          </div>
+        </div>
           );
 }
 

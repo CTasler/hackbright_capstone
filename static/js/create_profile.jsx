@@ -263,7 +263,8 @@ function CreateProfile() {
             </fieldset>
           </div>
           <div className="d-grid gap-2">
-            <input className="submit btn btn-outline-dark btn-md" type="submit"/>
+            <input className="submit btn btn-outline-dark btn-md" type="submit" 
+            value="Submit"/>
           </div>
         </form>
       </div>

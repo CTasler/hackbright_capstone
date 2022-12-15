@@ -13,21 +13,25 @@ function PPPreview(props) {
         <div>
             <h2> Project Post Preview </h2>
             <div className="rounded pppreview" style={{position: "relative"}}>
-                <div>
-                    <i id="favbutton" className="fa-regular fa-heart fa-2x" style={{ color: '#E98074'}}></i>
+                <div style={{paddingBottom: "30px"}}>
+                    <div>
+                        <i id="favbutton" className="fa-regular fa-heart fa-2x" 
+                        style={{ color: '#E98074'}}></i>
+                    </div>
+                    <div style={{wordBreak: "break-word"}}>
+                        <h4> Title: {props.title} </h4>
+                        <p> Posted by: {props.username} </p>
+                        <p> Summary: {props.summary} </p>
+                        <p> Languages, Libraries, APIs: {props.specs} </p>
+                        <p> GitHub URL: {props.projectGithub} </p>
+                        <p> Required Experience Level: {props.reqExpLevel} </p>
+                        <p>Current or Previous Roles: {reqRolesString}</p>
+                    </div>
                 </div>
-                <div style={{wordBreak: "break-word"}}>
-                    <h4> Title: {props.title} </h4>
-                    <p> Posted by: {props.username} </p>
-                    <p> Summary: {props.summary} </p>
-                    <p> Languages, Libraries, APIs: {props.specs} </p>
-                    <p> GitHub URL: {props.projectGithub} </p>
-                    <p> Required Experience Level: {props.reqExpLevel} </p>
-                    <p>Current or Previous Roles: {reqRolesString}</p>
-
-                </div>
-                <div style={{position: "absolute", bottom: "5px", left: "50%", transform: "translate(-50%, 0)"}}>
-                    <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Join Team</button>
+                <div style={{position: "absolute", bottom: 20, left: "50%", 
+                transform: "translate(-50%, 0)"}}>
+                    <button className="btn btn-md btn-outline-dark" 
+                    style={{backgroundColor: "#E85A4F"}}>Join Team</button>
                 </div>
             </div>
         </div>
@@ -116,7 +120,9 @@ function ProjectProposalForm() {
         <form onSubmit={submitHandler}>
             <div className="col-5">
                 <label htmlFor="title">Project Title:</label>
-                <input type="text" name="title" id="title" className="rounded" value={data.title} 
+                <input type="text" name="title" id="title" 
+                className="rounded full-input" 
+                value={data.title} 
                 onChange={changeHandler} required />
                 <p id="title-available">*Title is unique</p>
             </div>
@@ -124,7 +130,8 @@ function ProjectProposalForm() {
                 <label htmlFor="summary">Project Summary:</label>
             </div>
             <div>
-                <textarea name="summary" id="summary" className="rounded" rows="4" cols="50" 
+                <textarea name="summary" id="summary" className="rounded" 
+                rows="4" cols="50" 
                 value={data.summary} onChange={changeHandler} required>
                 </textarea>
             </div>
@@ -135,7 +142,8 @@ function ProjectProposalForm() {
                 </label>
             </div>
             <div>
-                <textarea name="specs" id="specs" className="rounded" rows="4" cols="50" 
+                <textarea name="specs" id="specs" className="rounded" 
+                rows="4" cols="50" 
                 value={data.specs} onChange={changeHandler} required>
                 </textarea>
             </div>
@@ -143,7 +151,9 @@ function ProjectProposalForm() {
                 <label htmlFor="project_github">
                     Your Project's GitHub URL:
                 </label>
-                <input type="url" name="project_github" id="project_github" className="rounded" value={data.project_github} onChange={changeHandler}/>
+                <input type="url" name="project_github" id="project_github" 
+                className="rounded full-input" value={data.project_github} 
+                onChange={changeHandler}/>
             </div>
             <div> 
                 <fieldset className="rounded border p-3">
@@ -154,30 +164,30 @@ function ProjectProposalForm() {
                     <input type="radio" name="req_exp_level" id="pp-trainee" 
                     value="Trainee Software Engineer" 
                     onChange={changeHandler}/>
-                    <label htmlFor="trainee">Trainee Software Engineer</label>
+                    <label htmlFor="pp-trainee">Trainee Software Engineer</label>
                     </div>
                     <div>
                     <input type="radio" name="req_exp_level" id="pp-junior" 
                     value="Junior Software Engineer" onChange={changeHandler}/>
-                    <label htmlFor="junior">Junior Software Engineer</label>
+                    <label htmlFor="pp-junior">Junior Software Engineer</label>
                     </div>
                     <div>
                     <input type="radio" name="req_exp_level" id="pp-mid_level" 
                     value="Mid-level Software Engineer" 
                     onChange={changeHandler}/>
-                    <label htmlFor="mid_level">
+                    <label htmlFor="pp-mid_level">
                         Mid-level Software Engineer
                     </label>
                     </div>
                     <div>
                     <input type="radio" name="req_exp_level" id="pp-senior" 
                     value="Senior Software Engineer" onChange={changeHandler}/>
-                    <label htmlFor="senior">Senior Software Engineer</label>
+                    <label htmlFor="pp-senior">Senior Software Engineer</label>
                     </div>
                     <div>
                     <input type="radio" name="req_exp_level" id="pp-lead" 
                     value="Lead Software Engineer" onChange={changeHandler}/>
-                    <label htmlFor="lead">Lead Software Engineer</label>
+                    <label htmlFor="pp-lead">Lead Software Engineer</label>
                     </div>
                 </fieldset>
             </div>
@@ -187,49 +197,59 @@ function ProjectProposalForm() {
                     Desired Current or Previous Role of Prospective Partners:
                     </legend>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-back_end" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-back_end" 
                     value="Back-end Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="back_end">Back-end Engineer</label>
+                    <label htmlFor="pp-back_end">Back-end Engineer</label>
                     </div>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-front_end" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-front_end" 
                     value="Front-end Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="front_end">Front-end Engineer</label>
+                    <label htmlFor="pp-front_end">Front-end Engineer</label>
                     </div>
                     <div>
-                    <input type="checkbox"className="checkbox" name="req_roles" id="pp-mobile" 
+                    <input type="checkbox"className="checkbox" name="req_roles" 
+                    id="pp-mobile" 
                     value="Mobile Developer" onChange={reqRoleHandler}/>
-                    <label htmlFor="mobile">Mobile Developer</label>
+                    <label htmlFor="pp-mobile">Mobile Developer</label>
                     </div>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-game" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-game" 
                     value="Game Developer" onChange={reqRoleHandler}/>
-                    <label htmlFor="game">Game Developer</label>
+                    <label htmlFor="pp-game">Game Developer</label>
                     </div>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-devops" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-devops" 
                     value="DevOps Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="devops">DevOps Engineer</label>
+                    <label htmlFor="pp-devops">DevOps Engineer</label>
                     </div>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-security" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-security" 
                     value="Security Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="security">Security Engineer</label>
+                    <label htmlFor="pp-security">Security Engineer</label>
                     </div>
                     <div>
-                    <input type="checkbox" className="checkbox" name="req_roles" id="pp-qa" 
+                    <input type="checkbox" className="checkbox" name="req_roles" 
+                    id="pp-qa" 
                     value="QA Engineer" onChange={reqRoleHandler}/>
-                    <label htmlFor="qa">QA Engineer</label>
+                    <label htmlFor="pp-qa">QA Engineer</label>
                     </div>
                 </fieldset>
                 </div>
                 <div className="d-grid gap-2">
-                    <input type="submit" className="submit btn btn-outline-dark btn-md"/>
+                    <input type="submit" value="Submit" 
+                    className="submit btn btn-outline-dark btn-md"/>
                 </div>
             </form>
         </div>
-            <div className="rounded project-preview" style={{alignItems: "center", justifyContent: "center"}}>
-                <PPPreview username={username.username_in_session} title={data.title} summary={data.summary} 
+            <div className="rounded project-preview" 
+            style={{alignItems: "center", justifyContent: "center"}}>
+                <PPPreview username={username.username_in_session} 
+                title={data.title} summary={data.summary} 
                 specs={data.specs} projectGithub={data.project_github} 
                 reqExpLevel={data.req_exp_level} reqRoles={data.req_roles}/>
             </div>

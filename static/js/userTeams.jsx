@@ -8,6 +8,10 @@
 // {/* <button data-toggle="tooltip" data-placement="top" title="Leave this team" */}
 
 
+
+// marginLeft: 210
+
+// {/* <div style={{position: "absolute", bottom: 20}}> */}
 function UserTeams(props) {
 
   const leaveTeamHandler = (() => {
@@ -37,38 +41,44 @@ function UserTeams(props) {
     return(
     <div className="rounded card">
         <div>
-          <button type="button" className="floatbuttonr btn btn-md btn-outline-dark" data-title="Leave this team" onClick={leaveTeamHandler} style={{backgroundColor: "#E98074"}}>
+        <div>
+          <button type="button" 
+          className="floatbuttonr btn btn-md btn-outline-dark" 
+          data-title="Leave this team" onClick={leaveTeamHandler} 
+          style={{backgroundColor: "#E98074"}}>
             X
           </button>
         </div>
-        <div>
-            <h4>
-                Project Title: { props.title }
-            </h4>
+          <div>
+              <h4>
+                  Title: { props.title }
+              </h4>
+          </div>
+          <div>
+              <p>
+                  Summary: { props.summary }
+              </p>
+          </div>
+          <div>
+              <p>
+                  GitHub URL: <a href={`${props.github}`}>{ props.github }</a>
+              </p>
+          </div>
+          <div>
+              <p>
+                  Team Members: { props.members}
+              </p>
+          </div>
+          <div>
+              <p style={{ visibility: 'hidden' }}>
+                  Project ID: { props.projectID }
+              </p>
+          </div>
         </div>
-        <div>
-            <p>
-                Summary: { props.summary }
-            </p>
-        </div>
-        <div>
-            <p>
-                GitHub URL: <a href={`${props.github}`}>{ props.github }</a>
-            </p>
-        </div>
-        <div>
-            <p>
-                Teammembers: { props.members}
-            </p>
-        </div>
-        <div>
-            <p style={{ visibility: 'hidden' }}>
-                Project ID: { props.projectID }
-            </p>
-        </div>
-        <div style={{bottom: 20, textAlign: "center"}}>
+        <div className="col d-flex justify-content-center align-items-end">
           <a href={`/team-page/${props.projectID}`}>
-            <button className="btn btn-md btn-outline-dark" style={{backgroundColor: "#E85A4F"}}>Team Page</button>
+            <button className="btn btn-md btn-outline-dark" 
+            style={{backgroundColor: "#E85A4F"}}>Team Page</button>
           </a>
         </div>
     </div>);
