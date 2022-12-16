@@ -4,10 +4,11 @@ from model import Project, db
 import crud
 import json
 import werkzeug.security
+import os
 
 
 app = Flask(__name__)
-app.secret_key = "unicorn"
+app.secret_key = os.environ["secret_key"]
 
 
 @app.route('/')
