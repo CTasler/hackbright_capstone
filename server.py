@@ -8,7 +8,8 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = os.environ["secret_key"]
+app.secret_key = os.environ["SECRET_KEY"]
+
 
 
 @app.route('/')
