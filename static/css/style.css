@@ -50,17 +50,18 @@
   
   .boxes { 
     text-align: start;
-      border-radius: 3px;
-      border: 3px solid black;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      margin-right: auto;
-      margin-left: auto;
-      padding: 20px;
-      width: 30%;
-      min-width: 400px;
-      background-color: #8E8D8A;
-  
+    border-radius: 3px;
+    border: 3px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+    width: 30%;
+    min-width: 400px;
+    background-color: #8E8D8A;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
   
   
@@ -1482,7 +1483,6 @@
       width: 30%;
       min-width: 550px;
       background-color: #8E8D8A;
-  
   }
   
   
