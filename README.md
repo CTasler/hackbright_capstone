@@ -1,6 +1,7 @@
 # Coders Assemble 
 
 Deployed at: http://codersassemble.net/
+
 Learn more about the developer: https://www.linkedin.com/in/claire-tasler/
 
 Coders Assemble is a fullstack web application that allows software engineers 
