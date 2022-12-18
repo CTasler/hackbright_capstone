@@ -4,18 +4,20 @@ Deployed at: http://codersassemble.net/
 
 Learn more about the developer: https://www.linkedin.com/in/claire-tasler/
 
-Coders Assemble is a fullstack web application that allows software engineers 
-to come together and post thier ideas for projects they want to build in order
-to find fellow engineers to collaborate on these projects with them. This 
+
+*Coders Assemble* is a full-stack web application that allows software engineers 
+to come together and post their ideas for projects they want to build; in order
+to find fellow engineers to collaborate on these projects with them. Inspired 
+by my time pair programming at Hackbright Academy, this 
 website was intended to create a space where engineers can go 
-to find inspiriation, make connections, and begin building incredible 
+to find inspiration, make connections, and begin building incredible 
 projects together. 
 
 ![Home Page](/readme_pics/homepagescreenshot.png?raw=true)
 
 ![Project Post Page](/readme_pics/create%20a%20project%20post%20screenshot.png)
 
-Users can post their own project ideas or look through the projects that others
+Users can post their project ideas or look through the projects that others
 have posted. Users can then request to join the team for projects they are 
 interested in or can save that project to their favorites. 
 
@@ -52,7 +54,7 @@ and CSS.
 4. Start up the flask server: 
   * `python server.py` 
 
-5. Go to localhost:5000 to see Coders Assemble
+5. Go to localhost:5000 to visit *Coders Assemble*
 
 ## Version 2.0
 
