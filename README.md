@@ -52,12 +52,12 @@ and CSS.
 
 ## Version 2.0
 
-__Improvements__ 
+### Improvements
 
 Improve responsive CSS
 
 
-__New Features__
+### New Features
 
 Allow users to message other users one on one, with an additional notifications
  feature using Push Notifications API
