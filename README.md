@@ -38,15 +38,15 @@ and CSS.
 ## How to run Coders Assemble locally
 
 * Set up and activate a python virtualenv and install all dependencies: 
- * `pip install -r requirements.txt`
+  * `pip install -r requirements.txt`
 
 * Change secret key
 
 * Seed the database 
- * `python seed_database.py`
+  * `python seed_database.py`
 
 * Start up the flask server: 
- * `python server.py` 
+  * `python server.py` 
 
 * Go to localhost:5000 to see Coders Assemble
 
