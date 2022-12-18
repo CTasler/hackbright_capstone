@@ -16,7 +16,7 @@ with them. This website was intended to create a space where engineers can go
 to find inspiriation, make connections, and begin building incredible 
 projects together. 
 
-! [Home Page] (homepagescreenshot.png)
+! [Home Page] (/readme_pics/homepagescreenshot.png?raw=true)
 
 ## Technologies Used 
 Python, Flask, SQLALchemy, Javascript, AJAX/JSON, Jinja, React, HTML, Bootstrap 
