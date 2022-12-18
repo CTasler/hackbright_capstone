@@ -37,32 +37,32 @@ and CSS.
 
 ## How to run Coders Assemble locally
 
-* Set up and activate a python virtualenv and install all dependencies: 
+1. Set up and activate a python virtualenv and install all dependencies: 
   * `pip install -r requirements.txt`
 
-* Change the value of the Flask secret key
+2. Change the value of the Flask secret key in server.py
   * You will have to create your own secret key. Do so by changing the first
-  line below to look something like the second. 
+  line below to look something like the second. The value can be any string. 
   * `app.secret_key = os.environ["SECRET_KEY"]`
   * `app.secret_key = "example_text"`
 
-* Seed the database 
+3. Seed the database 
   * `python seed_database.py`
 
-* Start up the flask server: 
+4. Start up the flask server: 
   * `python server.py` 
 
-* Go to localhost:5000 to see Coders Assemble
+5. Go to localhost:5000 to see Coders Assemble
 
 ## Version 2.0
 
-Allow users to message other users one on one, with an additional notifications
+* Allow users to message other users one on one, with an additional notifications
 feature using Push Notifications API.
 
-Implement an algorithm for suggesting projects that match a user's profile 
+* Implement an algorithm for suggesting projects that match a user's profile 
 information. 
 
-Utilize the Github Login API for authentification. 
+* Utilize the Github Login API for authentification. 
 
 
 
