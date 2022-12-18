@@ -33,5 +33,36 @@ team members and chat with them.
 Python, Flask, SQLALchemy, Javascript, AJAX/JSON, Jinja, React, HTML, Bootstrap 
 and CSS.
 
+(Dependencies are listed in requirements.txt)
+
+## How to run Coders Assemble locally
+
+* Set up and activate a python virtualenv and install all dependencies: 
+ * `pip install -r requirements.txt`
+
+* Change secret key
+
+* Seed the database 
+ * `python seed_database.py`
+
+* Start up the flask server: 
+ * `python server.py` 
+
+* Go to localhost:5000 to see Coders Assemble
+
 ## Version 2.0
+
+Improvements 
+
+Improve responsive CSS
+
+
+
+New Features 
+
+Allow users to message other users one on one, with an additional notifications
+ feature using Push Notifications API
+
+
+
 
