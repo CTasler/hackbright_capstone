@@ -40,19 +40,19 @@ and CSS.
 ## How to run Coders Assemble locally
 
 1. Set up and activate a python virtualenv and install all dependencies: 
-  * `pip install -r requirements.txt`
+    * `pip install -r requirements.txt`
 
-2. Change the value of the Flask secret key in server.py
-  * You will have to create your own secret key. Do so by changing the first
-  line below to look something like the second. The value can be any string. 
-  * `app.secret_key = os.environ["SECRET_KEY"]`
-  * `app.secret_key = "example_text"`
+2. Change the value of the Flask secret key in server.py:
+    * You will have to create your own secret key. Do so by changing the first
+  line below to look something like the second. The value can be any String. 
+    * `app.secret_key = os.environ["SECRET_KEY"]`
+    * `app.secret_key = "example_text"`
 
-3. Seed the database 
-  * `python seed_database.py`
+3. Seed the database:
+    * `python seed_database.py`
 
 4. Start up the flask server: 
-  * `python server.py` 
+    * `python server.py` 
 
 5. Go to localhost:5000 to visit *Coders Assemble*
 
